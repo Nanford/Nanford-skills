@@ -1,0 +1,27 @@
+# Secrets & Credentials
+.env
+.env.*
+!.env.example
+
+# OS Metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files & Logs
+*.log
+tmp/
+temp/
+node_modules/
+dist/
+build/
+
+# Local workspace specific
+.gemini/
+gemini_history.json
