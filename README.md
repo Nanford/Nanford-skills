@@ -18,13 +18,20 @@
 
 ## 🏛️ 官方规范与模板 (Anthropic Official)
 
-本仓库同步了 [Anthropic Official Skills](https://github.com/anthropics/skills) 的核心规范与模板，作为个人 Skill 开发的标准参考。
+本仓库通过 Git Submodule 引入了 [Anthropic Official Skills](https://github.com/anthropics/skills) 的核心规范与模板。
 
 *   **同步路径**：`skills/official/`
+*   **如何手动同步**：
+    ```bash
+    # 进入官方目录手动 pull
+    cd skills/official
+    git pull origin main
+    # 或者从根目录一键更新
+    git submodule update --remote
+    ```
 *   **核心参考**：
     *   [📜 官方 Skill 编写规范](skills/official/spec/agent-skills-spec.md)
     *   [🛠️ 官方 Skill 结构模板](skills/official/template/SKILL.md)
-*   **同步方式**：如需更新，请手动拉取官方仓库。
 
 ---
 
