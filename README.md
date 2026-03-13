@@ -16,9 +16,17 @@
 | **办公效率** | 文档/会议材料整理、知识库沉淀 | 极致提升日常琐事的产出效率 |
 | **业务实战** | 售前方案、需求拆解、行业分析 | 强化复杂业务场景下的逻辑输出 |
 
+## 🏛️ 官方技能中心 (Anthropic Official)
+
+本仓库通过 GitHub Actions 每日自动同步 [Anthropic Official Skills](https://github.com/anthropics/skills)。
+
+*   **同步路径**：`skills/official/`
+*   **状态**：🔄 每日自动更新
+*   **内容说明**：包含 Anthropic 官方发布的各种实战技能与模板。
+
 ---
 
-## 📂 已收录 Skill 索引
+## 📂 个人原创 Skill 索引
 
 ### 🔍 1. viral-article-analyzer
 > **定位**：公众号爆款文章深度拆解系统
