@@ -1,0 +1,5 @@
+interface:
+  display_name: "Prototype Orchestrator Pro"
+  short_description: "Turn raw requirements into product specs and HTML prototype handoffs"
+  brand_color: "#2F5D8A"
+  default_prompt: "Use $prototype-orchestrator-pro to turn these notes into a ProductSpec, page plan, and single-file HTML prototype handoff."

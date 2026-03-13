@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{APP_TITLE}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Outfit:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=Rajdhani:wght@600;700&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #2557a7;
+        --primary-hover: #1d4585;
+        --primary-light: #e3ecfa;
+        --accent: #2f8877;
+        --bg-main: #f6f4ef;
+        --bg-surface: #ffffff;
+        --bg-sidebar: #ffffff;
+        --bg-sidebar-hover: #f1f4f7;
+        --bg-hover: #f7f9fb;
+        --bg-tertiary: #e6ebf0;
+        --text-primary: #162332;
+        --text-secondary: #556372;
+        --text-tertiary: #8794a2;
+        --text-sidebar: #283848;
+        --border: #dde5eb;
+        --border-light: #edf2f5;
+        --success: #2d8a64;
+        --warning: #c48932;
+        --danger: #c95b4d;
+        --info: #2557a7;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 18px;
+        --shadow-sm: 0 1px 2px rgba(17, 29, 40, 0.04);
+        --shadow-md: 0 10px 24px rgba(17, 29, 40, 0.06);
+        --shadow-lg: 0 22px 48px rgba(17, 29, 40, 0.1);
+        --font-sans: 'Public Sans', 'Noto Sans SC', system-ui, sans-serif;
+        --font-display: 'Manrope', 'Noto Sans SC', sans-serif;
+        --sidebar-width: 260px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg-main);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: var(--sidebar-width) 1fr;
+      }
+
+      .sidebar {
+        padding: 24px 18px;
+        background: var(--bg-sidebar);
+        color: var(--text-sidebar);
+        border-right: 1px solid var(--border);
+      }
+
+      .brand {
+        margin-bottom: 24px;
+      }
+
+      .brand-kicker {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        opacity: 0.68;
+      }
+
+      .brand-title {
+        margin-top: 8px;
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+      }
+
+      .nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      .nav-item {
+        width: 100%;
+        padding: 12px 14px;
+        border: 0;
+        border-radius: var(--radius-md);
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .nav-item:hover,
+      .nav-item.active {
+        background: var(--bg-sidebar-hover);
+        transform: translateX(2px);
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 28px;
+        border-bottom: 1px solid var(--border-light);
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(12px);
+      }
+
+      .topbar-title {
+        display: grid;
+        gap: 4px;
+      }
+
+      .topbar-title strong {
+        font-size: 20px;
+      }
+
+      .topbar-title span {
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .topbar-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .btn-secondary {
+        background: var(--bg-surface);
+        color: var(--text-primary);
+        border-color: var(--border);
+      }
+
+      .page-stage {
+        padding: 28px;
+      }
+
+      .page {
+        display: none;
+        gap: 20px;
+      }
+
+      .page.active {
+        display: grid;
+      }
+
+      .panel {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        padding: 20px;
+      }
+
+      .metrics {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .metric-card {
+        cursor: pointer;
+      }
+
+      .metric-card strong {
+        display: block;
+        font-size: 30px;
+        font-family: var(--font-display);
+      }
+
+      .metric-card span {
+        display: block;
+        margin-top: 6px;
+        color: var(--text-secondary);
+      }
+
+      .metric-chip {
+        display: inline-flex;
+        margin-top: 14px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--primary-light);
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .table-shell {
+        overflow: hidden;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--border-light);
+        text-align: left;
+        font-size: 14px;
+      }
+
+      th {
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--primary-light);
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .drawer-overlay,
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+      }
+
+      .drawer-overlay.open,
+      .modal-overlay.open {
+        display: block;
+        background: rgba(10, 17, 26, 0.34);
+      }
+
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: -520px;
+        width: min(520px, 100vw);
+        height: 100vh;
+        padding: 24px;
+        background: var(--bg-surface);
+        box-shadow: var(--shadow-lg);
+        transition: right 0.24s ease;
+        z-index: 20;
+      }
+
+      .drawer.open {
+        right: 0;
+      }
+
+      .modal-shell {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 30;
+      }
+
+      .modal-shell.open {
+        display: flex;
+      }
+
+      .modal-card {
+        width: min(560px, calc(100vw - 32px));
+        padding: 24px;
+        background: var(--bg-surface);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .toast-stack {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        display: grid;
+        gap: 10px;
+        z-index: 40;
+      }
+
+      .toast {
+        min-width: 220px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        color: #fff;
+        box-shadow: var(--shadow-md);
+      }
+
+      .toast.info {
+        background: var(--info);
+      }
+
+      .toast.success {
+        background: var(--success);
+      }
+
+      @media (max-width: 900px) {
+        .app-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .page-stage,
+        .topbar {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-kicker">Prototype Base</div>
+          <div class="brand-title">{{APP_TITLE}}</div>
+        </div>
+        <nav class="nav">
+          <button class="nav-item active" data-route="overview">总览</button>
+          <button class="nav-item" data-route="list">列表</button>
+        </nav>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar">
+          <div class="topbar-title">
+            <strong>{{PAGE_TITLE}}</strong>
+            <span>{{PAGE_SUBTITLE}}</span>
+          </div>
+          <div class="topbar-actions">
+            <button class="btn btn-secondary" type="button" onclick="openDrawer('筛选设置', '<p>把真实筛选面板内容放这里。</p>')">筛选</button>
+            <button class="btn btn-primary" type="button" onclick="showToast('主操作已触发', 'success')">主操作</button>
+          </div>
+        </header>
+
+        <main class="page-stage">
+          <section class="page active" data-page="overview">
+            <div class="metrics">
+              <article class="panel metric-card" onclick="navigate('list')">
+                <strong>128</strong>
+                <span>待处理任务</span>
+                <div class="metric-chip">点击进入列表</div>
+              </article>
+              <article class="panel metric-card" onclick="showToast('异常看板已刷新', 'info')">
+                <strong>9</strong>
+                <span>高优先级异常</span>
+                <div class="metric-chip">本周新增 2 条</div>
+              </article>
+              <article class="panel metric-card" onclick="openModal('在线设备', '<p>把设备摘要、趋势和操作入口放这里。</p>')">
+                <strong>96.2%</strong>
+                <span>设备在线率</span>
+                <div class="metric-chip">查看说明</div>
+              </article>
+            </div>
+            <section class="panel">
+              <h2>把这里替换成真实页面模块</h2>
+              <p>建议保留一个主趋势区、一个风险区和一个最近动作区。</p>
+            </section>
+          </section>
+
+          <section class="page" data-page="list">
+            <section class="panel table-shell">
+              <table>
+                <thead>
+                  <tr>
+                    <th>对象</th>
+                    <th>状态</th>
+                    <th>负责人</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>示例对象 A</td>
+                    <td><span class="status-pill">处理中</span></td>
+                    <td>张敏</td>
+                    <td><button class="btn btn-secondary" type="button" onclick="openDrawer('详情', '<p>把详情字段、历史记录和处理动作放这里。</p>')">查看</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="drawer-overlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+    <aside id="drawer" class="drawer"></aside>
+
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal()"></div>
+    <div id="modal-shell" class="modal-shell">
+      <div id="modal-card" class="modal-card"></div>
+    </div>
+
+    <div id="toast-root" class="toast-stack"></div>
+
+    <script>
+      function navigate(route) {
+        document.querySelectorAll('.page').forEach((page) => {
+          page.classList.toggle('active', page.dataset.page === route);
+        });
+        document.querySelectorAll('.nav-item').forEach((item) => {
+          item.classList.toggle('active', item.dataset.route === route);
+        });
+        location.hash = '#/' + route;
+      }
+
+      function syncRoute() {
+        const route = location.hash.replace('#/', '') || 'overview';
+        const target = document.querySelector('.page[data-page="' + route + '"]');
+        navigate(target ? route : 'overview');
+      }
+
+      function openDrawer(title, content) {
+        document.getElementById('drawer').innerHTML =
+          '<h2>' + title + '</h2><div style="margin-top:16px;color:var(--text-secondary)">' + content + '</div>';
+        document.getElementById('drawer').classList.add('open');
+        document.getElementById('drawer-overlay').classList.add('open');
+      }
+
+      function closeDrawer() {
+        document.getElementById('drawer').classList.remove('open');
+        document.getElementById('drawer-overlay').classList.remove('open');
+      }
+
+      function openModal(title, content) {
+        document.getElementById('modal-card').innerHTML =
+          '<h2>' + title + '</h2><div style="margin-top:16px;color:var(--text-secondary)">' +
+          content +
+          '</div><div style="margin-top:20px"><button class="btn btn-primary" type="button" onclick="closeModal();showToast(\'已确认\', \'success\')">确认</button></div>';
+        document.getElementById('modal-overlay').classList.add('open');
+        document.getElementById('modal-shell').classList.add('open');
+      }
+
+      function closeModal() {
+        document.getElementById('modal-overlay').classList.remove('open');
+        document.getElementById('modal-shell').classList.remove('open');
+      }
+
+      function showToast(message, type) {
+        const toast = document.createElement('div');
+        toast.className = 'toast ' + (type || 'info');
+        toast.textContent = message;
+        document.getElementById('toast-root').appendChild(toast);
+        window.setTimeout(() => toast.remove(), 2600);
+      }
+
+      document.querySelectorAll('.nav-item').forEach((item) => {
+        item.addEventListener('click', () => navigate(item.dataset.route));
+      });
+
+      window.addEventListener('hashchange', syncRoute);
+      syncRoute();
+    </script>
+  </body>
+</html>
