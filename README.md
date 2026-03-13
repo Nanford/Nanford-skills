@@ -16,13 +16,15 @@
 | **办公效率** | 文档/会议材料整理、知识库沉淀 | 极致提升日常琐事的产出效率 |
 | **业务实战** | 售前方案、需求拆解、行业分析 | 强化复杂业务场景下的逻辑输出 |
 
-## 🏛️ 官方技能中心 (Anthropic Official)
+## 🏛️ 官方规范与模板 (Anthropic Official)
 
-本仓库通过 GitHub Actions 每日自动同步 [Anthropic Official Skills](https://github.com/anthropics/skills)。
+本仓库同步了 [Anthropic Official Skills](https://github.com/anthropics/skills) 的核心规范与模板，作为个人 Skill 开发的标准参考。
 
 *   **同步路径**：`skills/official/`
-*   **状态**：🔄 每日自动更新
-*   **内容说明**：包含 Anthropic 官方发布的各种实战技能与模板。
+*   **核心参考**：
+    *   [📜 官方 Skill 编写规范](skills/official/spec/agent-skills-spec.md)
+    *   [🛠️ 官方 Skill 结构模板](skills/official/template/SKILL.md)
+*   **同步方式**：如需更新，请手动拉取官方仓库。
 
 ---
 
