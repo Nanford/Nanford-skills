@@ -30,8 +30,9 @@
     git submodule update --remote
     ```
 *   **核心参考**：
-    *   [📜 官方 Skill 编写规范](skills/official/spec/agent-skills-spec.md)
-    *   [🛠️ 官方 Skill 结构模板](skills/official/template/SKILL.md)
+    *   [📜 官方 Skill 编写规范](https://github.com/anthropics/skills/blob/main/spec/agent-skills-spec.md) (GitHub 预览)
+    *   [🛠️ 官方 Skill 结构模板](https://github.com/anthropics/skills/blob/main/template/SKILL.md) (GitHub 预览)
+    *   *本地路径：`skills/official/spec/agent-skills-spec.md`*
 
 ---
 
