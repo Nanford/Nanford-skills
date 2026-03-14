@@ -54,8 +54,8 @@
 
     | 环节 | 推荐 Skill | 来源 |
     | :--- | :--- | :--- |
-    | 排版 | `wechat-article-formatter` | Claude Code 官方 Skill |
-    | 发布 | `baoyu-post-to-wechat` | [baoyu 社区 Skill](https://github.com/anthropics/skills) |
+    | 排版 | `wechat-article-formatter` | [iamzifei 公众号排版 Skill](https://github.com/iamzifei/wechat-article-formatter-skill)  |
+    | 发布 | `baoyu-post-to-wechat` | [baoyu 社区 Skill](https://github.com/JimLiu/baoyu-skills) |
     | 封面图 | `baoyu-cover-image` | baoyu 社区 Skill |
     | 文中配图 | `baoyu-article-illustrator` | baoyu 社区 Skill |
     | 爆文分析 | `viral-article-analyzer` | 本仓库 ✅ |
