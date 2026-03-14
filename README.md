@@ -45,10 +45,20 @@
 *   **适用场景**：拆解对标账号、分析爆款原因、沉淀可复用的写作方法论。
 
 ### ✍️ 2. wechat-article-operator
-> **定位**：公众号写作与传播力升级系统 (V2)
+> **定位**：公众号内容生产系统 (V3)
 
-*   **核心价值**：内容“整形”工具，通过植入“认知冲击”与“金句”提升传播潜能。
-*   **适用场景**：干货初稿润色、热点深度解读、增强读者互动意愿。
+*   **核心价值**：覆盖选题评估 → 读者锚定 → 结构选型 → 正文写作 → 传播元素植入 → 运营拆解的全链路。
+*   **适用场景**：热点解读、工具测评、趋势判断、观点文章、初稿升级改稿。
+*   **V3 新增**：选题五维评估、读者画像锚定、五种正文结构自动推荐、三档深度控制、改稿诊断表、工具链衔接。
+*   **推荐工具链**（可选，需额外安装对应 Skill）：
+
+    | 环节 | 推荐 Skill | 来源 |
+    | :--- | :--- | :--- |
+    | 排版 | `wechat-article-formatter` | Claude Code 官方 Skill |
+    | 发布 | `baoyu-post-to-wechat` | [baoyu 社区 Skill](https://github.com/anthropics/skills) |
+    | 封面图 | `baoyu-cover-image` | baoyu 社区 Skill |
+    | 文中配图 | `baoyu-article-illustrator` | baoyu 社区 Skill |
+    | 爆文分析 | `viral-article-analyzer` | 本仓库 ✅ |
 
 ### 🏗️ 3. prototype-orchestrator-pro
 > **定位**：从模糊需求到可交互原型的自动化编排器
@@ -73,6 +83,10 @@ Nanford-skills/
     │   └── references/           # 设计规范与方法论参考
     ├── viral-article-analyzer/
     └── wechat-article-operator/
+        ├── SKILL.md              # V3 核心指令
+        └── references/
+            ├── article-structures.md  # 五种正文结构详解
+            └── output-examples.md     # 风格示例与改稿诊断
 ```
 
 ---
@@ -93,6 +107,7 @@ Nanford-skills/
 
 ## 📜 版本更新记录
 
+- **v0.4**：`wechat-article-operator` 升级至 V3——新增选题评估、读者画像、多结构选型、深度档位、改稿诊断、工具链衔接；精简冗余参考文件。
 - **v0.3**：新增 `prototype-orchestrator-pro` 原型编排 Skill，重构 README 视觉结构。
 - **v0.2**：新增 `wechat-article-operator` 写作升级 Skill。
 - **v0.1**：仓库初始化，收录 `viral-article-analyzer` 拆解 Skill。
