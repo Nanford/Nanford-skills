@@ -66,6 +66,22 @@
 *   **核心价值**：需求归一化与可视化。直接将口语化需求转化为可交互的 HTML 原型。
 *   **适用场景**：快速原型验证、产品规格评审、方案视觉化演示。
 
+### 🎬 4. hootoolai-ppt
+> **定位**：多主题企业级演示文稿生成器 + 自动配图
+
+*   **核心价值**：将文本内容转化为 Bento Grid 布局的 HTML 演示文稿，并自动调用 AI 图片生成工具为幻灯片配图。输出 HTML + 素材文件夹，浏览器打开即可演示。
+*   **适用场景**：科技发布、工作汇报、客户提案、培训材料、学术演示。
+*   **6 种主题**：赛博暗夜 / 科技蓝 / 简洁汇报 / 暖光办公 / 软件公司 / 极简白，根据场景自动推荐。
+*   **素材生成**：自动识别配图需求，调用 `baoyu-image-gen`、`baoyu-article-illustrator` 等 Skill 生成封面图、概念配图、数据图表；简单图标直接内联 SVG 绘制。
+*   **推荐工具链**（可选，需额外安装对应 Skill）：
+
+    | 环节 | 推荐 Skill | 来源 |
+    | :--- | :--- | :--- |
+    | 封面/配图生成 | `baoyu-image-gen` | [baoyu 社区 Skill](https://github.com/JimLiu/baoyu-skills) |
+    | 矢量插画配图 | `baoyu-article-illustrator` | baoyu 社区 Skill |
+    | 信息图/图表 | `baoyu-infographic` | baoyu 社区 Skill |
+    | 封面大图 | `baoyu-cover-image` | baoyu 社区 Skill |
+
 ---
 
 ## 🏗️ 仓库目录结构
@@ -75,6 +91,11 @@ Nanford-skills/
 ├── README.md
 ├── .gitignore                    # 项目忽略配置
 └── skills/                       # 核心 Skill 目录
+    ├── hootoolai-ppt/
+    │   ├── SKILL.md              # 核心指令 (多主题 + 素材生成)
+    │   ├── assets/               # HTML 模板 (CSS 主题系统 + JS 演示引擎)
+    │   ├── examples/             # 完整演示示例
+    │   └── references/           # 设计系统规范与幻灯片模板
     ├── prototype-orchestrator-pro/
     │   ├── SKILL.md              # 核心逻辑指令
     │   ├── agents/               # 智能代理配置
@@ -107,6 +128,7 @@ Nanford-skills/
 
 ## 📜 版本更新记录
 
+- **v0.5**：新增 `hootoolai-ppt` 多主题演示文稿生成 Skill——6 种配色主题、Bento Grid 布局、自动调用 AI 图片生成 Skill 配图、输出 HTML + 素材文件夹。
 - **v0.4**：`wechat-article-operator` 升级至 V3——新增选题评估、读者画像、多结构选型、深度档位、改稿诊断、工具链衔接；精简冗余参考文件。
 - **v0.3**：新增 `prototype-orchestrator-pro` 原型编排 Skill，重构 README 视觉结构。
 - **v0.2**：新增 `wechat-article-operator` 写作升级 Skill。

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudSync Pro 产品发布</title>
+    <style>
+        :root {
+            --bg-main: #0D1117;
+            --bg-card: #161B22;
+            --bg-card-hover: #1C2333;
+            --border: #30363D;
+            --border-light: #484F58;
+            --accent-blue: #33A0FF;
+            --accent-orange: #F78166;
+            --accent-purple: #A371F7;
+            --accent-green: #3FB950;
+            --text-main: #E6EDF3;
+            --text-sub: #8B949E;
+            --text-weak: #6E7681;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-main);
+            overflow: hidden;
+            cursor: default;
+            user-select: none;
+        }
+
+        /* ========== 幻灯片容器 ========== */
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg-main);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        .slide-body {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========== 标题 ========== */
+        .slide-header {
+            margin-bottom: 40px;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+        }
+
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        /* ========== 卡片 ========== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-light);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ========== 封面 ========== */
+        .cover-layout {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 100px;
+        }
+
+        .cover-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            font-weight: 400;
+        }
+
+        .cover-date {
+            font-size: 1rem;
+            color: var(--text-sub);
+            margin-top: 8px;
+        }
+
+        /* ========== 内容布局 ========== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 32px;
+            flex: 1;
+            align-items: start;
+        }
+
+        .hero-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 300px;
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            margin-bottom: 16px;
+        }
+
+        .hero-label {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+        }
+
+        .content-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-list li {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .content-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        .content-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* ========== 数据卡片 ========== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .data-card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+        }
+
+        .data-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .data-label {
+            font-size: 1rem;
+            color: var(--text-sub);
+        }
+
+        .data-banner {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .data-banner .data-value {
+            font-size: 2.5rem;
+        }
+
+        /* ========== 流程 ========== */
+        .flow-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .flow-step {
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+        }
+
+        .step-card {
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .step-card h4 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .step-card p {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+        }
+
+        .flow-arrow {
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        /* ========== 总结 ========== */
+        .summary-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .summary-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 32px;
+        }
+
+        .summary-points {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 40px;
+        }
+
+        .summary-points li {
+            font-size: 1.3rem;
+            color: var(--text-main);
+            padding: 10px 0;
+        }
+
+        .summary-points li::before {
+            content: '✦ ';
+            color: var(--accent-blue);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            background: var(--accent-blue);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(51, 160, 255, 0.4);
+        }
+
+        /* ========== 几何装饰 ========== */
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .glow-blue {
+            width: 500px;
+            height: 500px;
+            top: -150px;
+            right: -150px;
+            background: radial-gradient(circle, rgba(51, 160, 255, 0.10) 0%, transparent 70%);
+        }
+
+        .glow-blue-br {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(51, 160, 255, 0.08) 0%, transparent 70%);
+        }
+
+        .glow-blue-tl {
+            width: 450px;
+            height: 450px;
+            top: -120px;
+            left: -120px;
+            background: radial-gradient(circle, rgba(51, 160, 255, 0.08) 0%, transparent 70%);
+        }
+
+        .glow-orange-br {
+            width: 400px;
+            height: 400px;
+            bottom: -120px;
+            right: -120px;
+            background: radial-gradient(circle, rgba(247, 129, 102, 0.08) 0%, transparent 70%);
+        }
+
+        .glow-purple-tl {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            background: radial-gradient(circle, rgba(163, 113, 247, 0.08) 0%, transparent 70%);
+        }
+
+        .glow-green-bl {
+            width: 350px;
+            height: 350px;
+            bottom: -100px;
+            left: -100px;
+            background: radial-gradient(circle, rgba(63, 185, 80, 0.08) 0%, transparent 70%);
+        }
+
+        .corner-dot {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+            bottom: 40px;
+            left: 40px;
+            z-index: 2;
+        }
+
+        /* ========== 动画 ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .slide.active .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .slide.active .animate-in:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .slide.active .animate-in:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .slide.active .animate-in:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .slide.active .animate-in:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .slide.active .animate-in:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        /* ========== 控制 UI ========== */
+        .controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .page-indicator {
+            position: fixed;
+            bottom: 16px;
+            right: 24px;
+            font-size: 0.85rem;
+            color: var(--text-weak);
+            z-index: 100;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .nav-hint {
+            position: fixed;
+            bottom: 16px;
+            left: 24px;
+            font-size: 0.75rem;
+            color: var(--text-weak);
+            z-index: 100;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== 幻灯片 1: 封面 ==================== -->
+    <section class="slide slide-cover">
+        <div class="glow glow-blue"></div>
+        <div class="slide-body cover-layout">
+            <h1 class="cover-title animate-in">CloudSync Pro</h1>
+            <p class="cover-subtitle animate-in">企业级云端协作平台</p>
+            <div class="accent-line animate-in"></div>
+            <p class="cover-date animate-in">2024 年产品发布会</p>
+        </div>
+        <div class="corner-dot"></div>
+    </section>
+
+    <!-- ==================== 幻灯片 2: 市场痛点 (内容型) ==================== -->
+    <section class="slide slide-content">
+        <div class="glow glow-blue-br"></div>
+        <div class="slide-body">
+            <div class="slide-header animate-in">
+                <h2 class="slide-title">市场痛点</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="content-grid">
+                <div class="hero-card card animate-in">
+                    <div class="hero-icon">⚠️</div>
+                    <h3 class="hero-label">效率低下</h3>
+                </div>
+                <div class="content-list animate-in">
+                    <ul>
+                        <li>传统工具难以满足远程协作需求</li>
+                        <li>数据分散在多个平台，查找困难</li>
+                        <li>安全性和隐私保护不足</li>
+                        <li>高昂的学习成本和维护费用</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 幻灯片 3: 解决方案 (流程型) ==================== -->
+    <section class="slide slide-flow">
+        <div class="glow glow-green-bl"></div>
+        <div class="slide-body">
+            <div class="slide-header animate-in">
+                <h2 class="slide-title">我们的解决方案</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="flow-grid">
+                <div class="flow-step animate-in">
+                    <span class="step-number">01</span>
+                    <div class="step-card card">
+                        <h4>⚡ 实时协作</h4>
+                        <p>多人同时编辑，零延迟同步</p>
+                    </div>
+                </div>
+                <div class="flow-arrow animate-in">→</div>
+                <div class="flow-step animate-in">
+                    <span class="step-number">02</span>
+                    <div class="step-card card">
+                        <h4>🔍 智能搜索</h4>
+                        <p>秒级查找所有文档和对话</p>
+                    </div>
+                </div>
+                <div class="flow-arrow animate-in">→</div>
+                <div class="flow-step animate-in">
+                    <span class="step-number">03</span>
+                    <div class="step-card card">
+                        <h4>🔒 安全加密</h4>
+                        <p>企业级 256 位端到端加密</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 幻灯片 4: 关键数据 (数据型) ==================== -->
+    <section class="slide slide-data">
+        <div class="glow glow-purple-tl"></div>
+        <div class="slide-body">
+            <div class="slide-header animate-in">
+                <h2 class="slide-title">关键指标</h2>
+                <div class="accent-line"></div>
+            </div>
+            <div class="data-grid">
+                <div class="data-card card animate-in">
+                    <span class="data-value" style="color: var(--accent-green)">99.9%</span>
+                    <span class="data-label">可用性保障</span>
+                </div>
+                <div class="data-card card animate-in">
+                    <span class="data-value" style="color: var(--accent-blue)">500ms</span>
+                    <span class="data-label">平均响应时间</span>
+                </div>
+                <div class="data-card card animate-in">
+                    <span class="data-value" style="color: var(--accent-purple)">256位</span>
+                    <span class="data-label">加密强度</span>
+                </div>
+            </div>
+            <div class="data-banner card animate-in">
+                <span class="data-value" style="color: var(--accent-orange)">1000+</span>
+                <span class="data-label">企业客户信赖之选</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 幻灯片 5: 总结 ==================== -->
+    <section class="slide slide-summary">
+        <div class="glow glow-blue-tl"></div>
+        <div class="glow glow-orange-br"></div>
+        <div class="slide-body summary-layout">
+            <h2 class="summary-title animate-in">开启高效协作新时代</h2>
+            <ul class="summary-points animate-in">
+                <li>统一的协作平台，告别工具分散</li>
+                <li>企业级安全保障，数据绝对可靠</li>
+                <li>简单易用，零学习成本</li>
+            </ul>
+            <div class="cta-button animate-in">立即开始免费试用</div>
+        </div>
+    </section>
+
+    <!-- 控制 UI -->
+    <div class="controls">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <span class="page-indicator" id="pageIndicator"></span>
+    <span class="nav-hint">← → 翻页 · F 全屏</span>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const total = slides.length;
+        let current = 0;
+
+        function showSlide(index) {
+            if (index < 0 || index >= total) return;
+            slides[current].classList.remove('active');
+            slides[index].querySelectorAll('.animate-in').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight;
+                el.style.animation = '';
+            });
+            slides[index].classList.add('active');
+            current = index;
+            document.getElementById('progressBar').style.width = ((current + 1) / total * 100) + '%';
+            document.getElementById('pageIndicator').textContent = (current + 1) + ' / ' + total;
+        }
+
+        function nextSlide() { showSlide(current + 1); }
+        function prevSlide() { showSlide(current - 1); }
+
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowRight': case 'ArrowDown': case ' ':
+                    e.preventDefault(); nextSlide(); break;
+                case 'ArrowLeft': case 'ArrowUp':
+                    e.preventDefault(); prevSlide(); break;
+                case 'f': case 'F':
+                    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                    else document.exitFullscreen();
+                    break;
+                case 'Escape':
+                    if (document.fullscreenElement) document.exitFullscreen(); break;
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (e.clientX > window.innerWidth / 2) nextSlide(); else prevSlide();
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
+        });
+
+        if (total > 0) showSlide(0);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="cyber-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{演示标题}</title>
+  <style>
+    /* ========== HooToolAI PPT 多主题设计系统 ========== */
+
+    /* 主题 1：赛博暗夜 (默认) */
+    :root, [data-theme="cyber-dark"] {
+      --bg-main: #0D1117;
+      --bg-card: #161B22;
+      --bg-card-hover: #1C2333;
+      --border: #30363D;
+      --border-light: #484F58;
+      --accent-primary: #33A0FF;
+      --accent-secondary: #F78166;
+      --accent-tertiary: #A371F7;
+      --accent-success: #3FB950;
+      --text-main: #E6EDF3;
+      --text-sub: #8B949E;
+      --text-weak: #6E7681;
+      --glow-primary: rgba(51, 160, 255, 0.10);
+      --glow-secondary: rgba(247, 129, 102, 0.08);
+      --glow-tertiary: rgba(163, 113, 247, 0.08);
+      --card-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      /* 兼容旧变量名 */
+      --accent-blue: #33A0FF;
+      --accent-orange: #F78166;
+      --accent-purple: #A371F7;
+      --accent-green: #3FB950;
+    }
+
+    /* 主题 2：科技蓝 */
+    [data-theme="tech-blue"] {
+      --bg-main: #0A1628;
+      --bg-card: #0F2240;
+      --bg-card-hover: #142D54;
+      --border: #1B3A5C;
+      --border-light: #2A5080;
+      --accent-primary: #4FC3F7;
+      --accent-secondary: #00E5FF;
+      --accent-tertiary: #7C4DFF;
+      --accent-success: #69F0AE;
+      --text-main: #E3F2FD;
+      --text-sub: #90CAF9;
+      --text-weak: #5C8DB8;
+      --glow-primary: rgba(79, 195, 247, 0.12);
+      --glow-secondary: rgba(0, 229, 255, 0.08);
+      --glow-tertiary: rgba(124, 77, 255, 0.08);
+      --card-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      --accent-blue: #4FC3F7;
+      --accent-orange: #00E5FF;
+      --accent-purple: #7C4DFF;
+      --accent-green: #69F0AE;
+    }
+
+    /* 主题 3：简洁汇报 */
+    [data-theme="clean-report"] {
+      --bg-main: #F5F7FA;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #F0F4F8;
+      --border: #E2E8F0;
+      --border-light: #CBD5E1;
+      --accent-primary: #2563EB;
+      --accent-secondary: #F59E0B;
+      --accent-tertiary: #8B5CF6;
+      --accent-success: #10B981;
+      --text-main: #1E293B;
+      --text-sub: #64748B;
+      --text-weak: #94A3B8;
+      --glow-primary: rgba(37, 99, 235, 0.06);
+      --glow-secondary: rgba(245, 158, 11, 0.05);
+      --glow-tertiary: rgba(139, 92, 246, 0.05);
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+      --accent-blue: #2563EB;
+      --accent-orange: #F59E0B;
+      --accent-purple: #8B5CF6;
+      --accent-green: #10B981;
+    }
+
+    /* 主题 4：暖光办公 */
+    [data-theme="warm-office"] {
+      --bg-main: #FAF8F5;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #F5F0EB;
+      --border: #E8E0D8;
+      --border-light: #D4C8BC;
+      --accent-primary: #D97706;
+      --accent-secondary: #DC2626;
+      --accent-tertiary: #9333EA;
+      --accent-success: #16A34A;
+      --text-main: #292524;
+      --text-sub: #78716C;
+      --text-weak: #A8A29E;
+      --glow-primary: rgba(217, 119, 6, 0.06);
+      --glow-secondary: rgba(220, 38, 38, 0.05);
+      --glow-tertiary: rgba(147, 51, 234, 0.05);
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
+      --accent-blue: #D97706;
+      --accent-orange: #DC2626;
+      --accent-purple: #9333EA;
+      --accent-green: #16A34A;
+    }
+
+    /* 主题 5：软件公司 */
+    [data-theme="software-pro"] {
+      --bg-main: #FFFFFF;
+      --bg-card: #F8FAFC;
+      --bg-card-hover: #F1F5F9;
+      --border: #E2E8F0;
+      --border-light: #CBD5E1;
+      --accent-primary: #6366F1;
+      --accent-secondary: #EC4899;
+      --accent-tertiary: #06B6D4;
+      --accent-success: #22C55E;
+      --text-main: #0F172A;
+      --text-sub: #475569;
+      --text-weak: #94A3B8;
+      --glow-primary: rgba(99, 102, 241, 0.08);
+      --glow-secondary: rgba(236, 72, 153, 0.06);
+      --glow-tertiary: rgba(6, 182, 212, 0.06);
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+      --accent-blue: #6366F1;
+      --accent-orange: #EC4899;
+      --accent-purple: #06B6D4;
+      --accent-green: #22C55E;
+    }
+
+    /* 主题 6：极简白 */
+    [data-theme="minimal-light"] {
+      --bg-main: #FAFAFA;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #F5F5F5;
+      --border: #E5E5E5;
+      --border-light: #D4D4D4;
+      --accent-primary: #171717;
+      --accent-secondary: #525252;
+      --accent-tertiary: #737373;
+      --accent-success: #16A34A;
+      --text-main: #171717;
+      --text-sub: #525252;
+      --text-weak: #A3A3A3;
+      --glow-primary: rgba(23, 23, 23, 0.04);
+      --glow-secondary: rgba(82, 82, 82, 0.03);
+      --glow-tertiary: rgba(115, 115, 115, 0.03);
+      --card-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);
+      --accent-blue: #171717;
+      --accent-orange: #525252;
+      --accent-purple: #737373;
+      --accent-green: #16A34A;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      overflow: hidden;
+      cursor: default;
+      user-select: none;
+    }
+
+    /* ========== 幻灯片容器 ========== */
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--bg-main);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      overflow: hidden;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+    .slide-body {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========== 标题区域 ========== */
+    .slide-header { margin-bottom: 40px; }
+    .slide-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 12px;
+    }
+    .accent-line {
+      width: 80px;
+      height: 4px;
+      background: var(--accent-primary);
+      border-radius: 2px;
+    }
+
+    /* ========== 卡片 ========== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-light);
+      box-shadow: var(--card-shadow);
+    }
+    .card-glass {
+      background: rgba(22, 27, 34, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(48, 54, 61, 0.5);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    /* ========== 封面布局 ========== */
+    .cover-layout {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 100px;
+    }
+    .cover-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--accent-primary);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .cover-subtitle {
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+    .cover-date {
+      font-size: 1rem;
+      color: var(--text-sub);
+      margin-top: 8px;
+    }
+
+    /* ========== 内容布局 (左右分栏) ========== */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 32px;
+      flex: 1;
+      align-items: start;
+    }
+    .hero-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 300px;
+    }
+    .hero-icon {
+      font-size: 5rem;
+      margin-bottom: 16px;
+    }
+    .hero-label {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent-secondary);
+    }
+    .content-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    .content-list li {
+      font-size: 1.2rem;
+      color: var(--text-main);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      padding-left: 20px;
+      position: relative;
+    }
+    .content-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent-primary);
+      font-weight: bold;
+    }
+    .content-list li:last-child { border-bottom: none; }
+
+    /* ========== 数据卡片布局 ========== */
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    .data-card {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+    }
+    .data-value {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .data-label {
+      font-size: 1rem;
+      color: var(--text-sub);
+    }
+    .data-banner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+    }
+    .data-banner .data-value { font-size: 2.5rem; }
+
+    /* ========== 对比布局 ========== */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 24px;
+      flex: 1;
+      align-items: start;
+    }
+    .compare-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .compare-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .compare-card li {
+      font-size: 1.1rem;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+    }
+    .compare-card li:last-child { border-bottom: none; }
+    .compare-divider {
+      width: 2px;
+      background: var(--border);
+      align-self: stretch;
+      border-radius: 1px;
+    }
+
+    /* ========== 流程布局 ========== */
+    .flow-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex: 1;
+    }
+    .flow-step { text-align: center; flex: 1; }
+    .step-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-primary);
+      margin-bottom: 12px;
+    }
+    .step-card {
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .step-card h4 {
+      font-size: 1.2rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .step-card p {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+    .flow-arrow {
+      font-size: 1.8rem;
+      color: var(--accent-primary);
+      flex-shrink: 0;
+    }
+
+    /* ========== 引用布局 ========== */
+    .quote-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 120px;
+    }
+    .quote-text {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.5;
+      margin-bottom: 32px;
+      font-style: italic;
+      border-left: 4px solid var(--accent-primary);
+      padding-left: 32px;
+      text-align: left;
+    }
+    .quote-author {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+    }
+
+    /* ========== 总结布局 ========== */
+    .summary-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .summary-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--accent-primary);
+      margin-bottom: 32px;
+    }
+    .summary-points {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 40px;
+    }
+    .summary-points li {
+      font-size: 1.3rem;
+      color: var(--text-main);
+      padding: 10px 0;
+    }
+    .summary-points li::before {
+      content: '✦ ';
+      color: var(--accent-primary);
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 16px 48px;
+      background: var(--accent-primary);
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    /* 极简白主题的 CTA 按钮文字需反色 */
+    [data-theme="minimal-light"] .cta-button { color: #FAFAFA; }
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px var(--glow-primary);
+    }
+
+    /* ========== 几何装饰 ========== */
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .glow-blue, .glow-primary {
+      width: 500px; height: 500px;
+      top: -150px; right: -150px;
+      background: radial-gradient(circle, var(--glow-primary) 0%, transparent 70%);
+    }
+    .glow-blue-br, .glow-primary-br {
+      width: 400px; height: 400px;
+      bottom: -100px; right: -100px;
+      background: radial-gradient(circle, var(--glow-primary) 0%, transparent 70%);
+    }
+    .glow-blue-tl, .glow-primary-tl {
+      width: 450px; height: 450px;
+      top: -120px; left: -120px;
+      background: radial-gradient(circle, var(--glow-primary) 0%, transparent 70%);
+    }
+    .glow-orange-tr, .glow-secondary-tr {
+      width: 400px; height: 400px;
+      top: -100px; right: -100px;
+      background: radial-gradient(circle, var(--glow-secondary) 0%, transparent 70%);
+    }
+    .glow-orange-br, .glow-secondary-br {
+      width: 400px; height: 400px;
+      bottom: -120px; right: -120px;
+      background: radial-gradient(circle, var(--glow-secondary) 0%, transparent 70%);
+    }
+    .glow-purple-tl, .glow-tertiary-tl {
+      width: 400px; height: 400px;
+      top: -100px; left: -100px;
+      background: radial-gradient(circle, var(--glow-tertiary) 0%, transparent 70%);
+    }
+    .glow-purple-br, .glow-tertiary-br {
+      width: 400px; height: 400px;
+      bottom: -100px; right: -100px;
+      background: radial-gradient(circle, var(--glow-tertiary) 0%, transparent 70%);
+    }
+    .glow-green-bl, .glow-success-bl {
+      width: 350px; height: 350px;
+      bottom: -100px; left: -100px;
+      background: radial-gradient(circle, var(--glow-primary) 0%, transparent 70%);
+    }
+    .corner-dot {
+      position: absolute;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent-secondary);
+      bottom: 40px; left: 40px;
+      z-index: 2;
+    }
+
+    /* ========== 动画 ========== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .slide.active .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    .slide.active .animate-in:nth-child(1) { animation-delay: 0.1s; }
+    .slide.active .animate-in:nth-child(2) { animation-delay: 0.2s; }
+    .slide.active .animate-in:nth-child(3) { animation-delay: 0.3s; }
+    .slide.active .animate-in:nth-child(4) { animation-delay: 0.4s; }
+    .slide.active .animate-in:nth-child(5) { animation-delay: 0.5s; }
+
+    /* ========== 演示控制 UI ========== */
+    .controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      pointer-events: none;
+    }
+    .progress-bar {
+      height: 3px;
+      background: var(--accent-primary);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .page-indicator {
+      position: fixed;
+      bottom: 16px;
+      right: 24px;
+      font-size: 0.85rem;
+      color: var(--text-weak);
+      z-index: 100;
+      font-variant-numeric: tabular-nums;
+    }
+    .nav-hint {
+      position: fixed;
+      bottom: 16px;
+      left: 24px;
+      font-size: 0.75rem;
+      color: var(--text-weak);
+      z-index: 100;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDES START -->
+
+  <!-- 在此处插入所有 <section class="slide"> 幻灯片 -->
+
+  <!-- SLIDES END -->
+
+  <!-- 演示控制 UI -->
+  <div class="controls">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <span class="page-indicator" id="pageIndicator"></span>
+  <span class="nav-hint">← → 翻页 · F 全屏</span>
+
+  <script>
+    // ========== 演示控制引擎 ==========
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+
+    function showSlide(index) {
+      if (index < 0 || index >= total) return;
+      slides[current].classList.remove('active');
+      // 重置动画
+      slides[index].querySelectorAll('.animate-in').forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight; // 触发 reflow
+        el.style.animation = '';
+      });
+      slides[index].classList.add('active');
+      current = index;
+
+      // 更新 UI
+      document.getElementById('progressBar').style.width =
+        ((current + 1) / total * 100) + '%';
+      document.getElementById('pageIndicator').textContent =
+        (current + 1) + ' / ' + total;
+    }
+
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+
+    // 键盘控制
+    document.addEventListener('keydown', (e) => {
+      switch(e.key) {
+        case 'ArrowRight': case 'ArrowDown': case ' ':
+          e.preventDefault(); nextSlide(); break;
+        case 'ArrowLeft': case 'ArrowUp':
+          e.preventDefault(); prevSlide(); break;
+        case 'f': case 'F':
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+          } else {
+            document.exitFullscreen();
+          }
+          break;
+        case 'Escape':
+          if (document.fullscreenElement) document.exitFullscreen();
+          break;
+      }
+    });
+
+    // 点击翻页
+    document.addEventListener('click', (e) => {
+      if (e.clientX > window.innerWidth / 2) nextSlide();
+      else prevSlide();
+    });
+
+    // 触摸滑动
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+    document.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? nextSlide() : prevSlide();
+      }
+    });
+
+    // 初始化
+    if (total > 0) showSlide(0);
+  </script>
+</body>
+</html>
