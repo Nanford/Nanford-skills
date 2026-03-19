@@ -1,5 +1,6 @@
 ---
 name: prototype-orchestrator-pro
+author: Nanford
 description: 将口语化需求、会议纪要、聊天记录或半结构化需求文档编排为可交互的单文件 HTML 产品原型。用于“帮我做原型”“把需求变成界面”“根据会议纪要出后台页面”“做个低保真/中保真页面”“prototype from requirements”“convert notes to UI”等场景；先归一需求，再输出 ProductSpec、页面方案与 frontend-design 渲染指令。
 ---
 
