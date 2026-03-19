@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+    .layer-title { font-size: 20px; font-weight: bold; fill: #263238; }
+    .block-title { font-size: 16px; font-weight: 600; fill: #263238; }
+    .node-label { font-size: 14px; fill: #263238; text-anchor: middle; }
+    .node-sub { font-size: 11px; fill: #546E7A; text-anchor: middle; }
+    .conn-label { font-size: 12px; fill: #546E7A; font-style: italic; }
+  </style>
+
+  <!-- 背景 -->
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <!-- ============================== -->
+  <!-- 层级1：展现层 -->
+  <!-- ============================== -->
+  <g id="presentation-layer">
+    <rect x="30" y="25" width="1860" height="110" rx="6" fill="#F5F5F5" stroke="#455A64" stroke-width="1.5"/>
+    <text x="50" y="53" class="layer-title">展现层</text>
+
+    <!-- B/S架构 -->
+    <rect x="50" y="66" width="586" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="343" y="87" class="node-label">B/S架构</text>
+    <text x="343" y="105" class="node-sub">IE11 / Chrome / Firefox</text>
+
+    <!-- 统一UI风格设计 -->
+    <rect x="657" y="66" width="586" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="950" y="99" class="node-label">统一UI风格设计</text>
+
+    <!-- 报表导出与交互 -->
+    <rect x="1264" y="66" width="586" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1557" y="87" class="node-label">报表导出与交互</text>
+    <text x="1557" y="105" class="node-sub">Office 2016 / WPS 2019</text>
+  </g>
+
+  <!-- 箭头：展现层 → 应用层 -->
+  <g id="conn-presentation-application">
+    <g class="flow-arrow" transform="translate(480, 137) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(960, 137) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(1440, 137) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <text x="978" y="150" class="conn-label">请求 / 响应</text>
+  </g>
+
+  <!-- ============================== -->
+  <!-- 层级2：应用层 -->
+  <!-- ============================== -->
+  <g id="application-layer">
+    <rect x="30" y="155" width="1860" height="340" rx="6" fill="#EEEEEE" stroke="#455A64" stroke-width="1.5"/>
+    <text x="50" y="183" class="layer-title">应用层</text>
+
+    <!-- Block: MES改造域 -->
+    <rect x="50" y="195" width="586" height="285" rx="4" fill="none" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="65" y="217" class="block-title">MES改造域</text>
+
+    <rect x="65" y="232" width="270" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="200" y="253" class="node-label">生产工单</text>
+    <text x="200" y="271" class="node-sub">默认 / 换牌 / 手工</text>
+
+    <rect x="350" y="232" width="270" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="485" y="265" class="node-label">工艺卡数据化</text>
+
+    <rect x="65" y="302" width="270" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="200" y="335" class="node-label">质量知识库</text>
+
+    <rect x="350" y="302" width="270" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="485" y="335" class="node-label">质量分析报表</text>
+
+    <!-- Block: 批次系统改造域 -->
+    <rect x="657" y="195" width="586" height="285" rx="4" fill="none" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="672" y="217" class="block-title">批次系统改造域</text>
+
+    <rect x="672" y="232" width="556" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="950" y="253" class="node-label">标签打印适配</text>
+    <text x="950" y="271" class="node-sub">11位码</text>
+
+    <rect x="672" y="302" width="556" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="950" y="335" class="node-label">成品追溯升级</text>
+
+    <rect x="672" y="372" width="556" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="950" y="405" class="node-label">条码样式调整</text>
+
+    <!-- Block: WMS改造域 -->
+    <rect x="1264" y="195" width="586" height="285" rx="4" fill="none" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="1279" y="217" class="block-title">WMS改造域</text>
+
+    <rect x="1279" y="232" width="556" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1557" y="253" class="node-label">出入库锁定</text>
+    <text x="1557" y="271" class="node-sub">半成品 / 成品</text>
+
+    <rect x="1279" y="302" width="556" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1557" y="335" class="node-label">库存查询优化</text>
+
+    <rect x="1279" y="372" width="556" height="55" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1557" y="393" class="node-label">PDA移动作业</text>
+    <text x="1557" y="411" class="node-sub">扫码组托 / 上架 / 拣货</text>
+  </g>
+
+  <!-- 箭头：应用层 → 服务层 -->
+  <g id="conn-application-service">
+    <g class="flow-arrow" transform="translate(480, 497) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(960, 497) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(1440, 497) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <text x="978" y="510" class="conn-label">服务调用</text>
+  </g>
+
+  <!-- ============================== -->
+  <!-- 层级3：服务层（业务中台） -->
+  <!-- ============================== -->
+  <g id="service-layer">
+    <rect x="30" y="515" width="1860" height="195" rx="6" fill="#E0E0E0" stroke="#455A64" stroke-width="1.5"/>
+    <text x="50" y="543" class="layer-title">服务层（业务中台）</text>
+
+    <!-- Block: 公共服务组件（微服务架构） -->
+    <rect x="50" y="555" width="1180" height="140" rx="4" fill="none" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="65" y="577" class="block-title">公共服务组件（微服务架构）</text>
+
+    <rect x="65" y="592" width="275" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="202" y="622" class="node-label">工单管理</text>
+
+    <rect x="355" y="592" width="275" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="492" y="622" class="node-label">质检管理</text>
+
+    <rect x="645" y="592" width="275" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="782" y="622" class="node-label">标签管理</text>
+
+    <rect x="935" y="592" width="275" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1072" y="622" class="node-label">库存管理</text>
+
+    <!-- Block: 中间件 -->
+    <rect x="1250" y="555" width="600" height="140" rx="4" fill="none" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="1265" y="577" class="block-title">中间件</text>
+
+    <rect x="1265" y="592" width="275" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1402" y="622" class="node-label">IBM WebSphere V8.5</text>
+
+    <rect x="1555" y="592" width="275" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1692" y="622" class="node-label">WebLogic V11G</text>
+  </g>
+
+  <!-- 箭头：服务层 → 数据层 -->
+  <g id="conn-service-data">
+    <g class="flow-arrow" transform="translate(480, 712) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(960, 712) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(1440, 712) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <text x="978" y="725" class="conn-label">数据读写</text>
+  </g>
+
+  <!-- ============================== -->
+  <!-- 层级4：数据层 -->
+  <!-- ============================== -->
+  <g id="data-layer">
+    <rect x="30" y="730" width="1860" height="155" rx="6" fill="#CFD8DC" stroke="#455A64" stroke-width="1.5"/>
+    <text x="50" y="758" class="layer-title">数据层</text>
+
+    <!-- Block: 数据库 -->
+    <rect x="50" y="772" width="880" height="100" rx="4" fill="none" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="65" y="792" class="block-title">数据库</text>
+
+    <rect x="65" y="802" width="270" height="48" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="200" y="831" class="node-label">IBM DB2 V11</text>
+
+    <rect x="350" y="802" width="270" height="48" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="485" y="831" class="node-label">Oracle 18C</text>
+
+    <rect x="635" y="802" width="270" height="48" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="770" y="831" class="node-label">集群部署</text>
+
+    <!-- Block: 数据结构 -->
+    <rect x="950" y="772" width="900" height="100" rx="4" fill="none" stroke="#546E7A" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text x="965" y="792" class="block-title">数据结构</text>
+
+    <rect x="965" y="802" width="280" height="48" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1105" y="831" class="node-label">质量批次号（保留）</text>
+
+    <rect x="1260" y="802" width="280" height="48" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1400" y="831" class="node-label">质量工单号（新增）</text>
+
+    <rect x="1555" y="802" width="280" height="48" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1695" y="831" class="node-label">双轨制数据存储</text>
+  </g>
+
+  <!-- 箭头：数据层 → 基础设施层 -->
+  <g id="conn-data-infrastructure">
+    <g class="flow-arrow" transform="translate(480, 887) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(960, 887) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <g class="flow-arrow" transform="translate(1440, 887) rotate(90)">
+      <rect x="0" y="-2" width="10" height="4" fill="#455A64" rx="1"/>
+      <polygon points="10,-5 10,5 17,0" fill="#455A64"/>
+    </g>
+    <text x="978" y="900" class="conn-label">运行支撑</text>
+  </g>
+
+  <!-- ============================== -->
+  <!-- 层级5：基础设施层 -->
+  <!-- ============================== -->
+  <g id="infrastructure-layer">
+    <rect x="30" y="905" width="1860" height="150" rx="6" fill="#B0BEC5" stroke="#455A64" stroke-width="1.5"/>
+    <text x="50" y="933" class="layer-title">基础设施层</text>
+
+    <rect x="50" y="948" width="352" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="226" y="978" class="node-label">服务器 / 存储 / 网络</text>
+
+    <rect x="417" y="948" width="352" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="593" y="978" class="node-label">VMware 虚拟化</text>
+
+    <rect x="784" y="948" width="352" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="960" y="978" class="node-label">容器化部署</text>
+
+    <rect x="1151" y="948" width="352" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1327" y="978" class="node-label">Windows Server 2016</text>
+
+    <rect x="1518" y="948" width="352" height="50" rx="2" fill="#FFFFFF" stroke="#455A64" stroke-width="1.5"/>
+    <text x="1694" y="978" class="node-label">RedHat Linux 8+</text>
+  </g>
+</svg>

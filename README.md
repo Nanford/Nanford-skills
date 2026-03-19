@@ -66,6 +66,19 @@
 *   **核心价值**：需求归一化与可视化。直接将口语化需求转化为可交互的 HTML 原型。
 *   **适用场景**：快速原型验证、产品规格评审、方案视觉化演示。
 
+### 📐 5. svg-architecture-diagram
+> **定位**：SVG 信息架构图生成器
+
+*   **核心价值**：将任意架构文字描述转化为结构清晰、视觉专业的 SVG 架构图，无需外部工具，直接输出可渲染的矢量图。
+*   **适用场景**：系统架构、业务流程、组织结构、数据流、技术选型方案等场景的可视化。
+*   **8 种主题**：通用多彩 / 科技蓝 / 深色海洋 / 医疗健康 / 金融 / 森林绿 / 政企 / 暖色创意，根据行业自动匹配。
+*   **双画布模式**：标准（1400×1000）和宽屏（1920×1080），适配不同展示需求。
+*   **技术亮点**：使用几何拼接箭头替代 SVG marker，确保跨平台渲染一致性。
+
+**效果预览**：
+
+![架构图示例](skills/svg-architecture-diagram/references/architecture-diagram.svg)
+
 ### 🎬 4. hootoolai-ppt
 > **定位**：多主题企业级演示文稿生成器 + 自动配图
 
@@ -102,6 +115,9 @@ Nanford-skills/
     │   ├── assets/               # 渲染模板与静态资产
     │   ├── examples/             # 最佳实践示例
     │   └── references/           # 设计规范与方法论参考
+    ├── svg-architecture-diagram/
+    │   ├── SKILL.md              # 核心指令 (JSON 模型 → SVG 生成)
+    │   └── references/           # 配色主题定义 & 效果示例
     ├── viral-article-analyzer/
     └── wechat-article-operator/
         ├── SKILL.md              # V3 核心指令
@@ -128,6 +144,7 @@ Nanford-skills/
 
 ## 📜 版本更新记录
 
+- **v0.6**：新增 `svg-architecture-diagram` SVG 架构图生成 Skill——8 种行业配色主题、双画布模式、几何拼接箭头、JSON 模型驱动的专业矢量架构图输出。
 - **v0.5**：新增 `hootoolai-ppt` 多主题演示文稿生成 Skill——6 种配色主题、Bento Grid 布局、自动调用 AI 图片生成 Skill 配图、输出 HTML + 素材文件夹。
 - **v0.4**：`wechat-article-operator` 升级至 V3——新增选题评估、读者画像、多结构选型、深度档位、改稿诊断、工具链衔接；精简冗余参考文件。
 - **v0.3**：新增 `prototype-orchestrator-pro` 原型编排 Skill，重构 README 视觉结构。
