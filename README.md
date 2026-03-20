@@ -66,7 +66,7 @@
 *   **核心价值**：需求归一化与可视化。直接将口语化需求转化为可交互的 HTML 原型。
 *   **适用场景**：快速原型验证、产品规格评审、方案视觉化演示。
 
-### 📐 5. svg-architecture-diagram
+### 📐 4. svg-architecture-diagram
 > **定位**：SVG 信息架构图生成器
 
 *   **核心价值**：将任意架构文字描述转化为结构清晰、视觉专业的 SVG 架构图，无需外部工具，直接输出可渲染的矢量图。
@@ -79,7 +79,19 @@
 
 ![架构图示例](skills/svg-architecture-diagram/references/architecture-diagram.svg)
 
-### 🎬 4. hootoolai-ppt
+### 📡 5. ai-news-scout
+> **定位**：AI 信息差日报生成工具
+
+*   **核心价值**：通过 3 批并行搜索（大厂动态 / 社区开源 / 产品商业）高效采集全网 AI 新闻，自动去重合并后输出精炼的信息差日报。
+*   **适用场景**：AI 日报生成、信息差选题、行业动态速览。
+*   **核心特性**：
+    *   3 批 Agent 并行搜索，覆盖官方公告、HN/Reddit/GitHub、融资与产品动态
+    *   自动去重合并，按事件主体聚合多源报道
+    *   6 类分类标签：模型发布 / 产品更新 / 开源动态 / 融资收购 / 政策监管 / 行业趋势
+    *   精简 5 维分析 + 3 维评分（30 分制），信息密度高
+    *   输出 `ai-news-{YYYY-MM-DD}.md` 日报文件，5 分钟掌握当日 AI 动态
+
+### 🎬 6. hootoolai-ppt
 > **定位**：多主题企业级演示文稿生成器 + 自动配图
 
 *   **核心价值**：将文本内容转化为 Bento Grid 布局的 HTML 演示文稿，并自动调用 AI 图片生成工具为幻灯片配图。输出 HTML + 素材文件夹，浏览器打开即可演示。
@@ -115,6 +127,9 @@ Nanford-skills/
     │   ├── assets/               # 渲染模板与静态资产
     │   ├── examples/             # 最佳实践示例
     │   └── references/           # 设计规范与方法论参考
+    ├── ai-news-scout/
+    │   ├── SKILL.md              # 核心指令 (3批并行搜索 + 去重 + 分类)
+    │   └── references/           # 输出模板
     ├── svg-architecture-diagram/
     │   ├── SKILL.md              # 核心指令 (JSON 模型 → SVG 生成)
     │   └── references/           # 配色主题定义 & 效果示例
@@ -144,6 +159,7 @@ Nanford-skills/
 
 ## 📜 版本更新记录
 
+- **v0.7**：新增 `ai-news-scout` AI 信息差日报 Skill——3 批 Agent 并行搜索、自动去重合并、6 类分类标签、精简 5 维分析 + 3 维评分、输出结构化日报文件。
 - **v0.6**：新增 `svg-architecture-diagram` SVG 架构图生成 Skill——8 种行业配色主题、双画布模式、几何拼接箭头、JSON 模型驱动的专业矢量架构图输出。
 - **v0.5**：新增 `hootoolai-ppt` 多主题演示文稿生成 Skill——6 种配色主题、Bento Grid 布局、自动调用 AI 图片生成 Skill 配图、输出 HTML + 素材文件夹。
 - **v0.4**：`wechat-article-operator` 升级至 V3——新增选题评估、读者画像、多结构选型、深度档位、改稿诊断、工具链衔接；精简冗余参考文件。
