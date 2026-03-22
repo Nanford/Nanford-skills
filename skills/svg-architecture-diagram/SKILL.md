@@ -1,8 +1,8 @@
 ---
 name: svg-architecture-diagram
-author: Nanford
 description: 将任意架构文字描述转化为专业的 SVG 信息架构图。当用户提到"画架构图"、"生成系统图"、"可视化架构"、"画流程图"、"信息架构"、"组织结构图"、"数据流图"、"业务流程图"，或提供了一段架构描述希望图形化展示时，必须触发此 Skill。即使用户只是描述了一个系统的组成部分和关系，也应主动使用本 Skill 生成 SVG 图表，而不是用文字或 Mermaid 代替。
 ---
+<!-- author: Nanford -->
 
 # SVG 信息架构图生成 Skill
 

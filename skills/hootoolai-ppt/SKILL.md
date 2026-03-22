@@ -1,8 +1,8 @@
 ---
 name: hootoolai-ppt
-author: Nanford
 description: 为真实工作场景生成高可读、强叙事、网页化展示的 HTML 演示文稿。强调信息压缩、版式决策、设计一致性与企业表达，而不是单纯堆砌卡片和装饰。输出 index.html + assets，可直接浏览器演示。当用户提到"生成PPT"、"做演示文稿"、"创建幻灯片"、"做presentation"、"做汇报材料"、"做slides"，或提供了一段内容希望制作成PPT/演示文稿时，必须触发此Skill。
 ---
+<!-- author: Nanford -->
 
 # HooToolAI PPT — HTML 演示设计引擎 v2
 
