@@ -1,0 +1,62 @@
+{
+  "dark_tech": {
+    "name": "深色科技感",
+    "description": "适合 AI 培训、技术方案、系统宣讲、产品演示",
+    "background": "#0F172A",
+    "background_alt": "#111827",
+    "card": "#162033",
+    "title": "#F8FAFC",
+    "body": "#CBD5E1",
+    "muted": "#94A3B8",
+    "accent": "#38BDF8",
+    "accent_2": "#22C55E",
+    "warning": "#F59E0B",
+    "danger": "#EF4444",
+    "line": "rgba(148,163,184,0.18)"
+  },
+  "business_blue": {
+    "name": "商务蓝白",
+    "description": "适合项目汇报、管理汇报、甲方汇报、售前提案",
+    "background": "#F8FAFC",
+    "background_alt": "#FFFFFF",
+    "card": "#FFFFFF",
+    "title": "#0F172A",
+    "body": "#334155",
+    "muted": "#64748B",
+    "accent": "#2563EB",
+    "accent_2": "#0EA5E9",
+    "warning": "#D97706",
+    "danger": "#DC2626",
+    "line": "#E2E8F0"
+  },
+  "mckinsey_clean": {
+    "name": "麦肯锡简洁风",
+    "description": "适合管理复盘、策略汇报、领导简报",
+    "background": "#FFFFFF",
+    "background_alt": "#FAFAFA",
+    "card": "#FAFAFA",
+    "title": "#111827",
+    "body": "#374151",
+    "muted": "#6B7280",
+    "accent": "#1D4ED8",
+    "accent_2": "#DC2626",
+    "warning": "#D97706",
+    "danger": "#B91C1C",
+    "line": "#E5E7EB"
+  },
+  "warm_exec": {
+    "name": "暖灰高管汇报",
+    "description": "适合董事会汇报、经营分析、年度总结",
+    "background": "#F6F4EF",
+    "background_alt": "#FFFCF7",
+    "card": "#FFFCF7",
+    "title": "#2B2B2B",
+    "body": "#4B5563",
+    "muted": "#6B7280",
+    "accent": "#8B5E3C",
+    "accent_2": "#B08968",
+    "warning": "#B45309",
+    "danger": "#9A3412",
+    "line": "#DDD6CE"
+  }
+}

@@ -107,6 +107,18 @@
     | 信息图/图表 | `baoyu-infographic` | baoyu 社区 Skill |
     | 封面大图 | `baoyu-cover-image` | baoyu 社区 Skill |
 
+### 📊 7. article-to-ppt
+> **定位**：长文本转结构化 PPT 大纲生成器
+
+*   **核心价值**：将长篇文档、业务教材转换为带有“视觉排版建议”和“讲师口语化逐字稿”的结构化大纲。
+*   **适用场景**：快速备课、制作汇报演示文稿的大纲梳理阶段。
+
+### 👑 8. text-to-ppt-pro
+> **定位**：专业 PPT 结构与规范生成助手
+
+*   **核心价值**：兼具总编、架构师、设计师、质检员四重身份，输出逻辑清晰、风格统一、层级明确的可交付 PPT 结构。
+*   **适用场景**：培训课件、项目汇报、立项汇报、方案宣讲等高规格演示需求。
+
 ---
 
 ## 🏗️ 仓库目录结构
@@ -116,6 +128,12 @@ Nanford-skills/
 ├── README.md
 ├── .gitignore                    # 项目忽略配置
 └── skills/                       # 核心 Skill 目录
+    ├── article-to-ppt/
+    │   └── SKILL.md              # 核心指令 (长文本 -> PPT大纲)
+    ├── text-to-ppt-pro/
+    │   ├── SKILL.md              # 核心指令 (专业PPT结构生成)
+    │   ├── assets/               # 主题预设
+    │   └── references/           # 页面库、设计系统、检查表等
     ├── hootoolai-ppt/
     │   ├── SKILL.md              # 核心指令 (多主题 + 素材生成)
     │   ├── assets/               # HTML 模板 (CSS 主题系统 + JS 演示引擎)
@@ -159,6 +177,7 @@ Nanford-skills/
 
 ## 📜 版本更新记录
 
+- **v0.8**：新增 `article-to-ppt` 与 `text-to-ppt-pro`，完善 PPT 制作全链路工具；升级 `hootoolai-ppt` 至 V3，引入 PPT-Agent 认知设计逻辑。
 - **v0.7**：新增 `ai-news-scout` AI 信息差日报 Skill——3 批 Agent 并行搜索、自动去重合并、6 类分类标签、精简 5 维分析 + 3 维评分、输出结构化日报文件。
 - **v0.6**：新增 `svg-architecture-diagram` SVG 架构图生成 Skill——8 种行业配色主题、双画布模式、几何拼接箭头、JSON 模型驱动的专业矢量架构图输出。
 - **v0.5**：新增 `hootoolai-ppt` 多主题演示文稿生成 Skill——6 种配色主题、Bento Grid 布局、自动调用 AI 图片生成 Skill 配图、输出 HTML + 素材文件夹。

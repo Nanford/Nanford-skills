@@ -197,30 +197,60 @@
 
 ## 8. 解决方案 `solution`
 
-上方主张 + 下方 3-4 个能力块。
+左侧方案主张大字 + 右侧 Bento 能力卡片组合。禁止三等分列。
 
 ```html
 <section class="slide slide-solution">
-  <div class="slide-inner">
-    <p class="eyebrow anim">{眉标：解决方案}</p>
-    <h2 class="text-title anim">{方案主张句}</h2>
-    <div class="deco-line anim"></div>
-    <div class="layout-thirds solution-capabilities">
-      <div class="panel anim">
-        <svg class="icon-md" viewBox="0 0 24 24" ...><!-- icon --></svg>
-        <h4>{能力1}</h4>
-        <p class="text-caption">{一句话}</p>
+  <div class="slide-inner" style="flex-direction:row;gap:24px;padding:60px 80px;">
+
+    <!-- 左侧方案主张：大字留白，强视觉冲击 -->
+    <div class="anim" style="width:420px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;gap:20px;">
+      <p class="eyebrow">{眉标：解决方案}</p>
+      <h2 style="font-size:44px;font-weight:800;line-height:1.2;color:var(--text-primary);margin:0;">{方案主张句}</h2>
+      <div class="deco-line"></div>
+      <p class="text-body" style="color:var(--text-secondary);line-height:1.6;">{方案背景/价值主张，2句以内}</p>
+    </div>
+
+    <!-- 右侧 Bento 能力矩阵 -->
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px;">
+
+      <!-- 能力1 — 右上大块 (rowspan 2) -->
+      <div class="bento-cell" style="grid-row:span 2;background:var(--accent-1);color:#fff;">
+        <div class="deco-ring" style="top:-20px;right:-20px;border-color:rgba(255,255,255,0.2);"></div>
+        <svg class="icon-lg" viewBox="0 0 24 24" width="40" height="40" fill="none"
+          stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          {/* 核心能力图标 */}
+        </svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;">
+          <h4 style="font-size:22px;font-weight:700;color:#fff;margin:0;">{核心能力}</h4>
+          <p style="font-size:15px;color:rgba(255,255,255,0.75);margin:0;line-height:1.5;">{一句话描述}</p>
+        </div>
       </div>
-      <div class="panel anim">
-        <svg class="icon-md" viewBox="0 0 24 24" ...><!-- icon --></svg>
-        <h4>{能力2}</h4>
-        <p class="text-caption">{一句话}</p>
+
+      <!-- 能力2 -->
+      <div class="bento-cell" style="display:flex;align-items:flex-start;gap:14px;">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none"
+          stroke="var(--accent-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;">
+          {/* 图标 path */}
+        </svg>
+        <div>
+          <h4 style="font-size:16px;font-weight:600;color:var(--text-primary);margin:0 0 6px;">{能力2}</h4>
+          <p style="font-size:13px;color:var(--text-secondary);margin:0;line-height:1.5;">{一句话}</p>
+        </div>
       </div>
-      <div class="panel anim">
-        <svg class="icon-md" viewBox="0 0 24 24" ...><!-- icon --></svg>
-        <h4>{能力3}</h4>
-        <p class="text-caption">{一句话}</p>
+
+      <!-- 能力3 -->
+      <div class="bento-cell" style="display:flex;align-items:flex-start;gap:14px;">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none"
+          stroke="var(--accent-positive)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;">
+          {/* 图标 path */}
+        </svg>
+        <div>
+          <h4 style="font-size:16px;font-weight:600;color:var(--text-primary);margin:0 0 6px;">{能力3}</h4>
+          <p style="font-size:13px;color:var(--text-secondary);margin:0;line-height:1.5;">{一句话}</p>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -230,29 +260,80 @@
 
 ## 9. 功能矩阵 `feature-grid`
 
-2×2 或 2×3 特性卡片。图标 + 标题 + 一句话。
+**必须用 Bento Grid**，禁止等分列。核心能力占英雄单元，其余环绕。
 
 ```html
 <section class="slide slide-feature-grid">
-  <div class="slide-inner">
-    <p class="eyebrow anim">{眉标}</p>
-    <h2 class="text-title anim">{标题}</h2>
-    <div class="layout-2x3 feature-cards">
-      <div class="panel feature-card anim">
-        <svg class="icon-md" viewBox="0 0 24 24" ...><!-- icon --></svg>
-        <h4>{特性名}</h4>
-        <p class="text-caption">{一句话描述}</p>
+  <div class="slide-inner" style="gap:20px;">
+    <div class="anim" style="display:flex;flex-direction:column;gap:4px;">
+      <p class="eyebrow">{眉标}</p>
+      <h2 class="text-title">{标题结论句}</h2>
+    </div>
+    <div class="bento-grid anim" style="flex:1;">
+
+      <!-- 英雄单元：核心能力，占视觉主体 -->
+      <div class="bento-cell cell-hero cell-accent">
+        <div class="deco-glow-orb" style="top:-60px;right:-60px;"></div>
+        <svg class="icon-lg" viewBox="0 0 24 24" width="48" height="48" fill="none"
+          stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          {/* 主功能图标 path */}
+        </svg>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;">
+          <h3 style="font-size:28px;font-weight:700;color:#fff;margin:0;">{核心能力名称}</h3>
+          <p style="font-size:16px;color:rgba(255,255,255,0.75);margin:0;line-height:1.5;">{一句话核心价值描述}</p>
+        </div>
       </div>
-      <!-- 重复 4-6 个 -->
+
+      <!-- 次级能力 2 -->
+      <div class="bento-cell cell-sm">
+        <svg class="icon-md" viewBox="0 0 24 24" width="32" height="32" fill="none"
+          stroke="var(--accent-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          {/* 图标 path */}
+        </svg>
+        <h4 style="font-size:17px;font-weight:600;margin:12px 0 6px;color:var(--text-primary);">{能力2}</h4>
+        <p class="text-caption" style="color:var(--text-secondary);line-height:1.5;">{一句话}</p>
+      </div>
+
+      <!-- 次级能力 3 -->
+      <div class="bento-cell cell-sm">
+        <svg class="icon-md" viewBox="0 0 24 24" width="32" height="32" fill="none"
+          stroke="var(--accent-1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          {/* 图标 path */}
+        </svg>
+        <h4 style="font-size:17px;font-weight:600;margin:12px 0 6px;color:var(--text-primary);">{能力3}</h4>
+        <p class="text-caption" style="color:var(--text-secondary);line-height:1.5;">{一句话}</p>
+      </div>
+
+      <!-- 次级能力 4 -->
+      <div class="bento-cell cell-sm">
+        <svg class="icon-md" viewBox="0 0 24 24" width="32" height="32" fill="none"
+          stroke="var(--accent-positive)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          {/* 图标 path */}
+        </svg>
+        <h4 style="font-size:17px;font-weight:600;margin:12px 0 6px;color:var(--text-primary);">{能力4}</h4>
+        <p class="text-caption" style="color:var(--text-secondary);line-height:1.5;">{一句话}</p>
+      </div>
+
+      <!-- 次级能力 5 -->
+      <div class="bento-cell cell-sm">
+        <svg class="icon-md" viewBox="0 0 24 24" width="32" height="32" fill="none"
+          stroke="var(--accent-positive)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          {/* 图标 path */}
+        </svg>
+        <h4 style="font-size:17px;font-weight:600;margin:12px 0 6px;color:var(--text-primary);">{能力5}</h4>
+        <p class="text-caption" style="color:var(--text-secondary);line-height:1.5;">{一句话}</p>
+      </div>
+
     </div>
   </div>
 </section>
 ```
 
 **版式说明：**
-- 每张卡片内容不超过 3 行
-- 图标统一 32px
-- 卡片间距 24px
+- 英雄单元 span7/row2 承载核心能力，用 `cell-accent` 强调色填充
+- 5个次级单元 span3，两行排列在英雄右侧（5列 ÷ 5 = 各占约3列）
+- 图标严格统一线性风格，禁止 emoji
+- 不超过 6 个特性（超出则拆页）
 
 ---
 
@@ -331,35 +412,62 @@
 
 ## 12. 数据展示 `metrics`
 
-1 个主数字突出 + 2-4 个次级指标陪衬。**禁止多数字同权。**
+1 个主数字突出 + 2-4 个次级指标陪衬。**禁止多数字同权。必须 Bento Grid。**
 
 ```html
 <section class="slide slide-metrics">
-  <div class="slide-inner">
-    <p class="eyebrow anim">{眉标}</p>
-    <h2 class="text-title anim">{数据页标题（结论句）}</h2>
-    <div class="layout-metric-hero metrics-body">
-      <!-- 主数据：占更大面积 -->
-      <div class="panel metric-hero anim">
-        <span class="text-metric-lg" style="color:var(--accent-1)">{主数字}</span>
-        <span class="text-body">{主指标名称}</span>
-        <p class="text-caption">{简短说明}</p>
-      </div>
-      <!-- 次级数据 -->
-      <div class="panel metric-sub anim">
-        <span class="text-metric-sm" style="color:var(--accent-positive)">{数字2}</span>
-        <span class="text-caption">{指标2}</span>
-      </div>
-      <div class="panel metric-sub anim">
-        <span class="text-metric-sm" style="color:var(--text-secondary)">{数字3}</span>
-        <span class="text-caption">{指标3}</span>
-      </div>
-      <div class="panel metric-sub anim">
-        <span class="text-metric-sm" style="color:var(--text-secondary)">{数字4}</span>
-        <span class="text-caption">{指标4}</span>
-      </div>
+  <div class="slide-inner" style="gap:20px;">
+    <div class="anim" style="display:flex;flex-direction:column;gap:4px;">
+      <p class="eyebrow">{眉标}</p>
+      <h2 class="text-title">{数据页标题（结论句）}</h2>
     </div>
-    <!-- 可选：底部小型 SVG 趋势图 -->
+    <div class="bento-grid anim" style="flex:1;">
+
+      <!-- 主数据英雄单元 — 视觉绝对焦点 -->
+      <div class="bento-cell cell-hero cell-metric" style="background:var(--accent-1);color:#fff;">
+        <div class="deco-glow-orb" style="bottom:-80px;left:-80px;background:radial-gradient(circle,rgba(255,255,255,0.2),transparent 70%);"></div>
+        <p style="font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin:0;">{眉标/指标类别}</p>
+        <div style="display:flex;align-items:flex-end;gap:8px;margin:auto 0;">
+          <span style="font-size:96px;font-weight:800;line-height:1;color:#fff;">{主数字}</span>
+          <span style="font-size:36px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:12px;">{单位}</span>
+        </div>
+        <p style="font-size:18px;color:rgba(255,255,255,0.85);margin:0;font-weight:500;">{主指标名称}</p>
+        <p style="font-size:14px;color:rgba(255,255,255,0.6);margin:8px 0 0;">{简短说明}</p>
+      </div>
+
+      <!-- 次级数据 1 -->
+      <div class="bento-cell cell-sm cell-metric">
+        <p class="eyebrow" style="margin:0 0 auto;">{次指标1}</p>
+        <span style="font-size:48px;font-weight:800;line-height:1;color:var(--accent-positive);">{数字2}</span>
+        <span style="font-size:13px;color:var(--text-secondary);margin-top:6px;">{说明}</span>
+      </div>
+
+      <!-- 次级数据 2 -->
+      <div class="bento-cell cell-sm cell-metric">
+        <p class="eyebrow" style="margin:0 0 auto;">{次指标2}</p>
+        <span style="font-size:48px;font-weight:800;line-height:1;color:var(--text-primary);">{数字3}</span>
+        <span style="font-size:13px;color:var(--text-secondary);margin-top:6px;">{说明}</span>
+      </div>
+
+      <!-- 次级数据 3 -->
+      <div class="bento-cell cell-sm cell-metric">
+        <p class="eyebrow" style="margin:0 0 auto;">{次指标3}</p>
+        <span style="font-size:48px;font-weight:800;line-height:1;color:var(--text-primary);">{数字4}</span>
+        <span style="font-size:13px;color:var(--text-secondary);margin-top:6px;">{说明}</span>
+      </div>
+
+      <!-- 可选：趋势图单元格 (跨满5列) -->
+      <div class="bento-cell cell-md cell-chart">
+        <p class="eyebrow" style="margin:0 0 12px;">趋势</p>
+        <svg viewBox="0 0 300 100" fill="none" style="width:100%;height:auto;">
+          <polyline points="0,80 60,60 120,45 180,30 240,20 300,10"
+            stroke="var(--accent-1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <polyline points="0,80 60,60 120,45 180,30 240,20 300,10 300,100 0,100"
+            fill="var(--accent-1)" opacity="0.08"/>
+        </svg>
+      </div>
+
+    </div>
   </div>
 </section>
 ```
