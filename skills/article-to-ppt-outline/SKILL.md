@@ -1,9 +1,9 @@
 ---
-name: article-to-ppt
+name: article-to-ppt-outline
 description: 将长篇文档、业务教材或文章，转换为带有"视觉排版建议"和"讲师口语化逐字稿"的结构化 PPT 大纲。适用于需要快速备课、制作汇报演示文稿的场景。当用户提供长文本并要求生成 PPT、演示大纲、幻灯片内容时触发此技能。
 ---
 
-# Article to PPT Generator
+# Article to PPT Outline Generator
 
 将输入文章转化为结构化 PPT 大纲，每页含【视觉排版建议】【文案内容】【讲师逐字稿】三个模块。
 
