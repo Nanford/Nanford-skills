@@ -1,0 +1,4 @@
+interface:
+  display_name: "PLC Station DB Mapper"
+  short_description: "基于DB截图动态推算多站台PLC点位并导出标准Excel"
+  default_prompt: "Use $plc-station-db-mapper to normalize DB screenshot tables and generate multi-station PLC tag mappings with dynamic stride inference."

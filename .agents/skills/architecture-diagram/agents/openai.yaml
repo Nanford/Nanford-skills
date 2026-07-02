@@ -1,0 +1,4 @@
+interface:
+  display_name: "架构图设计"
+  short_description: "设计无箭头、无连线且层级清晰美观的专业架构图"
+  default_prompt: "Use $architecture-diagram to 将内容设计成无箭头、无连线、层级清晰且美观的架构图。"

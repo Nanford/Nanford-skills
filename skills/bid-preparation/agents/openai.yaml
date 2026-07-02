@@ -1,0 +1,4 @@
+interface:
+  display_name: "投标响应文件制作"
+  short_description: "从招标文件和本地材料生成DOCX投标响应。"
+  default_prompt: "Use $bid-preparation to analyze my tender files and local evidence materials, then create a formatted DOCX bid response package."
