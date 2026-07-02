@@ -12,7 +12,8 @@ import json
 from pathlib import Path
 
 
-IGNORED_NAMES = {"Thumbs.db", ".DS_Store"}
+# 说明.md/DIRECTORY.md/README.md 是目录用途占位说明，不是投标证明材料，索引时排除。
+IGNORED_NAMES = {"Thumbs.db", ".DS_Store", "说明.md", "DIRECTORY.md", "README.md"}
 
 
 CATEGORY_RULES = [

@@ -1,8 +1,37 @@
 """Build a final DOCX bid response from Markdown response files.
 
-INPUT: ordered Markdown response files generated in bid-projects/<project>/output.
-OUTPUT: one formatted DOCX response file.
-POS: Final delivery builder for the bid-preparation skill.
+INPUT: ordered Markdown response files generated in bid-projects/<project>/output,
+       optional page-header text (project title shown on every page).
+OUTPUT: one formatted DOCX response file that follows the winning-sample layout:
+        A4 page, 宋体, 小四 body / 四号 H1, 1.5 line spacing, page header + page-number
+        footer, cover page, Word TOC field, and per-section page breaks;
+        plus <output>.build-report.json (source list + warnings such as missing
+        images, consumed by validate_bid_package.py 的人工核查清单).
+POS: Final delivery builder for the bid-preparation skill (stage 6).
+
+Markdown layout markers (HTML comments, invisible in Markdown preview):
+  <!-- cover -->              file top: render this file as the centered cover page
+  <!-- toc -->                insert 目录 title + Word TOC field (update in Word to fill)
+  <!-- notoc -->              next heading renders as a centered bold title outside TOC
+                              (used for the three navigation tables)
+  <!-- break-all-headings --> file top: every heading in this file starts a new page
+                              (commercial documents: 每一章节/小节独立起页)
+  <!-- pagebreak -->          force a page break before the next block
+
+Page-break rules (mirrors the 湖北中烟 winning sample):
+  * each new source file starts on a new page
+  * Heading 1/2 always start a new page; Heading 3/4 too when break-all-headings is on
+  * exception: a heading that directly follows its parent heading stays on the same
+    page (e.g. "一、商务文件" + "（一）投标函" share a page, as in the sample)
+
+Heading numbering is expected to be embedded in the heading text itself
+(一、 / （一） / 1. / 1.1), exactly as the winning sample does; no Word auto
+numbering is stacked on top, so the TOC field renders clean entries.
+
+Images: a standalone Markdown image line `![说明](路径)` inserts the picture
+centered and auto-scaled to fit the printable area (relative paths resolve
+against the Markdown file's directory). Missing files degrade to a visible
+placeholder paragraph instead of crashing, and are listed in the JSON result.
 """
 
 from __future__ import annotations
@@ -13,15 +42,18 @@ import re
 from pathlib import Path
 
 from docx import Document
-from docx.enum.text import WD_LINE_SPACING
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK, WD_LINE_SPACING
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Pt, RGBColor
+from docx.shared import Cm, Pt, RGBColor
 
 
 FONT_NAME = "宋体"
-BODY_SIZE_PT = 12
-HEADING1_SIZE_PT = 14
+BODY_SIZE_PT = 12          # 小四
+HEADING1_SIZE_PT = 14      # 四号
+COVER_INFO_SIZE_PT = 16    # 三号（封面信息行）
+COVER_TITLE_SIZE_PT = 36   # 小初（封面"投标文件"）
+HEADER_FOOTER_SIZE_PT = 9  # 小五（页眉/页脚）
 BLACK = RGBColor(0, 0, 0)
 HEADING_STYLE_BY_LEVEL = {
     1: "Heading 1",
@@ -30,8 +62,14 @@ HEADING_STYLE_BY_LEVEL = {
     4: "Heading 4",
 }
 HEADING_PATTERN = re.compile(r"^(#{1,4})\s+(.+)$")
-
-
+MARKER_PATTERN = re.compile(r"^<!--\s*([a-z-]+)\s*-->$")
+# 贪婪匹配到行尾右括号，兼容含括号的文件名（如 ISO9001_00(1).jpg）
+IMAGE_PATTERN = re.compile(r"^!\[([^\]]*)\]\((.+)\)$")
+# 整行加粗（**……**）：用于比四级标题更深的小节题（如 1.4.2.1），不进目录
+BOLD_LINE_PATTERN = re.compile(r"^\*\*(.+)\*\*$")
+# A4 减去左右 3.18cm / 上下 2.54cm 页边距后的可打印区域
+PRINTABLE_WIDTH_CM = 21.0 - 3.18 * 2
+PRINTABLE_HEIGHT_CM = 29.7 - 2.54 * 2 - 1.5  # 预留页眉页脚空间
 def set_run_font(run, size_pt: int, bold: bool = False) -> None:
     run.font.name = FONT_NAME
     run._element.rPr.rFonts.set(qn("w:eastAsia"), FONT_NAME)
@@ -63,70 +101,62 @@ def configure_document_styles(document: Document) -> None:
         configure_style(document.styles[style_name], BODY_SIZE_PT, bold=True, before_pt=8, after_pt=8)
 
 
-def next_numbering_id(parent, child_name: str, attr_name: str) -> int:
-    values = []
-    for child in parent.findall(qn(child_name)):
-        value = child.get(qn(attr_name))
-        if value is not None and value.isdigit():
-            values.append(int(value))
-    return (max(values) + 1) if values else 1
+def configure_page_layout(document: Document) -> None:
+    # A4 纵向，Word 默认页边距；python-docx 默认模板是 Letter，必须显式改
+    for section in document.sections:
+        section.page_width = Cm(21.0)
+        section.page_height = Cm(29.7)
+        section.top_margin = Cm(2.54)
+        section.bottom_margin = Cm(2.54)
+        section.left_margin = Cm(3.18)
+        section.right_margin = Cm(3.18)
 
 
-def add_heading_numbering(document: Document) -> int:
-    numbering = document.part.numbering_part.element
-    abstract_id = next_numbering_id(numbering, "w:abstractNum", "w:abstractNumId")
-    num_id = next_numbering_id(numbering, "w:num", "w:numId")
-
-    abstract = OxmlElement("w:abstractNum")
-    abstract.set(qn("w:abstractNumId"), str(abstract_id))
-    multi_level = OxmlElement("w:multiLevelType")
-    multi_level.set(qn("w:val"), "multilevel")
-    abstract.append(multi_level)
-
-    level_texts = ["%1.", "%1.%2", "%1.%2.%3", "%1.%2.%3.%4"]
-    for level, level_text in enumerate(level_texts):
-        lvl = OxmlElement("w:lvl")
-        lvl.set(qn("w:ilvl"), str(level))
-        start = OxmlElement("w:start")
-        start.set(qn("w:val"), "1")
-        num_fmt = OxmlElement("w:numFmt")
-        num_fmt.set(qn("w:val"), "decimal")
-        lvl_text_node = OxmlElement("w:lvlText")
-        lvl_text_node.set(qn("w:val"), level_text)
-        lvl_jc = OxmlElement("w:lvlJc")
-        lvl_jc.set(qn("w:val"), "left")
-        p_pr = OxmlElement("w:pPr")
-        ind = OxmlElement("w:ind")
-        ind.set(qn("w:left"), str(360 * (level + 1)))
-        ind.set(qn("w:hanging"), "240")
-        p_pr.append(ind)
-        for node in (start, num_fmt, lvl_text_node, lvl_jc, p_pr):
-            lvl.append(node)
-        abstract.append(lvl)
-
-    numbering.append(abstract)
-
-    num = OxmlElement("w:num")
-    num.set(qn("w:numId"), str(num_id))
-    abstract_num_id = OxmlElement("w:abstractNumId")
-    abstract_num_id.set(qn("w:val"), str(abstract_id))
-    num.append(abstract_num_id)
-    numbering.append(num)
-    return num_id
-
-
-def apply_numbering(paragraph, num_id: int, level: int) -> None:
+def set_page_break_before(paragraph) -> None:
     p_pr = paragraph._p.get_or_add_pPr()
-    num_pr = p_pr.find(qn("w:numPr"))
-    if num_pr is None:
-        num_pr = OxmlElement("w:numPr")
-        p_pr.append(num_pr)
-    ilvl = OxmlElement("w:ilvl")
-    ilvl.set(qn("w:val"), str(level - 1))
-    num_id_node = OxmlElement("w:numId")
-    num_id_node.set(qn("w:val"), str(num_id))
-    num_pr.append(ilvl)
-    num_pr.append(num_id_node)
+    if p_pr.find(qn("w:pageBreakBefore")) is None:
+        p_pr.append(OxmlElement("w:pageBreakBefore"))
+
+
+def add_field_runs(paragraph, instruction: str, placeholder: str, size_pt: int) -> None:
+    """Insert a Word field (e.g. PAGE / TOC) marked dirty so Word refreshes it on open."""
+    begin = OxmlElement("w:fldChar")
+    begin.set(qn("w:fldCharType"), "begin")
+    begin.set(qn("w:dirty"), "true")
+    instr = OxmlElement("w:instrText")
+    instr.set(qn("xml:space"), "preserve")
+    instr.text = f" {instruction} "
+    separate = OxmlElement("w:fldChar")
+    separate.set(qn("w:fldCharType"), "separate")
+    end = OxmlElement("w:fldChar")
+    end.set(qn("w:fldCharType"), "end")
+
+    for element in (begin, instr, separate):
+        run = paragraph.add_run()
+        set_run_font(run, size_pt)
+        run._element.append(element)
+    if placeholder:
+        placeholder_run = paragraph.add_run(placeholder)
+        set_run_font(placeholder_run, size_pt)
+    end_run = paragraph.add_run()
+    set_run_font(end_run, size_pt)
+    end_run._element.append(end)
+
+
+def configure_header_footer(document: Document, header_text: str) -> None:
+    section = document.sections[0]
+    if header_text:
+        header_paragraph = section.header.paragraphs[0]
+        header_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        header_paragraph.paragraph_format.space_before = Pt(0)
+        header_paragraph.paragraph_format.space_after = Pt(0)
+        run = header_paragraph.add_run(header_text)
+        set_run_font(run, HEADER_FOOTER_SIZE_PT)
+    footer_paragraph = section.footer.paragraphs[0]
+    footer_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    footer_paragraph.paragraph_format.space_before = Pt(0)
+    footer_paragraph.paragraph_format.space_after = Pt(0)
+    add_field_runs(footer_paragraph, "PAGE", "1", HEADER_FOOTER_SIZE_PT)
 
 
 def markdown_table_rows(lines: list[str], start: int) -> tuple[list[list[str]], int] | None:
@@ -162,70 +192,319 @@ def add_table(document: Document, rows: list[list[str]]) -> None:
             set_run_font(run, BODY_SIZE_PT, bold=(row_index == 0))
 
 
-def add_body_paragraph(document: Document, text: str) -> None:
+def add_body_paragraph(
+    document: Document, text: str, page_break_before: bool = False, bold: bool = False
+):
     paragraph = document.add_paragraph(style="Normal")
     configure_paragraph_format(paragraph.paragraph_format)
+    if page_break_before:
+        set_page_break_before(paragraph)
     run = paragraph.add_run(text.strip())
-    set_run_font(run, BODY_SIZE_PT)
+    set_run_font(run, BODY_SIZE_PT, bold=bold)
+    return paragraph
 
 
-def add_heading(document: Document, text: str, level: int, num_id: int) -> None:
+def add_heading(document: Document, text: str, level: int, page_break_before: bool):
     paragraph = document.add_paragraph(style=HEADING_STYLE_BY_LEVEL[level])
-    apply_numbering(paragraph, num_id, level)
+    if page_break_before:
+        set_page_break_before(paragraph)
     run = paragraph.add_run(text.strip())
     size = HEADING1_SIZE_PT if level == 1 else BODY_SIZE_PT
     set_run_font(run, size, bold=True)
+    return paragraph
 
 
-def add_markdown_file(document: Document, markdown_path: Path, num_id: int) -> None:
-    lines = markdown_path.read_text(encoding="utf-8").splitlines()
-    index = 0
-    while index < len(lines):
-        line = lines[index].rstrip()
-        if not line:
-            index += 1
+def add_plain_title(document: Document, text: str, page_break_before: bool) -> None:
+    """导航表标题：四号加粗居中，但不用 Heading 样式，避免进入目录域。"""
+    paragraph = document.add_paragraph(style="Normal")
+    configure_paragraph_format(paragraph.paragraph_format, before_pt=8, after_pt=8)
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    if page_break_before:
+        set_page_break_before(paragraph)
+    run = paragraph.add_run(text.strip())
+    set_run_font(run, HEADING1_SIZE_PT, bold=True)
+
+
+def add_image(
+    document: Document,
+    image_path: Path,
+    caption: str,
+    page_break_before: bool,
+    warnings: list[str],
+) -> None:
+    """居中插入图片并按可打印区域等比缩放；文件缺失时降级为占位段落。"""
+    paragraph = document.add_paragraph(style="Normal")
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    configure_paragraph_format(paragraph.paragraph_format, before_pt=6, after_pt=6)
+    if page_break_before:
+        set_page_break_before(paragraph)
+    if not image_path.exists():
+        warnings.append(f"图片未找到: {image_path}")
+        run = paragraph.add_run(f"【图片待补充：{caption or image_path.name}】")
+        set_run_font(run, BODY_SIZE_PT)
+        return
+    try:
+        run = paragraph.add_run()
+        picture = run.add_picture(str(image_path), width=Cm(PRINTABLE_WIDTH_CM))
+        max_height = Cm(PRINTABLE_HEIGHT_CM)
+        if picture.height > max_height:
+            scale = max_height / picture.height
+            picture.width = int(picture.width * scale)
+            picture.height = max_height
+    except Exception as exc:  # 图片损坏/格式不支持时不中断整份文档生成
+        warnings.append(f"图片插入失败: {image_path} ({exc})")
+        run = paragraph.add_run(f"【图片插入失败，请在 Word 中手动插入：{image_path.name}】")
+        set_run_font(run, BODY_SIZE_PT)
+
+
+def add_page_break_paragraph(document: Document) -> None:
+    paragraph = document.add_paragraph(style="Normal")
+    configure_paragraph_format(paragraph.paragraph_format)
+    run = paragraph.add_run()
+    set_run_font(run, BODY_SIZE_PT)
+    run.add_break(WD_BREAK.PAGE)
+
+
+def add_cover_page(document: Document, lines: list[str]) -> None:
+    """封面：信息行三号居中；"投标文件"小初加粗居中，上下留白，与中标样本一致。"""
+    for line in lines:
+        text = line.strip()
+        if not text:
             continue
-        table_result = markdown_table_rows(lines, index)
-        if table_result:
-            rows, index = table_result
-            add_table(document, rows)
-            continue
-        heading_match = HEADING_PATTERN.match(line)
-        if heading_match:
-            level = len(heading_match.group(1))
-            add_heading(document, heading_match.group(2), level, num_id)
-        elif line.startswith("- "):
-            add_body_paragraph(document, line[2:])
+        paragraph = document.add_paragraph(style="Normal")
+        paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        compact = text.replace("　", "").replace(" ", "")
+        if compact == "投标文件":
+            configure_paragraph_format(paragraph.paragraph_format, before_pt=90, after_pt=90)
+            run = paragraph.add_run(text)
+            set_run_font(run, COVER_TITLE_SIZE_PT, bold=True)
         else:
-            add_body_paragraph(document, line)
-        index += 1
+            configure_paragraph_format(paragraph.paragraph_format, before_pt=6, after_pt=6)
+            run = paragraph.add_run(text)
+            set_run_font(run, COVER_INFO_SIZE_PT, bold=False)
 
 
-def build_response_docx(markdown_files: list[Path], output_path: Path) -> dict:
+def add_toc_block(document: Document, page_break_before: bool) -> None:
+    add_plain_title(document, "目　录", page_break_before)
+    paragraph = document.add_paragraph(style="Normal")
+    configure_paragraph_format(paragraph.paragraph_format)
+    add_field_runs(
+        paragraph,
+        'TOC \\o "1-3" \\h \\z \\u',
+        "【目录域：在 Word 中全选后按 F9（或右键→更新域）生成带页码目录】",
+        BODY_SIZE_PT,
+    )
+
+
+class MarkdownRenderer:
+    """把一组 Markdown 文件渲染进同一个 Document，维护跨文件的分页状态。"""
+
+    def __init__(self, document: Document):
+        self.document = document
+        self.pending_break = False
+        self.last_heading_level: int | None = None  # 上一个渲染块若是标题则记录级别
+        self.rendered_any_block = False
+        self.warnings: list[str] = []
+
+    def _consume_break(self) -> bool:
+        pending = self.pending_break
+        self.pending_break = False
+        return pending
+
+    def _heading_needs_break(self, level: int, break_all: bool) -> bool:
+        # 紧跟父级标题的子标题与父级同页（样本："一、商务文件"+"（一）投标函"同页）
+        follows_parent = (
+            self.last_heading_level is not None and self.last_heading_level < level
+        )
+        default_break = level <= 2 or break_all
+        return default_break and not follows_parent
+
+    def render_file(self, markdown_path: Path, is_first_file: bool) -> None:
+        lines = markdown_path.read_text(encoding="utf-8").splitlines()
+        markers = {
+            MARKER_PATTERN.match(line.strip()).group(1)
+            for line in lines[:5]
+            if MARKER_PATTERN.match(line.strip())
+        }
+        if "cover" in markers:
+            add_cover_page(self.document, [
+                line for line in lines if not MARKER_PATTERN.match(line.strip())
+            ])
+            self.rendered_any_block = True
+            self.last_heading_level = None
+            self.pending_break = True
+            return
+
+        break_all = "break-all-headings" in markers
+        if not is_first_file:
+            self.pending_break = True
+        notoc_next_heading = False
+
+        index = 0
+        while index < len(lines):
+            line = lines[index].rstrip()
+            stripped = line.strip()
+            if not stripped:
+                index += 1
+                continue
+
+            marker_match = MARKER_PATTERN.match(stripped)
+            if marker_match:
+                marker = marker_match.group(1)
+                if marker == "pagebreak":
+                    self.pending_break = True
+                elif marker == "notoc":
+                    notoc_next_heading = True
+                elif marker == "toc":
+                    add_toc_block(self.document, self._consume_break())
+                    self.rendered_any_block = True
+                    self.last_heading_level = None
+                # cover/break-all-headings 已在文件级处理
+                index += 1
+                continue
+
+            table_result = markdown_table_rows(lines, index)
+            if table_result:
+                rows, index = table_result
+                if self._consume_break():
+                    add_page_break_paragraph(self.document)
+                add_table(self.document, rows)
+                self.rendered_any_block = True
+                self.last_heading_level = None
+                continue
+
+            image_match = IMAGE_PATTERN.match(stripped)
+            if image_match:
+                caption, raw_path = image_match.group(1), image_match.group(2).strip()
+                image_path = Path(raw_path)
+                if not image_path.is_absolute():
+                    image_path = (markdown_path.parent / image_path).resolve()
+                add_image(
+                    self.document,
+                    image_path,
+                    caption,
+                    page_break_before=self._consume_break(),
+                    warnings=self.warnings,
+                )
+                self.rendered_any_block = True
+                self.last_heading_level = None
+                index += 1
+                continue
+
+            heading_match = HEADING_PATTERN.match(line)
+            if heading_match:
+                level = len(heading_match.group(1))
+                text = heading_match.group(2)
+                needs_break = self._consume_break() or (
+                    self.rendered_any_block and self._heading_needs_break(level, break_all)
+                )
+                if notoc_next_heading:
+                    add_plain_title(self.document, text, needs_break)
+                    notoc_next_heading = False
+                    self.last_heading_level = None
+                else:
+                    add_heading(self.document, text, level, needs_break)
+                    self.last_heading_level = level
+                self.rendered_any_block = True
+            else:
+                text = line[2:] if line.startswith("- ") else line
+                bold_match = BOLD_LINE_PATTERN.match(stripped)
+                if bold_match:
+                    add_body_paragraph(
+                        self.document,
+                        bold_match.group(1),
+                        page_break_before=self._consume_break(),
+                        bold=True,
+                    )
+                else:
+                    add_body_paragraph(
+                        self.document, text, page_break_before=self._consume_break()
+                    )
+                self.rendered_any_block = True
+                self.last_heading_level = None
+            index += 1
+
+
+def build_response_docx(markdown_files: list[Path], output_path: Path, header_text: str = "") -> dict:
     document = Document()
     configure_document_styles(document)
-    num_id = add_heading_numbering(document)
-    for markdown_file in markdown_files:
+    configure_page_layout(document)
+    configure_header_footer(document, header_text)
+    renderer = MarkdownRenderer(document)
+    for position, markdown_file in enumerate(markdown_files):
         resolved = markdown_file.expanduser().resolve()
         if not resolved.exists():
             raise FileNotFoundError(f"响应文件不存在: {resolved}")
-        add_markdown_file(document, resolved, num_id)
+        renderer.render_file(resolved, is_first_file=(position == 0))
     output_path = output_path.expanduser().resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
     document.save(output_path)
-    return {"output": str(output_path), "source_files": [str(path) for path in markdown_files]}
+    result = {
+        "output": str(output_path),
+        "header": header_text,
+        "source_files": [str(path) for path in markdown_files],
+        "warnings": renderer.warnings,
+    }
+    # 构建结果落盘：图片待补等警告供 validate_bid_package.py 汇总进"人工核查清单"
+    report_path = output_path.with_suffix(".build-report.json")
+    try:
+        report_path.write_text(
+            json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+    except OSError as exc:
+        renderer.warnings.append(f"构建报告写入失败: {report_path} ({exc})")
+    return result
+
+
+def load_manifest(manifest_path: Path) -> tuple[list[Path], str]:
+    """读取 JSON 组装清单：{"header": "...", "files": ["相对/绝对路径", ...]}。
+
+    files 中的相对路径相对于清单文件所在目录解析，保证清单可随项目目录整体移动。
+    """
+    manifest_path = manifest_path.expanduser().resolve()
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"组装清单读取失败: {manifest_path} ({exc})")
+    files = manifest.get("files")
+    if not isinstance(files, list) or not files:
+        raise SystemExit(f"组装清单缺少非空 files 列表: {manifest_path}")
+    base_dir = manifest_path.parent
+    resolved_files = []
+    for entry in files:
+        entry_path = Path(entry)
+        resolved_files.append(entry_path if entry_path.is_absolute() else base_dir / entry_path)
+    return resolved_files, str(manifest.get("header", ""))
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build a formatted DOCX bid response.")
     parser.add_argument("--output", type=Path, required=True, help="Final DOCX path.")
-    parser.add_argument("markdown_files", type=Path, nargs="+", help="Ordered Markdown source files.")
-    return parser.parse_args()
+    parser.add_argument(
+        "--header",
+        default="",
+        help="Page-header text shown on every page (usually 项目名称+投标文件).",
+    )
+    parser.add_argument(
+        "--manifest",
+        type=Path,
+        help="JSON 组装清单（含 header 与按序 files），与直接列出 Markdown 文件二选一.",
+    )
+    parser.add_argument("markdown_files", type=Path, nargs="*", help="Ordered Markdown source files.")
+    args = parser.parse_args()
+    if bool(args.manifest) == bool(args.markdown_files):
+        parser.error("--manifest 与 Markdown 文件列表必须二选一")
+    return args
 
 
 def main() -> int:
     args = parse_args()
-    result = build_response_docx(args.markdown_files, args.output)
+    if args.manifest:
+        markdown_files, manifest_header = load_manifest(args.manifest)
+        header_text = args.header or manifest_header
+    else:
+        markdown_files, header_text = args.markdown_files, args.header
+    result = build_response_docx(markdown_files, args.output, header_text)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
