@@ -12,9 +12,10 @@
 
 | 维度 | 重点解决场景 | 价值目标 |
 | :--- | :--- | :--- |
-| **内容创作** | 爆款拆解、风格复刻、信息差提炼 | 提升内容的传播力与认知冲击 |
-| **办公效率** | 文档/会议材料整理、知识库沉淀 | 极致提升日常琐事的产出效率 |
-| **业务实战** | 售前方案、需求拆解、行业分析 | 强化复杂业务场景下的逻辑输出 |
+| **内容创作** | 爆款拆解、风格复刻、信息差提炼、视觉配图 | 提升内容的传播力与认知冲击 |
+| **办公效率** | 文档/会议材料整理、PPT 规划与渲染、知识库沉淀 | 极致提升日常琐事的产出效率 |
+| **业务实战** | 售前方案、投标应标、需求拆解、行业分析 | 强化复杂业务场景下的逻辑输出 |
+| **工业自动化** | PLC 点位映射、站台化补表续表 | 将工程数据整理为可交付表格资产 |
 
 ## 🏛️ 官方规范与模板 (Anthropic Official)
 
@@ -107,17 +108,53 @@
     | 信息图/图表 | `baoyu-infographic` | baoyu 社区 Skill |
     | 封面大图 | `baoyu-cover-image` | baoyu 社区 Skill |
 
-### 📊 7. article-to-ppt
-> **定位**：长文本转结构化 PPT 大纲生成器
+### 📊 7. article-to-ppt-outline
+> **定位**：长文本转结构化 PPT 大纲生成器（规划层）
 
-*   **核心价值**：将长篇文档、业务教材转换为带有“视觉排版建议”和“讲师口语化逐字稿”的结构化大纲。
+*   **核心价值**：将长篇文档、业务教材转换为带有“视觉排版建议”和“讲师口语化逐字稿”的结构化大纲，为下游渲染提供逐页规划。
 *   **适用场景**：快速备课、制作汇报演示文稿的大纲梳理阶段。
+*   **推荐工具链**：大纲完成后交由 `text-to-ppt-pro` 渲染为可编辑 `.pptx` 文件。
 
 ### 👑 8. text-to-ppt-pro
-> **定位**：专业 PPT 结构与规范生成助手
+> **定位**：专业 PPT 生成执行层
 
-*   **核心价值**：兼具总编、架构师、设计师、质检员四重身份，输出逻辑清晰、风格统一、层级明确的可交付 PPT 结构。
+*   **核心价值**：接收结构化大纲，忠实渲染为可编辑 `.pptx` 文件；支持 13 种标准页型、4 套主题预设、备注区写入与自动质检。
 *   **适用场景**：培训课件、项目汇报、立项汇报、方案宣讲等高规格演示需求。
+*   **主题预设**：`dark_tech` / `business_blue` / `mckinsey_clean` / `warm_exec`，按受众与场景自动推荐。
+*   **参考资产**：`layout-specs.md` 版式规范、`design-system.md` 设计系统、示例 PPT 参考稿。
+
+### 📋 9. bid-preparation
+> **定位**：标书响应文件制作全流程 Skill
+
+*   **核心价值**：解析招标文件、匹配公司资料、按流程生成商务 + 技术响应文件，并组装为成品 DOCX。
+*   **适用场景**：投标、应标、解标、偏离表编制、资格/符合性/评标导航表整理。
+*   **核心能力**：
+    *   招标文件结构化拆解与评分矩阵提取
+    *   公司资料索引与匹配状态跟踪
+    *   商务/技术响应大纲、偏离表、投标函等模板化产出
+    *   辅助脚本：`extract_text`、`index_materials`、`build_response_docx`、`validate_bid_package` 等
+
+### 🎨 10. minimal-narrative-sketch-scenes
+> **定位**：极简手绘叙事小场景图像提示词生成器
+
+*   **核心价值**：围绕任意主题生成高质量 16:9 横版插图提示词——多组松散动作小场景、强留白、轻快叙事感，介于儿童涂鸦与设计草图之间。
+*   **适用场景**：文章配图、培训课件插图、社交媒体视觉、品牌故事草图风格表达。
+*   **核心特性**：多变叙事结构模板、动作瞬间编排、统一手绘气质约束，避免精细插画或整齐图标化。
+
+### ⚙️ 11. plc-station-db-mapper
+> **定位**：西门子 PLC 站台化项目点位映射 Skill
+
+*   **核心价值**：将 DB 截图、PDF 导出、Excel 导出或手动输入等多种原始格式，标准化为统一 Excel，并批量生成目标站台点位表。
+*   **适用场景**：Task / Alarm / State 等类别点位的扩展、补表、续表。
+*   **4 种输入路径**：DB 截图 → 标准化 Excel；PDF 导出；XLSX 导出；手动输入偏移与结构。
+*   **原则**：以本次项目数据为准，不默认复用历史固定偏移模板。
+
+### 🗺️ 12. architecture-diagram
+> **定位**：无连线架构图视觉设计 Skill（`.agents/`）
+
+*   **核心价值**：通过层级、分组、对齐与留白传达系统结构，默认不绘制箭头与连接线，输出克制、专业的架构视觉。
+*   **适用场景**：系统总览、平台地图、方案蓝图、技术全景、分层能力视图（HTML / SVG / 幻灯片 / 图片）。
+*   **设计原则**：以 containment 与 spatial organization 替代 connector web；仅在用户明确要求时添加最少必要连线。
 
 ---
 
@@ -127,29 +164,43 @@
 Nanford-skills/
 ├── README.md
 ├── .gitignore                    # 项目忽略配置
+├── .agents/                      # Agent 专用 Skill
+│   └── skills/
+│       └── architecture-diagram/ # 无连线架构图视觉设计
 └── skills/                       # 核心 Skill 目录
-    ├── article-to-ppt/
-    │   └── SKILL.md              # 核心指令 (长文本 -> PPT大纲)
+    ├── article-to-ppt-outline/
+    │   └── SKILL.md              # 规划层 (长文本 -> PPT大纲)
     ├── text-to-ppt-pro/
-    │   ├── SKILL.md              # 核心指令 (专业PPT结构生成)
+    │   ├── SKILL.md              # 执行层 (大纲 -> .pptx 渲染)
     │   ├── assets/               # 主题预设
-    │   └── references/           # 页面库、设计系统、检查表等
+    │   └── references/           # 版式规范、设计系统、检查表、参考 PPT
+    ├── bid-preparation/
+    │   ├── SKILL.md              # 标书响应文件制作
+    │   ├── scripts/              # 文本提取、资料索引、DOCX 组装与校验
+    │   ├── templates/            # 投标函、偏离表、导航表等模板
+    │   └── references/           # 解标参考卡片
+    ├── minimal_narrative_sketch_scenes_skill/
+    │   └── SKILL.md              # 极简手绘叙事小场景提示词
+    ├── plc-station-db-mapper/
+    │   ├── SKILL.md              # PLC 站台点位映射
+    │   ├── scripts/              # 表格生成与 Excel 标准化
+    │   └── reference/            # DB 截图、变量表等参考样例
     ├── hootoolai-ppt/
-    │   ├── SKILL.md              # 核心指令 (多主题 + 素材生成)
+    │   ├── SKILL.md              # 多主题 HTML 演示 + 素材生成
     │   ├── assets/               # HTML 模板 (CSS 主题系统 + JS 演示引擎)
     │   ├── examples/             # 完整演示示例
     │   └── references/           # 设计系统规范与幻灯片模板
     ├── prototype-orchestrator-pro/
-    │   ├── SKILL.md              # 核心逻辑指令
+    │   ├── SKILL.md              # 需求 -> 可交互 HTML 原型
     │   ├── agents/               # 智能代理配置
     │   ├── assets/               # 渲染模板与静态资产
     │   ├── examples/             # 最佳实践示例
     │   └── references/           # 设计规范与方法论参考
     ├── ai-news-scout/
-    │   ├── SKILL.md              # 核心指令 (3批并行搜索 + 去重 + 分类)
+    │   ├── SKILL.md              # 3 批并行搜索 + 去重 + 分类
     │   └── references/           # 输出模板
     ├── svg-architecture-diagram/
-    │   ├── SKILL.md              # 核心指令 (JSON 模型 → SVG 生成)
+    │   ├── SKILL.md              # JSON 模型 → SVG 架构图
     │   └── references/           # 配色主题定义 & 效果示例
     ├── viral-article-analyzer/
     └── wechat-article-operator/
@@ -177,6 +228,7 @@ Nanford-skills/
 
 ## 📜 版本更新记录
 
+- **v0.9**：新增 `bid-preparation` 标书响应文件制作 Skill（脚本 + 模板 + 参考卡片）；新增 `minimal-narrative-sketch-scenes` 极简手绘叙事小场景提示词 Skill；新增 `plc-station-db-mapper` 西门子 PLC 站台点位映射 Skill；新增 `.agents/skills/architecture-diagram` 无连线架构图视觉设计 Skill；升级 `text-to-ppt-pro` 为 PPT 执行层（13 种页型、4 套主题、`layout-specs` 版式规范、参考 PPT）；`article-to-ppt` 重命名为 `article-to-ppt-outline` 明确规划层定位。
 - **v0.8**：新增 `article-to-ppt` 与 `text-to-ppt-pro`，完善 PPT 制作全链路工具；升级 `hootoolai-ppt` 至 V3，引入 PPT-Agent 认知设计逻辑。
 - **v0.7**：新增 `ai-news-scout` AI 信息差日报 Skill——3 批 Agent 并行搜索、自动去重合并、6 类分类标签、精简 5 维分析 + 3 维评分、输出结构化日报文件。
 - **v0.6**：新增 `svg-architecture-diagram` SVG 架构图生成 Skill——8 种行业配色主题、双画布模式、几何拼接箭头、JSON 模型驱动的专业矢量架构图输出。
