@@ -5,7 +5,10 @@ OUTPUT: validation result with blocker/warning issues and optional JSON/MD repor
 POS: DOCX format gate for the bid-preparation skill (stage 6/7).
 
 Checks (aligned with the 湖北中烟 winning-sample layout):
-  * styles: 宋体 / 小四 body / 四号 H1 / bold headings / black / 1.5 line / 8pt spacing
+  * styles: 宋体 / 小四 body / 四号 H1 / bold headings / black / 1.5 line /
+    heading spacing 段前13磅+段后6磅
+  * body indent: at least one body paragraph carries 首行缩进2字符
+    (w:firstLineChars=200; the builder indents every plain body paragraph)
   * page: A4 size declared in sectPr
   * pagination: Heading 1/2 start a new page unless directly following a parent
     heading, and the document contains page breaks at all
@@ -32,7 +35,9 @@ EXPECTED_FONT = "宋体"
 BODY_SIZE = "24"       # 小四 = 12pt = 24 half-points
 HEADING1_SIZE = "28"   # 四号 = 14pt
 LINE_SPACING = "360"   # 1.5 倍
-HEADING_SPACING = "160"  # 8 磅
+HEADING_SPACING_BEFORE = "260"  # 段前 13 磅
+HEADING_SPACING_AFTER = "120"   # 段后 6 磅
+FIRST_LINE_INDENT_CHARS = "200"  # 正文首行缩进 2 字符
 A4_WIDTH_TWIPS = 11906
 A4_HEIGHT_TWIPS = 16838
 HEADING_STYLE_LEVELS = {"Heading1": 1, "Heading2": 2, "Heading3": 3, "Heading4": 4}
@@ -100,8 +105,11 @@ def check_common_style(
     if heading:
         if style.find(".//w:b", NS) is None and bold:
             issue(issues, "blocker", f"{style_name} 未加粗", style_name)
-        if attr(spacing, "before") != HEADING_SPACING or attr(spacing, "after") != HEADING_SPACING:
-            issue(issues, "blocker", f"{style_name} 段前段后不是 8 磅", style_name)
+        if (
+            attr(spacing, "before") != HEADING_SPACING_BEFORE
+            or attr(spacing, "after") != HEADING_SPACING_AFTER
+        ):
+            issue(issues, "blocker", f"{style_name} 段前/段后不是 13磅/6磅", style_name)
 
 
 def check_page_size(document_root: ElementTree.Element, issues: list[dict]) -> None:
@@ -148,6 +156,30 @@ def check_pagination_and_numbering(document_root: ElementTree.Element, issues: l
         seen_any_heading = True
     if page_break_count == 0:
         issue(issues, "blocker", "全文没有任何分页符，章节未独立起页", "document.xml")
+
+
+def check_body_indent(document_root: ElementTree.Element, issues: list[dict]) -> None:
+    """正文段落应首行缩进2字符（构建器对每个普通正文段落设置 w:firstLineChars=200）。
+    表格、标题、居中段不缩进，因此只要求文档中存在带该属性的正文段。"""
+    body = document_root.find("w:body", NS)
+    if body is None:
+        return
+    has_body_text = False
+    for paragraph in body.findall("w:p", NS):
+        p_pr = paragraph.find("w:pPr", NS)
+        style_value = attr(None if p_pr is None else p_pr.find("w:pStyle", NS), "val")
+        if style_value in HEADING_STYLE_LEVELS:
+            continue
+        if p_pr is not None and p_pr.find("w:jc", NS) is not None:
+            continue  # 居中/对齐段（封面、导航表标题、插图）不要求缩进
+        if not paragraph_text(paragraph).strip():
+            continue
+        has_body_text = True
+        ind = None if p_pr is None else p_pr.find("w:ind", NS)
+        if attr(ind, "firstLineChars") == FIRST_LINE_INDENT_CHARS:
+            return
+    if has_body_text:
+        issue(issues, "blocker", "正文段落未设置首行缩进2字符", "document.xml")
 
 
 def check_toc_field(document_root: ElementTree.Element, issues: list[dict]) -> None:
@@ -213,6 +245,7 @@ def validate_docx_format(docx_path: Path, write_files: bool = True) -> dict:
         else:
             check_page_size(document_root, issues)
             check_pagination_and_numbering(document_root, issues)
+            check_body_indent(document_root, issues)
             check_toc_field(document_root, issues)
         check_header_footer(package, issues)
     result = {"file": str(docx_path), "ok": not any(item["level"] == "blocker" for item in issues), "issues": issues}

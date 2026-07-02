@@ -1,7 +1,9 @@
 """Create a bid project workspace from tender files and evidence directories.
 
-INPUT: project root, project name, tender file paths, evidence material paths.
-OUTPUT: bid-projects/<project>/ directory and analysis/project-intake.md.
+INPUT: project root, project name, tender file paths, evidence material paths,
+       generation scope (full = 商务+技术完整包, technical-only = 仅技术部分).
+OUTPUT: bid-projects/<project>/ directory and analysis/project-intake.md
+        (记录生成范围，后续阶段按此裁剪).
 POS: Stage 0 intake helper for the bid-preparation skill.
 """
 
@@ -24,6 +26,12 @@ REQUIRED_DIRS = [
     "output/资格证明文件",
     "review",
 ]
+
+# 生成范围：使用前必须征询用户；未明确选择时默认推荐 full 并请用户确认
+SCOPE_LABELS = {
+    "full": "完整投标文件（商务部分+技术部分+导航表+组装成品）",
+    "technical-only": "仅技术部分（技术响应偏离表+技术方案+服务承诺）",
+}
 
 
 def safe_project_slug(project_name: str) -> str:
@@ -52,9 +60,17 @@ def unique_project_dir(root: Path, project_name: str) -> Path:
     raise FileExistsError(f"项目目录已存在且无法生成唯一名称: {base_dir}")
 
 
-def write_intake(project_dir: Path, tender_paths: list[Path], material_paths: list[Path]) -> Path:
+def write_intake(
+    project_dir: Path,
+    tender_paths: list[Path],
+    material_paths: list[Path],
+    scope: str,
+) -> Path:
     lines = [
         "# 项目输入登记",
+        "",
+        "## 生成范围（使用前已征询用户）",
+        f"- {SCOPE_LABELS[scope]}",
         "",
         "## 招标文件",
         *[f"- `{path}`" for path in tender_paths],
@@ -90,7 +106,10 @@ def prepare_project(
     tender_paths: list[Path],
     material_paths: list[Path],
     copy_sources: bool,
+    scope: str = "full",
 ) -> dict:
+    if scope not in SCOPE_LABELS:
+        raise ValueError(f"未知的生成范围: {scope}（可选: {', '.join(SCOPE_LABELS)}）")
     root = root.expanduser().resolve()
     tenders = resolve_paths(tender_paths)
     materials = resolve_paths(material_paths)
@@ -98,10 +117,11 @@ def prepare_project(
     for relative_dir in REQUIRED_DIRS:
         (project_dir / relative_dir).mkdir(parents=True, exist_ok=True)
     source_refs = copy_tenders(tenders, project_dir / "source") if copy_sources else tenders
-    intake_path = write_intake(project_dir, source_refs, materials)
+    intake_path = write_intake(project_dir, source_refs, materials, scope)
     return {
         "project_dir": str(project_dir),
         "intake": str(intake_path),
+        "scope": scope,
         "tender_files": [str(path) for path in source_refs],
         "material_paths": [str(path) for path in materials],
     }
@@ -114,6 +134,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tender", type=Path, action="append", required=True, help="Tender file path.")
     parser.add_argument("--materials", type=Path, action="append", required=True, help="Evidence file or directory.")
     parser.add_argument("--no-copy-sources", action="store_true", help="Reference tender files without copying.")
+    parser.add_argument(
+        "--scope",
+        choices=sorted(SCOPE_LABELS),
+        default="full",
+        help="生成范围：full=商务+技术完整包（默认推荐），technical-only=仅技术部分.",
+    )
     return parser.parse_args()
 
 

@@ -3,8 +3,10 @@
 INPUT: ordered Markdown response files generated in bid-projects/<project>/output,
        optional page-header text (project title shown on every page).
 OUTPUT: one formatted DOCX response file that follows the winning-sample layout:
-        A4 page, 宋体, 小四 body / 四号 H1, 1.5 line spacing, page header + page-number
-        footer, cover page, Word TOC field, and per-section page breaks;
+        A4 page, 宋体, 小四 body / 四号 H1, 1.5 line spacing, headings 段前13磅/
+        段后6磅, body paragraphs 首行缩进2字符 (tables/headings/images 不缩进),
+        annotation text（此处附：…/【…待补充…】）in 五号 red italic, page header +
+        page-number footer, cover page, Word TOC field, and per-section page breaks;
         plus <output>.build-report.json (source list + warnings such as missing
         images, consumed by validate_bid_package.py 的人工核查清单).
 POS: Final delivery builder for the bid-preparation skill (stage 6).
@@ -54,7 +56,13 @@ HEADING1_SIZE_PT = 14      # 四号
 COVER_INFO_SIZE_PT = 16    # 三号（封面信息行）
 COVER_TITLE_SIZE_PT = 36   # 小初（封面"投标文件"）
 HEADER_FOOTER_SIZE_PT = 9  # 小五（页眉/页脚）
+ANNOTATION_SIZE_PT = 10.5  # 五号（说明性/待补占位文字）
+HEADING_SPACE_BEFORE_PT = 13
+HEADING_SPACE_AFTER_PT = 6
+FIRST_LINE_INDENT_CHARS = 200   # w:firstLineChars 单位为 1/100 字符：200 = 2字符
+FIRST_LINE_INDENT_TWIPS = 480   # 兼容值：2 × 小四12pt = 24pt = 480 twips
 BLACK = RGBColor(0, 0, 0)
+ANNOTATION_RED = RGBColor(0xFF, 0x00, 0x00)
 HEADING_STYLE_BY_LEVEL = {
     1: "Heading 1",
     2: "Heading 2",
@@ -67,6 +75,9 @@ MARKER_PATTERN = re.compile(r"^<!--\s*([a-z-]+)\s*-->$")
 IMAGE_PATTERN = re.compile(r"^!\[([^\]]*)\]\((.+)\)$")
 # 整行加粗（**……**）：用于比四级标题更深的小节题（如 1.4.2.1），不进目录
 BOLD_LINE_PATTERN = re.compile(r"^\*\*(.+)\*\*$")
+# 说明性/待补占位文字（非标书正式内容，交付前必须替换或确认）：五号红色斜体
+ANNOTATION_BRACKET_PATTERN = re.compile(r"^（此处附[:：][^）]{0,60}）$|^【[^】]{1,80}】$")
+ANNOTATION_KEYWORDS = ("此处附", "待补充", "待回填", "待核查", "待确认", "需人工", "说明")
 # A4 减去左右 3.18cm / 上下 2.54cm 页边距后的可打印区域
 PRINTABLE_WIDTH_CM = 21.0 - 3.18 * 2
 PRINTABLE_HEIGHT_CM = 29.7 - 2.54 * 2 - 1.5  # 预留页眉页脚空间
@@ -76,6 +87,35 @@ def set_run_font(run, size_pt: int, bold: bool = False) -> None:
     run.font.size = Pt(size_pt)
     run.font.bold = bold
     run.font.color.rgb = BLACK
+
+
+def set_annotation_font(run) -> None:
+    """说明性文字统一为五号红色斜体：与正式内容一眼区分，交付前必须处理掉。"""
+    run.font.name = FONT_NAME
+    run._element.rPr.rFonts.set(qn("w:eastAsia"), FONT_NAME)
+    run.font.size = Pt(ANNOTATION_SIZE_PT)
+    run.font.bold = False
+    run.font.italic = True
+    run.font.color.rgb = ANNOTATION_RED
+
+
+def is_annotation_line(text: str) -> bool:
+    """整行被（此处附：…）或【…】包裹且含说明类关键词的，判定为说明性文字。"""
+    if not ANNOTATION_BRACKET_PATTERN.match(text):
+        return False
+    return any(keyword in text for keyword in ANNOTATION_KEYWORDS)
+
+
+def set_first_line_indent(paragraph) -> None:
+    """正文首行缩进2字符：firstLineChars 随字号自适应（Word 优先读取），
+    firstLine twips 值兜底兼容不识别字符单位的渲染器。"""
+    p_pr = paragraph._p.get_or_add_pPr()
+    ind = p_pr.find(qn("w:ind"))
+    if ind is None:
+        ind = OxmlElement("w:ind")
+        p_pr.append(ind)
+    ind.set(qn("w:firstLineChars"), str(FIRST_LINE_INDENT_CHARS))
+    ind.set(qn("w:firstLine"), str(FIRST_LINE_INDENT_TWIPS))
 
 
 def configure_paragraph_format(paragraph_format, before_pt: int = 0, after_pt: int = 0) -> None:
@@ -96,9 +136,15 @@ def configure_style(style, size_pt: int, bold: bool, before_pt: int = 0, after_p
 
 def configure_document_styles(document: Document) -> None:
     configure_style(document.styles["Normal"], BODY_SIZE_PT, bold=False)
-    configure_style(document.styles["Heading 1"], HEADING1_SIZE_PT, bold=True, before_pt=8, after_pt=8)
+    configure_style(
+        document.styles["Heading 1"], HEADING1_SIZE_PT, bold=True,
+        before_pt=HEADING_SPACE_BEFORE_PT, after_pt=HEADING_SPACE_AFTER_PT,
+    )
     for style_name in ("Heading 2", "Heading 3", "Heading 4"):
-        configure_style(document.styles[style_name], BODY_SIZE_PT, bold=True, before_pt=8, after_pt=8)
+        configure_style(
+            document.styles[style_name], BODY_SIZE_PT, bold=True,
+            before_pt=HEADING_SPACE_BEFORE_PT, after_pt=HEADING_SPACE_AFTER_PT,
+        )
 
 
 def configure_page_layout(document: Document) -> None:
@@ -118,7 +164,10 @@ def set_page_break_before(paragraph) -> None:
         p_pr.append(OxmlElement("w:pageBreakBefore"))
 
 
-def add_field_runs(paragraph, instruction: str, placeholder: str, size_pt: int) -> None:
+def add_field_runs(
+    paragraph, instruction: str, placeholder: str, size_pt: int,
+    annotation_placeholder: bool = False,
+) -> None:
     """Insert a Word field (e.g. PAGE / TOC) marked dirty so Word refreshes it on open."""
     begin = OxmlElement("w:fldChar")
     begin.set(qn("w:fldCharType"), "begin")
@@ -137,7 +186,10 @@ def add_field_runs(paragraph, instruction: str, placeholder: str, size_pt: int) 
         run._element.append(element)
     if placeholder:
         placeholder_run = paragraph.add_run(placeholder)
-        set_run_font(placeholder_run, size_pt)
+        if annotation_placeholder:
+            set_annotation_font(placeholder_run)
+        else:
+            set_run_font(placeholder_run, size_pt)
     end_run = paragraph.add_run()
     set_run_font(end_run, size_pt)
     end_run._element.append(end)
@@ -197,10 +249,24 @@ def add_body_paragraph(
 ):
     paragraph = document.add_paragraph(style="Normal")
     configure_paragraph_format(paragraph.paragraph_format)
+    # 只有普通正文段缩进；整行加粗是小节题，与标题一样顶格
+    if not bold:
+        set_first_line_indent(paragraph)
     if page_break_before:
         set_page_break_before(paragraph)
     run = paragraph.add_run(text.strip())
     set_run_font(run, BODY_SIZE_PT, bold=bold)
+    return paragraph
+
+
+def add_annotation_paragraph(document: Document, text: str, page_break_before: bool = False):
+    """说明性/待补占位段：五号红色斜体、不缩进，便于交付前逐条清理。"""
+    paragraph = document.add_paragraph(style="Normal")
+    configure_paragraph_format(paragraph.paragraph_format)
+    if page_break_before:
+        set_page_break_before(paragraph)
+    run = paragraph.add_run(text.strip())
+    set_annotation_font(run)
     return paragraph
 
 
@@ -217,7 +283,11 @@ def add_heading(document: Document, text: str, level: int, page_break_before: bo
 def add_plain_title(document: Document, text: str, page_break_before: bool) -> None:
     """导航表标题：四号加粗居中，但不用 Heading 样式，避免进入目录域。"""
     paragraph = document.add_paragraph(style="Normal")
-    configure_paragraph_format(paragraph.paragraph_format, before_pt=8, after_pt=8)
+    configure_paragraph_format(
+        paragraph.paragraph_format,
+        before_pt=HEADING_SPACE_BEFORE_PT,
+        after_pt=HEADING_SPACE_AFTER_PT,
+    )
     paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     if page_break_before:
         set_page_break_before(paragraph)
@@ -241,7 +311,7 @@ def add_image(
     if not image_path.exists():
         warnings.append(f"图片未找到: {image_path}")
         run = paragraph.add_run(f"【图片待补充：{caption or image_path.name}】")
-        set_run_font(run, BODY_SIZE_PT)
+        set_annotation_font(run)
         return
     try:
         run = paragraph.add_run()
@@ -254,7 +324,7 @@ def add_image(
     except Exception as exc:  # 图片损坏/格式不支持时不中断整份文档生成
         warnings.append(f"图片插入失败: {image_path} ({exc})")
         run = paragraph.add_run(f"【图片插入失败，请在 Word 中手动插入：{image_path.name}】")
-        set_run_font(run, BODY_SIZE_PT)
+        set_annotation_font(run)
 
 
 def add_page_break_paragraph(document: Document) -> None:
@@ -293,6 +363,7 @@ def add_toc_block(document: Document, page_break_before: bool) -> None:
         'TOC \\o "1-3" \\h \\z \\u',
         "【目录域：在 Word 中全选后按 F9（或右键→更新域）生成带页码目录】",
         BODY_SIZE_PT,
+        annotation_placeholder=True,
     )
 
 
@@ -409,7 +480,11 @@ class MarkdownRenderer:
             else:
                 text = line[2:] if line.startswith("- ") else line
                 bold_match = BOLD_LINE_PATTERN.match(stripped)
-                if bold_match:
+                if is_annotation_line(stripped):
+                    add_annotation_paragraph(
+                        self.document, stripped, page_break_before=self._consume_break()
+                    )
+                elif bold_match:
                     add_body_paragraph(
                         self.document,
                         bold_match.group(1),
