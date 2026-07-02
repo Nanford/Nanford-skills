@@ -6,7 +6,8 @@
 
 | 文件 | 输入 | 输出 | 用途 |
 |---|---|---|---|
-| `prepare_project.py` | 招标文件路径、材料路径、项目名称、`--scope` 生成范围（full=商务+技术完整包/technical-only=仅技术） | `bid-projects/<项目>/` 标准目录 + intake 登记生成范围 | 初始化投标项目工作区（生成范围来自开工第一问，决定后续阶段裁剪） |
+| `prepare_project.py` | 招标文件路径、材料路径、项目名称、`--scope` 生成范围（full=商务+技术完整包/technical-only=仅技术） | `bid-projects/<项目>/` 标准目录 + intake 登记生成范围 + `project-state.json` 状态文件 | 初始化投标项目工作区（生成范围来自开工第一问，决定后续阶段裁剪） |
+| `project_status.py` | 项目目录（含 project-state.json），可选 `--start/--complete/--reopen N` | 阶段状态汇总 + 下一步指引（含细则文件路径） | 断点续作入口：新会话先跑本脚本即知"做到哪、下一步干什么、读哪份细则" |
 | `extract_text.py` | PDF、DOCX、DOC、TXT/MD 文件 | `analysis/extracted-text/` 与提取报告 | 提取可检索的招标文件文字 |
 | `index_materials.py` | 公司资料库或材料目录 | `analysis/material-index.md/json` | 建立资质、证书、业绩、技术资料索引（自动排除 `说明.md`/`DIRECTORY.md`/`README.md` 等目录占位说明） |
 | `build_response_docx.py` | 已完成的 Markdown 响应文件（或 `--manifest` JSON 组装清单） | `output/投标响应文件.docx` + `.build-report.json` | 按中标样本版式合并生成最终 DOCX（分页/封面/目录域/页眉页脚/插图）；构建警告落盘供门禁汇总 |

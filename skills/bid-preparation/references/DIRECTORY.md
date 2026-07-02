@@ -4,6 +4,8 @@
 
 | 文件 | 使用阶段 | 内容边界 |
 |---|---|---|
+| `stage-0-init.md` … `stage-7-review.md` | 对应阶段 | 各阶段执行细则（目标/双平台命令/硬性要求/完成标志/状态更新），进入该阶段前必读——SKILL.md 只保留路由与红线 |
+| `tobacco-industry-notes.md` | 解标分析、资料匹配 | 行业提示（烟草体系样例）；行业惯例一律以招标文件说明为准，非烟草体系不得照搬 |
 | `bid-structure-analysis.md` | 解标分析 | 招标文件结构、字段提取和输出要求 |
 | `mandatory-clause-guide.md` | 强制条款识别 | `★`、否决、无效投标和承诺类条款处理 |
 | `scoring-patterns.md` | 评分矩阵与技术组织 | 技术、商务、价格评分映射方式 |

@@ -2,8 +2,9 @@
 
 INPUT: project root, project name, tender file paths, evidence material paths,
        generation scope (full = 商务+技术完整包, technical-only = 仅技术部分).
-OUTPUT: bid-projects/<project>/ directory and analysis/project-intake.md
-        (记录生成范围，后续阶段按此裁剪).
+OUTPUT: bid-projects/<project>/ directory, analysis/project-intake.md
+        (记录生成范围，后续阶段按此裁剪), and project-state.json
+        (断点续作状态文件：阶段0标记完成，technical-only 时阶段4标记跳过).
 POS: Stage 0 intake helper for the bid-preparation skill.
 """
 
@@ -88,6 +89,24 @@ def write_intake(
     return intake_path
 
 
+def write_initial_state(project_dir: Path, project_name: str, scope: str) -> Path:
+    """初始化断点续作状态文件：新会话通过 project_status.py 读取，知道做到哪一步。"""
+    stages = {str(stage): "pending" for stage in range(8)}
+    stages["0"] = "done"
+    if scope == "technical-only":
+        stages["4"] = "skipped"
+    state = {
+        "project_name": project_name,
+        "scope": scope,
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+        "updated_at": datetime.now().isoformat(timespec="seconds"),
+        "stages": stages,
+    }
+    state_path = project_dir / "project-state.json"
+    state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    return state_path
+
+
 def copy_tenders(tender_paths: list[Path], source_dir: Path) -> list[Path]:
     copied = []
     for tender_path in tender_paths:
@@ -118,9 +137,11 @@ def prepare_project(
         (project_dir / relative_dir).mkdir(parents=True, exist_ok=True)
     source_refs = copy_tenders(tenders, project_dir / "source") if copy_sources else tenders
     intake_path = write_intake(project_dir, source_refs, materials, scope)
+    state_path = write_initial_state(project_dir, project_name, scope)
     return {
         "project_dir": str(project_dir),
         "intake": str(intake_path),
+        "state": str(state_path),
         "scope": scope,
         "tender_files": [str(path) for path in source_refs],
         "material_paths": [str(path) for path in materials],

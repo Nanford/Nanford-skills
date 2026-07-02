@@ -6,10 +6,11 @@
 
 | 路径 | 职责 | 产出 |
 |---|---|---|
-| `SKILL.md` | 定义 Skill 触发后的阶段0-7工作流程、输入边界和质量门禁 | AI 执行规则 |
-| `scripts/` | 提供确定性本地辅助脚本 | 项目目录、文本提取、材料索引、DOCX 成稿、格式校验、质量门禁 |
-| `references/` | 提供按阶段加载的参考卡片 | 解标、评分、强制条款、成品格式规范、清单、表达 |
+| `SKILL.md` | 路由主文件：开工必问（生成范围+商务资料确认）、阶段路由表、红线规则、断点续作入口 | AI 执行规则（细则按需加载） |
+| `scripts/` | 提供确定性本地辅助脚本 | 项目目录、文本提取、材料索引、DOCX 成稿、格式校验、质量门禁、阶段状态跟踪 |
+| `references/` | 提供按阶段加载的参考卡片（含 `stage-0..7` 阶段细则） | 阶段细则、解标、评分、强制条款、成品格式规范、清单、表达 |
 | `templates/` | 提供通用输出模板 | 分析报告、导航表、偏离表、服务承诺书等 Markdown 结构 |
+| `requirements.txt` | Python 依赖清单 | `pip install -r requirements.txt` 一步装齐 pypdf + python-docx |
 | `agents/openai.yaml` | Codex UI 元数据（仅 Codex 使用，其他 Agent 忽略） | Skill 展示名称和默认提示 |
 
 ## 依赖
