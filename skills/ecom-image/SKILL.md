@@ -11,9 +11,12 @@ description: 读取 image_jobs.json，通过 Codex App 的 ImageGen 或阿里云
 
 1. `image_jobs.json`、`strategy.json` 或用户消息已指定提供方时直接使用，不复问。
 2. 用户明确要求自动选择时：活动工具中存在 `image_gen__imagegen` 就使用 Codex ImageGen；否则使用 `ECOM_IMAGE_PROVIDER`，再否则使用 `assets/providers.json` 的 `default_external`。
-3. 用户没有指定、没有授权自动选择且即将产生正式 API 调用时，一次询问：Codex ImageGen、Qwen Image 3.0 Pro、Nano Banana 2 或 Seedream。
-4. 用户只要求检查工单或 dry-run 时，不必询问提供方。
-5. API Key 只从环境变量读取，不要求用户把 Key 发在对话中，也不写入仓库、JSON 或日志。
+3. 用户没有指定、没有授权自动选择且即将产生正式 API 调用时，调用结构化选择控件。Codex 使用 `request_user_input`；其他 Agent 使用等价选项工具。不得用普通消息列出图片模型让用户手工回复。
+4. 第一题提供 `Codex ImageGen（推荐）`、`外部 API`、`自动路由`。用户选择外部 API 后，第二题提供 Qwen Image 3.0 Pro、Nano Banana 2、Seedream。
+5. 每题使用稳定的 `snake_case` ID，例如 `provider_route` 和 `external_provider`；不要设置自动超时，也不要手工添加 `Other`。
+6. 当前环境没有结构化选择控件时停止正式出图，并提示切换到支持结构化输入的交互模式；不要退化为文本问卷。
+7. 用户只要求检查工单或 dry-run 时，不必询问提供方。
+8. API Key 只从环境变量读取，不要求用户把 Key 发在对话中，也不写入仓库、JSON 或日志。
 
 先读取 `references/providers.md`，确认所选提供方的模型名、环境变量、参考图限制和输出特性。
 

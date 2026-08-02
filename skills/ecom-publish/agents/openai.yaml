@@ -1,4 +1,4 @@
 interface:
   display_name: "电商发布质检与导出"
   short_description: "检查文案图片并导出平台刊登文件"
-  default_prompt: "请对当前电商内容和套图执行发布前质检，并在通过后导出平台刊登文件。"
+  default_prompt: "使用 $ecom-publish 对电商内容和套图执行发布前质检，并通过结构化选择控件补齐正式导出选项。"

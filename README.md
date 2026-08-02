@@ -165,7 +165,7 @@
 | `ecom-image` | 无文字底图生成、准确文字图层合成 | `base_images/`、`final_images/`、渲染清单 |
 | `ecom-publish` | 规则质检、视觉验收、平台字段映射 | `quality-report.json`、`listing_export.csv` |
 
-*   **交互原则**：用户已说明的选项直接采用，只集中询问缺失且会影响交付结果的选项。
+*   **交互原则**：用户已说明的选项直接采用；缺失且会影响交付结果的选项使用原生结构化选择控件，不使用文本问卷。
 *   **图片提供方**：Codex ImageGen、Qwen Image 3.0 Pro、Nano Banana 2、火山引擎 Seedream。
 *   **续跑能力**：每个阶段落盘中间产物，上游修改后从最早受影响的位置继续。
 *   **文案安全**：硬参数必须有来源，图片仅补充可直接观察事实，待确认属性不得进入公开文案。
@@ -239,7 +239,7 @@ Nanford-skills/
 powershell -ExecutionPolicy Bypass -File ".\install-ecom-skills.ps1" -Agent both -Force
 ```
 
-Codex 依次调用 `$ecom-listing`、`$ecom-image`、`$ecom-publish`；Claude Code 依次调用 `/ecom-listing`、`/ecom-image`、`/ecom-publish`。
+Codex 依次调用 `$ecom-listing`、`$ecom-image`、`$ecom-publish`；Claude Code 依次调用 `/ecom-listing`、`/ecom-image`、`/ecom-publish`。需要补充关键选项时使用 Agent 的原生选择控件；当前模式不提供该控件时，切换到支持结构化输入的交互模式后继续。
 
 ### 统一标准
 每个 Skill 遵循 **“单一职责”** 原则，包含明确的：
