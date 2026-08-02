@@ -1,0 +1,129 @@
+{
+  "_comment": "脚本读取的机器可读规则。references/sites/*.md 是给模型读的解释版本，本文件是给脚本读的执行版本。两者必须同步更新。核对日期见 last_verified。",
+  "_last_verified": "2026-08-01",
+  "banned_terms_global": [
+    "best", "no.1", "#1", "cheapest", "guaranteed", "100% effective",
+    "cure", "cures", "treat disease", "heal", "prevent disease",
+    "free shipping", "discount", "sale price", "limited time",
+    "五星好评", "点击链接", "加微信"
+  ],
+  "banned_terms_platform": {
+    "amazon": ["ebay", "walmart", "aliexpress", "temu", "shopee", "www.", "http://", "https://"],
+    "ebay": ["amazon", "walmart", "aliexpress", "temu", "paypal me"],
+    "temu": ["amazon", "ebay", "walmart", "aliexpress", "shein"]
+  },
+  "sites": {
+    "amazon-US": {
+      "platform": "amazon",
+      "locale": "en-US",
+      "title_max_chars": 200,
+      "bullet_count": 5,
+      "bullet_max_chars": 200,
+      "description_max_chars": 2000,
+      "search_terms_max_bytes": 250,
+      "allow_all_caps_bullet": false,
+      "image": {
+        "main_bg": "white",
+        "main_allow_text": false,
+        "min_longest_side": 1000,
+        "recommended_longest_side": 1600,
+        "max_longest_side": 10000,
+        "aspect_ratios": ["1:1"],
+        "formats": ["jpg", "jpeg", "png", "tiff"],
+        "max_count": 9,
+        "max_file_mb": 10
+      }
+    },
+    "amazon-DE": {
+      "platform": "amazon",
+      "locale": "de-DE",
+      "title_max_chars": 200,
+      "bullet_count": 5,
+      "bullet_max_chars": 200,
+      "description_max_chars": 2000,
+      "search_terms_max_bytes": 250,
+      "allow_all_caps_bullet": false,
+      "image": {
+        "main_bg": "white",
+        "main_allow_text": false,
+        "min_longest_side": 1000,
+        "recommended_longest_side": 1600,
+        "max_longest_side": 10000,
+        "aspect_ratios": ["1:1"],
+        "formats": ["jpg", "jpeg", "png", "tiff"],
+        "max_count": 9,
+        "max_file_mb": 10
+      }
+    },
+    "ebay-UK": {
+      "platform": "ebay",
+      "locale": "en-GB",
+      "title_max_chars": 80,
+      "subtitle_max_chars": 55,
+      "bullet_count": 5,
+      "bullet_max_chars": 250,
+      "description_max_chars": 4000,
+      "search_terms_max_bytes": 0,
+      "allow_all_caps_bullet": false,
+      "image": {
+        "main_bg": "any",
+        "main_allow_text": false,
+        "min_longest_side": 500,
+        "recommended_longest_side": 1600,
+        "max_longest_side": 9000,
+        "aspect_ratios": ["1:1", "4:3"],
+        "formats": ["jpg", "jpeg", "png"],
+        "max_count": 24,
+        "max_file_mb": 12
+      }
+    },
+    "temu-US": {
+      "platform": "temu",
+      "locale": "en-US",
+      "title_max_chars": 120,
+      "bullet_count": 5,
+      "bullet_max_chars": 150,
+      "description_max_chars": 1500,
+      "search_terms_max_bytes": 0,
+      "allow_all_caps_bullet": false,
+      "image": {
+        "main_bg": "white",
+        "main_allow_text": false,
+        "min_longest_side": 800,
+        "recommended_longest_side": 1200,
+        "max_longest_side": 6000,
+        "aspect_ratios": ["1:1"],
+        "formats": ["jpg", "jpeg", "png"],
+        "max_count": 10,
+        "max_file_mb": 5
+      }
+    }
+  },
+  "export_field_map": {
+    "amazon": {
+      "sku": "item_sku",
+      "title": "item_name",
+      "brand": "brand_name",
+      "bullets": "bullet_point{i}",
+      "description": "product_description",
+      "search_terms": "generic_keywords",
+      "main_image": "main_image_url",
+      "other_images": "other_image_url{i}"
+    },
+    "ebay": {
+      "sku": "CustomLabel",
+      "title": "Title",
+      "description": "Description",
+      "main_image": "PicURL",
+      "other_images": "PicURL"
+    },
+    "temu": {
+      "sku": "sku",
+      "title": "goods_name",
+      "bullets": "selling_point{i}",
+      "description": "goods_desc",
+      "main_image": "main_image_url",
+      "other_images": "detail_image_url{i}"
+    }
+  }
+}

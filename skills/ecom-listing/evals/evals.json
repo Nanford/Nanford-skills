@@ -1,0 +1,57 @@
+{
+  "skill_name": "ecom-listing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "做 Amazon 美国站，英语，1:1，智能 7 张，用 Nano Banana 2，帮我把这个产品做成完整 Listing。",
+      "expected_output": "直接采用全部已给选项，不重复提问，产出四个规划文件。",
+      "assertions": [
+        "不再询问平台、国家、语言、比例、套图数量或图片提供方",
+        "strategy.json 包含 amazon-US、en-US、1:1、minimum_images=7 和 nano-banana-2",
+        "产出 listing.json、strategy.json、copy.json 和 image_jobs.json"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "根据这组商品图做一套电商内容和图片。",
+      "expected_output": "先提取能确认的商品事实，再把所有实质缺失选项合并为一次选择题。",
+      "assertions": [
+        "只询问当前完整交付所需的缺失项",
+        "一次列出平台站点、语言或可推导关系、比例、套图模式和图片提供方",
+        "不把未确认容量、材质或认证写入公开内容"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "我只想看看这些图能提炼哪些卖点。",
+      "expected_output": "仅完成商品理解，不询问站点、图片比例、套图或图片 API。",
+      "assertions": [
+        "产出或更新 listing.json",
+        "不生成 strategy.json、copy.json 或 image_jobs.json",
+        "不询问与卖点提炼无关的选项"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "你来自动决定，给我做一套适合 Amazon 美国站的 7 张图。",
+      "expected_output": "把自动决定视为授权，推导 en-US 并选择合理画幅和图片提供方，不逐项询问。",
+      "assertions": [
+        "不重复询问语言、比例或提供方",
+        "摘要中说明自动采用的值",
+        "image_jobs.json 至少有 7 个任务"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "为 Amazon 美国站生成五点描述。标题：Wireless Bluetooth 5.3 Headphones, 40-Hour Battery, Memory Foam Ear Cups, 3.5mm Audio Jack。只返回 JSON。",
+      "expected_output": "返回严格 JSON，使用标题中有证据的参数生成 5 条紧凑、自然的美国英语五点描述，不补造降噪、连接距离或快充数据。",
+      "assertions": [
+        "顶层只包含 bullet_points 和 language",
+        "bullet_points 必须且只能有 5 条，language 为 en-US",
+        "每条使用卖点短语 - 强动词开头的说明结构",
+        "每条优先为 20 至 25 个英文单词并自然包含 1 至 2 个相关关键词",
+        "不得出现标题未提供的 noise cancellation、100ft range、fast charge 或充电时长"
+      ]
+    }
+  ]
+}

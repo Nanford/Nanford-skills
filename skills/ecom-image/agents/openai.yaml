@@ -1,0 +1,4 @@
+interface:
+  display_name: "电商套图生成"
+  short_description: "调用 Codex 或外部图片 API 并合成可编辑文字层"
+  default_prompt: "请读取 image_jobs.json 生成电商套图；已指定的图片模型直接使用，未指定且需要正式出图时再询问。"

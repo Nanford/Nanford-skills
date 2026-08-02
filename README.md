@@ -156,6 +156,20 @@
 *   **适用场景**：系统总览、平台地图、方案蓝图、技术全景、分层能力视图（HTML / SVG / 幻灯片 / 图片）。
 *   **设计原则**：以 containment 与 spatial organization 替代 connector web；仅在用户明确要求时添加最少必要连线。
 
+### 🛒 13. 电商 Listing 生产工作流
+> **定位**：商品理解、站点文案、套图生成、发布质检与刊登导出的三段式 Skill 工作流
+
+| Skill | 工作阶段 | 核心产物 |
+| :--- | :--- | :--- |
+| `ecom-listing` | 商品事实、选项收集、站点文案、套图规划 | `listing.json`、`strategy.json`、`copy.json`、`image_jobs.json` |
+| `ecom-image` | 无文字底图生成、准确文字图层合成 | `base_images/`、`final_images/`、渲染清单 |
+| `ecom-publish` | 规则质检、视觉验收、平台字段映射 | `quality-report.json`、`listing_export.csv` |
+
+*   **交互原则**：用户已说明的选项直接采用，只集中询问缺失且会影响交付结果的选项。
+*   **图片提供方**：Codex ImageGen、Qwen Image 3.0 Pro、Nano Banana 2、火山引擎 Seedream。
+*   **续跑能力**：每个阶段落盘中间产物，上游修改后从最早受影响的位置继续。
+*   **文案安全**：硬参数必须有来源，图片仅补充可直接观察事实，待确认属性不得进入公开文案。
+
 ---
 
 ## 🏗️ 仓库目录结构
@@ -168,6 +182,9 @@ Nanford-skills/
 │   └── skills/
 │       └── architecture-diagram/ # 无连线架构图视觉设计
 └── skills/                       # 核心 Skill 目录
+    ├── ecom-listing/             # 商品理解、文案与套图工单
+    ├── ecom-image/               # 多提供方出图与文字合成
+    ├── ecom-publish/             # 发布前质检与刊登导出
     ├── article-to-ppt-outline/
     │   └── SKILL.md              # 规划层 (长文本 -> PPT大纲)
     ├── text-to-ppt-pro/
@@ -213,6 +230,16 @@ Nanford-skills/
 ---
 
 ## 🚀 使用与演进
+
+### 电商工作流安装
+
+将仓库中的三个电商 Skill 安装到 Codex 与 Claude Code：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\install-ecom-skills.ps1" -Agent both -Force
+```
+
+Codex 依次调用 `$ecom-listing`、`$ecom-image`、`$ecom-publish`；Claude Code 依次调用 `/ecom-listing`、`/ecom-image`、`/ecom-publish`。
 
 ### 统一标准
 每个 Skill 遵循 **“单一职责”** 原则，包含明确的：

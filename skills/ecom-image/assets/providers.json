@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "default_external": "qwen-image-3.0-pro",
+  "providers": {
+    "codex-imagegen": {
+      "kind": "codex_tool",
+      "tool": "image_gen__imagegen"
+    },
+    "qwen-image-3.0-pro": {
+      "kind": "qwen",
+      "endpoint": "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "endpoint_env": "DASHSCOPE_BASE_URL",
+      "model": "qwen-image-3.0-pro",
+      "model_env": "DASHSCOPE_MODEL",
+      "api_key_env": "DASHSCOPE_API_KEY"
+    },
+    "nano-banana-2": {
+      "kind": "gemini",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+      "endpoint_env": "GEMINI_BASE_URL",
+      "model": "gemini-3.1-flash-image",
+      "model_env": "GEMINI_IMAGE_MODEL",
+      "api_key_env": "GEMINI_API_KEY"
+    },
+    "volcengine-seedream": {
+      "kind": "volcengine",
+      "endpoint": "https://ark.cn-beijing.volces.com/api/v3/images/generations",
+      "endpoint_env": "ARK_BASE_URL",
+      "model": "doubao-seedream-4-5-251128",
+      "model_env": "ARK_IMAGE_MODEL",
+      "api_key_env": "ARK_API_KEY"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "电商内容与套图规划"
+  short_description: "收集必要选项并生成商品事实、站点文案和套图工单"
+  default_prompt: "请根据商品资料生成 listing.json、strategy.json、copy.json 和 image_jobs.json；已说明的选项直接采用，缺少的关键选项集中询问。"

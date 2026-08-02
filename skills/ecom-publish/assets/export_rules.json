@@ -1,0 +1,33 @@
+{
+  "sites": {
+    "amazon-US": "amazon",
+    "amazon-DE": "amazon",
+    "ebay-UK": "ebay",
+    "temu-US": "temu"
+  },
+  "field_maps": {
+    "amazon": {
+      "sku": "item_sku",
+      "title": "item_name",
+      "brand": "brand_name",
+      "bullets": "bullet_point{i}",
+      "description": "product_description",
+      "search_terms": "generic_keywords",
+      "main_image": "main_image_url",
+      "other_images": "other_image_url{i}"
+    },
+    "ebay": {
+      "sku": "CustomLabel",
+      "title": "Title",
+      "description": "Description",
+      "main_image": "PicURL"
+    },
+    "temu": {
+      "sku": "seller_sku",
+      "title": "product_name",
+      "description": "product_description",
+      "main_image": "main_image_url",
+      "other_images": "detail_image_url_{i}"
+    }
+  }
+}
