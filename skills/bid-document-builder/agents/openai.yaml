@@ -1,0 +1,4 @@
+interface:
+  display_name: "招标文件智能编排"
+  short_description: "整份克隆参考Word，追溯来源并完成结构红字终审"
+  default_prompt: "使用 $bid-document-builder 复制整份参考 Word 原位编制招标文件，映射并复算项目来源数据，保留全部结构并完成红字、旧值、结构和渲染终审。"
