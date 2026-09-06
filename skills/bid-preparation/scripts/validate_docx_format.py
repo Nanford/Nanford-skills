@@ -4,11 +4,12 @@ INPUT: final DOCX response file (built by build_response_docx.py).
 OUTPUT: validation result with blocker/warning issues and optional JSON/MD report.
 POS: DOCX format gate for the bid-preparation skill (stage 6/7).
 
-Checks (aligned with the 湖北中烟 winning-sample layout):
-  * styles: 宋体 / 小四 body / 四号 H1 / bold headings / black / 1.5 line /
-    heading spacing 段前13磅+段后6磅
-  * body indent: at least one body paragraph carries 首行缩进2字符
-    (w:firstLineChars=200; the builder indents every plain body paragraph)
+Checks:
+  * styles: 宋体 / 小四 body / 四号 Heading 1 / 小四 Heading 2-5 / bold / black / 1.5 line /
+    heading spacing 段前13磅+段后8磅
+  * body: ordinary paragraphs use a two-character first-line indent; headings and
+    all-bold subsection titles remain flush left
+  * annotations: missing-material placeholders are 五号 red italic
   * page: A4 size declared in sectPr
   * pagination: Heading 1/2 start a new page unless directly following a parent
     heading, and the document contains page breaks at all
@@ -32,15 +33,29 @@ W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 NS = {"w": W_NS}
 W = f"{{{W_NS}}}"
 EXPECTED_FONT = "宋体"
-BODY_SIZE = "24"       # 小四 = 12pt = 24 half-points
-HEADING1_SIZE = "28"   # 四号 = 14pt
+BODY_SIZE = "24"       # 12pt = 24 half-points（小四）
+HEADING1_SIZE = "28"   # 14pt = 28 half-points（四号）
+HEADING_OTHER_SIZE = "24"  # 12pt = 24 half-points（二至五级标题小四）
+ANNOTATION_SIZE = "21" # 10.5pt = 21 half-points（五号）
+ANNOTATION_RED = "FF0000"
 LINE_SPACING = "360"   # 1.5 倍
 HEADING_SPACING_BEFORE = "260"  # 段前 13 磅
-HEADING_SPACING_AFTER = "120"   # 段后 6 磅
-FIRST_LINE_INDENT_CHARS = "200"  # 正文首行缩进 2 字符
+HEADING_SPACING_AFTER = "160"   # 段后 8 磅
+FIRST_LINE_INDENT_CHARS = "200"
 A4_WIDTH_TWIPS = 11906
 A4_HEIGHT_TWIPS = 16838
-HEADING_STYLE_LEVELS = {"Heading1": 1, "Heading2": 2, "Heading3": 3, "Heading4": 4}
+HEADING_STYLE_LEVELS = {
+    "Heading1": 1,
+    "Heading2": 2,
+    "Heading3": 3,
+    "Heading4": 4,
+    "Heading5": 5,
+}
+ANNOTATION_KEYWORDS = (
+    "\u6b64\u5904\u9644", "\u5f85\u8865\u5145", "\u5f85\u56de\u586b", "\u5f85\u6838\u67e5",
+    "\u5f85\u786e\u8ba4", "\u9700\u4eba\u5de5", "\u8bf4\u660e", "\u56fe\u7247\u63d2\u5165\u5931\u8d25",
+    "\u76ee\u5f55\u57df",
+)
 # 标题文本自带编号（一、 / （一） / 1. / 1.1 / （1） / 附件12-1 / 附：），与中标样本一致
 SELF_NUMBERED_PATTERN = re.compile(
     r"^\s*(?:"
@@ -51,6 +66,14 @@ SELF_NUMBERED_PATTERN = re.compile(
     r"|附件?\s*\d"
     r"|附[:：]"
     r")"
+)
+# 最终 DOCX 正文中不应出现的 Markdown 泄漏痕迹
+MARKDOWN_LEAK_IN_DOCX = (
+    (re.compile(r"`"), "正文残留反引号`"),
+    (re.compile(r"\*\*"), "正文残留加粗标记**"),
+    (re.compile(r"^#{1,6}\s"), "正文残留Markdown标题#"),
+    (re.compile(r"\[([^\]]+)\]\(([^)]+)\)"), "正文残留Markdown链接"),
+    (re.compile(r"^>\s"), "正文残留引用块>"),
 )
 
 
@@ -75,6 +98,91 @@ def attr(node: ElementTree.Element | None, name: str) -> str | None:
 
 def paragraph_text(paragraph: ElementTree.Element) -> str:
     return "".join(node.text or "" for node in paragraph.findall(".//w:t", NS))
+
+
+def is_annotation_text(text: str) -> bool:
+    """Recognize red manual-review placeholders emitted by the DOCX builder."""
+    stripped = text.strip()
+    return (
+        stripped.startswith("\uff08\u6b64\u5904\u9644")
+        or (stripped.startswith("\u3010") and any(keyword in stripped for keyword in ANNOTATION_KEYWORDS))
+    )
+
+
+def text_runs(paragraph: ElementTree.Element) -> list[ElementTree.Element]:
+    """Return only runs containing visible text, excluding field-control runs."""
+    return [run for run in paragraph.findall(".//w:r", NS) if paragraph_text(run).strip()]
+
+
+def is_bold_only_paragraph(paragraph: ElementTree.Element) -> bool:
+    """Treat an all-bold Normal paragraph as a top-aligned non-heading subsection title."""
+    runs = text_runs(paragraph)
+    return bool(runs) and all(run.find("./w:rPr/w:b", NS) is not None for run in runs)
+
+
+def check_body_indent(document_root: ElementTree.Element, issues: list[dict]) -> None:
+    """Gate ordinary body paragraphs to a two-character first-line indent."""
+    body = document_root.find("w:body", NS)
+    if body is None:
+        return
+    missing: list[str] = []
+    for paragraph in body.findall("w:p", NS):
+        p_pr = paragraph.find("w:pPr", NS)
+        text = paragraph_text(paragraph).strip()
+        style_id = attr(None if p_pr is None else p_pr.find("w:pStyle", NS), "val")
+        alignment = attr(None if p_pr is None else p_pr.find("w:jc", NS), "val")
+        if (
+            not text
+            or style_id in HEADING_STYLE_LEVELS
+            or alignment == "center"
+            or is_annotation_text(text)
+            or is_bold_only_paragraph(paragraph)
+        ):
+            continue
+        indent = None if p_pr is None else p_pr.find("w:ind", NS)
+        if attr(indent, "firstLineChars") != FIRST_LINE_INDENT_CHARS:
+            missing.append(text[:40])
+    if missing:
+        examples = "；".join(missing[:3])
+        issue(issues, "blocker", f"正文段落未设置首行缩进2字符: {examples}", "document.xml")
+
+
+def check_heading_indent(document_root: ElementTree.Element, issues: list[dict]) -> None:
+    """Keep every Heading 1-5 paragraph flush left, independent of style inheritance."""
+    body = document_root.find("w:body", NS)
+    if body is None:
+        return
+    for paragraph in body.findall("w:p", NS):
+        p_pr = paragraph.find("w:pPr", NS)
+        style_id = attr(None if p_pr is None else p_pr.find("w:pStyle", NS), "val")
+        if style_id not in HEADING_STYLE_LEVELS:
+            continue
+        indent = None if p_pr is None else p_pr.find("w:ind", NS)
+        if indent is None:
+            continue
+        indent_values = ("firstLineChars", "firstLine", "hangingChars", "hanging", "leftChars", "left")
+        if any((attr(indent, name) or "0") != "0" for name in indent_values):
+            issue(issues, "blocker", f"标题未顶格: {paragraph_text(paragraph).strip()[:40]}", style_id)
+
+
+def check_annotation_format(document_root: ElementTree.Element, issues: list[dict]) -> None:
+    """Require visible placeholders to remain red, five-point-size, and italic for review."""
+    for paragraph in document_root.findall(".//w:p", NS):
+        text = paragraph_text(paragraph).strip()
+        if not is_annotation_text(text):
+            continue
+        for run in text_runs(paragraph):
+            r_pr = run.find("w:rPr", NS)
+            color = attr(None if r_pr is None else r_pr.find("w:color", NS), "val") or ""
+            size = attr(None if r_pr is None else r_pr.find("w:sz", NS), "val")
+            if (
+                color.upper() != ANNOTATION_RED
+                or size != ANNOTATION_SIZE
+                or r_pr is None
+                or r_pr.find("w:i", NS) is None
+            ):
+                issue(issues, "blocker", f"待补占位文字未使用五号红色斜体: {text[:40]}", "document.xml")
+                break
 
 
 def check_common_style(
@@ -109,7 +217,7 @@ def check_common_style(
             attr(spacing, "before") != HEADING_SPACING_BEFORE
             or attr(spacing, "after") != HEADING_SPACING_AFTER
         ):
-            issue(issues, "blocker", f"{style_name} 段前/段后不是 13磅/6磅", style_name)
+            issue(issues, "blocker", f"{style_name} 段前/段后不是 13磅/8磅", style_name)
 
 
 def check_page_size(document_root: ElementTree.Element, issues: list[dict]) -> None:
@@ -158,34 +266,36 @@ def check_pagination_and_numbering(document_root: ElementTree.Element, issues: l
         issue(issues, "blocker", "全文没有任何分页符，章节未独立起页", "document.xml")
 
 
-def check_body_indent(document_root: ElementTree.Element, issues: list[dict]) -> None:
-    """正文段落应首行缩进2字符（构建器对每个普通正文段落设置 w:firstLineChars=200）。
-    表格、标题、居中段不缩进，因此只要求文档中存在带该属性的正文段。"""
-    body = document_root.find("w:body", NS)
-    if body is None:
-        return
-    has_body_text = False
-    for paragraph in body.findall("w:p", NS):
-        p_pr = paragraph.find("w:pPr", NS)
-        style_value = attr(None if p_pr is None else p_pr.find("w:pStyle", NS), "val")
-        if style_value in HEADING_STYLE_LEVELS:
-            continue
-        if p_pr is not None and p_pr.find("w:jc", NS) is not None:
-            continue  # 居中/对齐段（封面、导航表标题、插图）不要求缩进
-        if not paragraph_text(paragraph).strip():
-            continue
-        has_body_text = True
-        ind = None if p_pr is None else p_pr.find("w:ind", NS)
-        if attr(ind, "firstLineChars") == FIRST_LINE_INDENT_CHARS:
-            return
-    if has_body_text:
-        issue(issues, "blocker", "正文段落未设置首行缩进2字符", "document.xml")
-
-
 def check_toc_field(document_root: ElementTree.Element, issues: list[dict]) -> None:
     instructions = [node.text or "" for node in document_root.findall(".//w:instrText", NS)]
     if not any("TOC" in instruction for instruction in instructions):
         issue(issues, "blocker", "缺少目录域（TOC field），无法在 Word 中生成带页码目录", "document.xml")
+
+
+def check_markdown_leaks(document_root: ElementTree.Element, issues: list[dict]) -> None:
+    """扫描最终 DOCX 正文，拦截未清洗干净的 Markdown 标记（格式不标准的常见原因）。"""
+    body = document_root.find("w:body", NS)
+    if body is None:
+        return
+    seen: set[str] = set()
+    for paragraph in body.findall("w:p", NS):
+        text = paragraph_text(paragraph)
+        if not text or not text.strip():
+            continue
+        for pattern, label in MARKDOWN_LEAK_IN_DOCX:
+            if pattern.search(text):
+                key = f"{label}:{text[:40]}"
+                if key in seen:
+                    continue
+                seen.add(key)
+                issue(
+                    issues,
+                    "blocker",
+                    f"DOCX 存在 Markdown 泄漏（{label}）: {text.strip()[:40]}",
+                    "document.xml",
+                )
+                if len(seen) >= 20:
+                    return
 
 
 def check_header_footer(package: zipfile.ZipFile, issues: list[dict]) -> None:
@@ -238,15 +348,23 @@ def validate_docx_format(docx_path: Path, write_files: bool = True) -> dict:
         else:
             check_common_style(find_style(styles_root, "Normal"), "正文", BODY_SIZE, False, False, issues)
             check_common_style(find_style(styles_root, "Heading1"), "一级标题", HEADING1_SIZE, True, True, issues)
-            for style_id, label in (("Heading2", "二级标题"), ("Heading3", "三级标题"), ("Heading4", "四级标题")):
-                check_common_style(find_style(styles_root, style_id), label, BODY_SIZE, True, True, issues)
+            for style_id, label in (
+                ("Heading2", "二级标题"),
+                ("Heading3", "三级标题"),
+                ("Heading4", "四级标题"),
+                ("Heading5", "五级标题"),
+            ):
+                check_common_style(find_style(styles_root, style_id), label, HEADING_OTHER_SIZE, True, True, issues)
         if document_root is None:
             issue(issues, "blocker", "缺少 document.xml", "document.xml")
         else:
             check_page_size(document_root, issues)
             check_pagination_and_numbering(document_root, issues)
             check_body_indent(document_root, issues)
+            check_heading_indent(document_root, issues)
+            check_annotation_format(document_root, issues)
             check_toc_field(document_root, issues)
+            check_markdown_leaks(document_root, issues)
         check_header_footer(package, issues)
     result = {"file": str(docx_path), "ok": not any(item["level"] == "blocker" for item in issues), "issues": issues}
     if write_files:

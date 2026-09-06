@@ -1,52 +1,60 @@
-# 阶段3细则：资料收集与匹配
+# 阶段3细则：资料收集与匹配（含 P0 空库禁写）
 
-> 组合拳定义详见 `references/response-file-format.md` 第3节。
+> 组合拳定义见 `response-file-format.md`。  
+> **P0**：资料库无真实证据文件时，**禁止**撰写含人员/业绩/证书/报价等事实的详细正文；只允许大纲 + 缺口清单。
 
 ## 目标
 
-对照招标要求逐项匹配公司资料库，标记缺失项。
+对照招标要求逐项匹配资料库；生成 **material-gate** 写作门禁。
 
-> 范围裁剪：仅技术部分（technical-only）时只匹配技术类资料——体系认证、技术人员证书、案例业绩、方案素材；商务资质/财务/保证金类跳过。
+> technical-only：只匹配技术类资料；门禁门槛证据数 ≥1。full：≥3 个真实文件才允许详细正文。
 
 ## 步骤
 
 ```powershell
-# Windows PowerShell
 python -X utf8 <scripts>\index_materials.py `
   --materials "company-library" `
-  --output-dir "bid-projects\<项目>\analysis"
+  --output-dir "bid-projects\<项目>\analysis" `
+  --scope full
 ```
 
 ```bash
-# macOS / Linux
 python3 -X utf8 <scripts>/index_materials.py \
   --materials "company-library" \
-  --output-dir "bid-projects/<项目>/analysis"
+  --output-dir "bid-projects/<项目>/analysis" \
+  --scope full
 ```
 
-然后逐项映射：每一条资格条件、评分项、★条款、证明要求 → 真实文件路径或缺口状态。
+`--scope` 与项目生成范围一致。然后填写 `material-match-status.md`。
+
+**P1**：打开 `scoring-strategy.md`，按「满分条件」优先凑齐证书截图、业绩五件套、延保决策等可机械得分材料，状态回写策略表。
 
 ## 产出
 
-- `analysis/material-index.md/.json` — 资料库索引
-- `analysis/material-match-status.md` — 逐项匹配表（用 `templates/material-match-status.md`）
+- `material-index.md/.json`
+- `material-match-status.md`
+- **`material-gate.md/.json`（P0）** — `writing_detail_allowed` / `outline_only`
 
-允许的状态：`已具备`、`需补材料`、`需用户确认`、`不适用`、`存在偏离`、`无法判断`。**证据不存在且用户未确认的项，不得标记为满足。**
+## P0 空库禁写规则
 
-## "组合拳"完整性核对
+| material-gate | 允许 | 禁止 |
+|---|---|---|
+| `writing_detail_allowed=true` | 大纲确认后逐章写正文（仍须证据对应） | 编造无材料的事实 |
+| `outline_only=true` | 写作大纲、缺口清单、硬参数/格式克隆表 | 详细技术方案/伪造业绩人员报价；output 大段正文会被门禁拦截 |
 
-> 以下组合提炼自最严格的烟草体系中标样本，是**最稳妥的准备口径**；具体需要哪几件，以当前招标文件的证明材料要求为准（要求更少时按招标文件执行，不强加）。
+用户补齐资料后重新 `index_materials.py`，确认 `writing_detail_allowed=true` 并说「继续」再写正文。
 
-- **业绩五件套**：合同关键页（名称页/内容页/金额页/签章页/时间页）+ 发票 + 发票查验平台截图 + 银行收款凭证 + 其他说明
-- **人员三件套**：毕业证及身份证 + 资格证书 + 社保证明（连续6个月）
-- **保证金三件套**：银行汇款凭证 + 基本存款账户信息 + 已开立银行结算账户清单
-- **证书+查询截图配对**：ISO类证书配 cx.cnca.cn 截图、ITSS配 itss.cn 截图、纳税信用配税务局查询截图（只放证书不得分）
-- **信用查询五平台截图**：国家企业信用信息公示系统、信用中国、中国执行信息公开网、中国裁判文书网、天眼查（招标文件可能约定由代理机构查询，投标人无需提供）
+允许的匹配状态：`已具备`、`需补材料`、`需用户确认`、`不适用`、`存在偏离`、`无法判断`。  
+**证据不存在且用户未确认的项，不得标记为满足。**
+
+## 组合拳核对
+
+- 业绩五件套、人员三件套、保证金三件套、证书+官网截图、信用五平台（以招标文件为准）
 
 ## 完成标志
-
-**用户确认资料齐全或明确哪些缺口无法补充**后，更新状态：
 
 ```powershell
 python -X utf8 <scripts>\project_status.py "bid-projects\<项目>" --complete 3
 ```
+
+完成前须存在 `material-gate.json`。若 `outline_only`，进入阶段4/5时只能出大纲，并在汇报中明确告知用户。

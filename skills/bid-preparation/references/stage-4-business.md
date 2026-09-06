@@ -1,13 +1,43 @@
 # 阶段4细则：编制商务文件
 
 > **生成范围为"仅技术部分"（technical-only）时跳过本阶段，直接进入阶段5。**
-> 配套阅读：`references/response-file-format.md`（商务文件十二件套 + 组合拳）、`references/industry-common-terms.md`（成品表达）。
+> 配套阅读：`references/response-file-format.md`（商务文件十二件套 + 组合拳）、`references/industry-common-terms.md`（成品表达）、`templates/商务写作大纲.md`。
+> **硬门禁**：必须先输出商务大纲并经用户确认，再**按大纲顺序逐件套**编制；每件套经用户确认后再写下一件。禁止一次灌完整个商务包。
 
 ## 目标
 
 严格按招标文件第六章格式生成商务响应文件。**招标文件提供了格式模板的，只填空白处，不得修改模板文字。**
 
-## 按成品组装顺序编制（十二件套）
+## 步骤A：商务写作大纲（先做，等确认）
+
+**前置 P0**：
+
+- `format-clone-checklist.md` 已克隆官方格式且无「缺口」行（商务大纲以该表为准，**不默认十二件套**）
+- `hard-parameters.md` 已填完（投标函/报价依赖有效期、限价、保证金）
+- 阅读 `material-gate.json`：若 `outline_only`，本阶段只交大纲+缺口，**不写**含报价/业绩/人员事实的详细件
+
+1. 以 `format-clone-checklist.md` 商务行为主，对照用户响应样本，输出：
+   - `analysis/business-writing-outline.md`（用 `templates/商务写作大纲.md`）
+2. 大纲每行写清：件套名称、对应官方格式标题、必填字段、证明材料、预估页数。
+3. **向用户展示大纲，明确请求确认**。未获「大纲确认/可以/按此写」前，禁止写 `output/商务文件/*` 正文。
+4. 用户确认后：
+```powershell
+python -X utf8 <scripts>\project_status.py "bid-projects\<项目>" --confirm-outline business
+```
+
+## 步骤B：按大纲逐件套编制（一件一套，确认后再继续）
+
+对大纲中的每一件套，按序执行：
+
+1. 只写当前一件套的 Markdown 中间稿到 `output/商务文件/`
+2. 汇报：文件路径、关键填写项、待补材料
+3. 请用户确认；用户确认后：
+```powershell
+python -X utf8 <scripts>\project_status.py "bid-projects\<项目>" --confirm-section business --section "件套名称"
+```
+4. 再进入下一件套。用户要求修改则先改当前件，再请确认。
+
+### 按成品组装顺序的件套清单（大纲应覆盖）
 
 1. **投标函** — 原文模板，只替换项目名、投标人、有效期、日期；有效期必须 ≥ 招标要求
 2. **投标一览表/开标一览表** — 报价（含税/不含税）、税率、质保期、交付期；**不得超最高限价**
@@ -32,13 +62,29 @@
 - 证书评分项必须"证书页 + 官方平台查询截图页"配对成节（如 附1.1 证书 / 附1.2 查询截图）
 - 商务文件 Markdown 首行加 `<!-- break-all-headings -->`，实现每一章节/小节/每份证明材料独立起页
 
+## 中间稿格式（防 Markdown 泄漏）
+
+- 禁止反引号、`---` 分割线、`- 列表` 当正文、`> 引用`、普通链接语法
+- 列表式内容写成表格或「（1）（2）」完整句子
+- 标题用 `#` / `##` 且编号写在标题文字里
+
+## 偏离表与 ★三角
+
+- 商务响应偏离表逐条无空项；「不允许偏离」时不得写负偏离
+- 回填 `mandatory-checklist` 中商务相关行的 **偏离表位置**
+- 报价：总价与分项均不得超过 `hard-parameters` 限价
+
 ## 自检
 
-格式与第六章一致、签章位置齐全、报价数字前后一致、偏离表无空项。
+```powershell
+python -X utf8 <scripts>\check_p0_gates.py "bid-projects\<项目>"
+```
+
+格式与官方格式章一致、签章位置齐全、报价与硬参数一致、偏离表无空项、大纲件套均已确认、无 Markdown 泄漏。
 
 ## 完成标志
 
-**用户审查商务文件，确认格式和内容无误**后，更新状态：
+**全部件套经用户确认、格式和内容无误**后，更新状态：
 
 ```powershell
 python -X utf8 <scripts>\project_status.py "bid-projects\<项目>" --complete 4

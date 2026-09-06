@@ -10,29 +10,60 @@
 ## 质量门禁
 
 ```powershell
-# Windows PowerShell
+# P0/P1
+python -X utf8 <scripts>\check_p0_gates.py "bid-projects\<项目>"
+# P2 深度+覆盖率
+python -X utf8 <scripts>\check_content_quality.py "bid-projects\<项目>"
+# 全量门禁（内含 P0/P1/P2）
 python -X utf8 <scripts>\validate_bid_package.py "bid-projects\<项目>"
 ```
 
 ```bash
-# macOS / Linux
+python3 -X utf8 <scripts>/check_p0_gates.py "bid-projects/<项目>"
+python3 -X utf8 <scripts>/check_content_quality.py "bid-projects/<项目>"
 python3 -X utf8 <scripts>/validate_bid_package.py "bid-projects/<项目>"
 ```
 
-门禁报告 `review/validation-report.md` 末尾自动汇总**人工核查清单**：留空待补材料（"此处附：XXX"占位页）、构建警告（图片待补充）、导航表 `P__` 页码待回填、资料匹配表未闭环缺口、签字盖章与目录域更新提醒。**交付时必须把这份清单一并交给用户，逐项处理完才算交付完成。**
+报告：`analysis/p0-gate-report.md` + `analysis/content-quality-report.md` + `review/validation-report.md`。**交付前逐项处理完。**
 
 ## 审查必须确认
 
+### P0 五项（任一项 blocker = 不能交付）
+
+- [ ] 提取门禁通过（无 needs_ocr/failed）
+- [ ] `hard-parameters.md` 填完；报价/有效期/保证金与响应文件一致；**分项限价均未超**
+- [ ] `format-clone-checklist.md` 无「缺口」；成品目录对齐官方格式章
+- [ ] ★三角闭环（偏离表位置 + 正文位置 + 状态已响应）
+- [ ] 资料库非空壳禁写违规（outline_only 时无大段伪正文）
+
+### P1 路由（warning 应清零后再交付）
+
+- [ ] `project-profile.md` 类型与递交方式已确认
+- [ ] 电子标：`e-bid-delivery-checklist` 平台动作完成或明确责任人
+- [ ] 多现场/改造：`multi-site-plan` 已融入实施方案
+- [ ] 施工安装：安全环保专章已写
+- [ ] `scoring-strategy` 可得分项已执行或用户确认放弃
+
+### P2 内容质量
+
+- [ ] `content-quality-report` 偏薄章节已加厚或有合理说明
+- [ ] ★/强制条款正文覆盖率达标
+- [ ] 若有 `requirement-index.md`，需求编号覆盖达标
+
+### 常规项
+
 - [ ] 每条★条款有明确响应（**一条未响应 = 不能交付**）
-- [ ] 每个评分项映射到响应章节和证据（覆盖率：🟢刻意优化 / 🟡有内容 / 🔴无内容）
-- [ ] 偏离表无空行
+- [ ] 每个评分项映射到响应章节和证据
+- [ ] 偏离表无空行；不允许偏离时无负偏离
 - [ ] 资格材料齐全或已列为缺口；五件套/三件套完整
 - [ ] 承诺书保持官方原文
-- [ ] 有效期、限价、服务范围、质保、付款条款前后一致；报价大小写一致
-- [ ] 三张导航表与评分表/审查表一致，页码已按 `page-map.md` 对照表回填（或已明确提醒用户回填）
-- [ ] 签章位置齐全、页码连续、正副本份数、装订密封要求已确认
-- [ ] 未把未经证实的事实写成已确认
-- [ ] `output/投标响应文件.docx` 存在且格式校验通过，无内部写作痕迹
+- [ ] 有效期、限价（含分项）、服务范围、质保前后一致；报价大小写一致
+- [ ] 三张导航表页码回填或已提醒
+- [ ] 签章/装订/正副本已确认
+- [ ] DOCX 格式校验通过、无 Markdown 泄漏
+- [ ] 写作大纲已用户确认
+- [ ] 技术含项目管理/实施方案/进度计划（或注明不适用）
+- [ ] 有响应样本时抽查模块完整度
 
 ## 结论与交付
 

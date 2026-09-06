@@ -2,10 +2,10 @@
 
 INPUT: ordered Markdown response files generated in bid-projects/<project>/output,
        optional page-header text (project title shown on every page).
-OUTPUT: one formatted DOCX response file that follows the winning-sample layout:
-        A4 page, 宋体, 小四 body / 四号 H1, 1.5 line spacing, headings 段前13磅/
-        段后6磅, body paragraphs 首行缩进2字符 (tables/headings/images 不缩进),
-        annotation text（此处附：…/【…待补充…】）in 五号 red italic, page header +
+OUTPUT: one formatted DOCX response file:
+        A4 page, 宋体, 小四 body, 四号 Heading 1, 小四 Heading 2-5, black text, 1.5 line spacing,
+        headings with 13pt before / 8pt after spacing, annotation text（此处附：…/【…待补充…】）
+        in 五号 red italic, page header +
         page-number footer, cover page, Word TOC field, and per-section page breaks;
         plus <output>.build-report.json (source list + warnings such as missing
         images, consumed by validate_bid_package.py 的人工核查清单).
@@ -51,16 +51,17 @@ from docx.shared import Cm, Pt, RGBColor
 
 
 FONT_NAME = "宋体"
-BODY_SIZE_PT = 12          # 小四
-HEADING1_SIZE_PT = 14      # 四号
-COVER_INFO_SIZE_PT = 16    # 三号（封面信息行）
-COVER_TITLE_SIZE_PT = 36   # 小初（封面"投标文件"）
-HEADER_FOOTER_SIZE_PT = 9  # 小五（页眉/页脚）
-ANNOTATION_SIZE_PT = 10.5  # 五号（说明性/待补占位文字）
+BODY_SIZE_PT = 12              # 小四
+HEADING1_SIZE_PT = 14          # 四号
+HEADING_OTHER_SIZE_PT = 12     # 小四，用于二至五级标题
+COVER_INFO_SIZE_PT = 16        # 三号
+COVER_TITLE_SIZE_PT = 36       # 小初
+HEADER_FOOTER_SIZE_PT = 9      # 小五
+ANNOTATION_SIZE_PT = 10.5      # 五号
 HEADING_SPACE_BEFORE_PT = 13
-HEADING_SPACE_AFTER_PT = 6
-FIRST_LINE_INDENT_CHARS = 200   # w:firstLineChars 单位为 1/100 字符：200 = 2字符
-FIRST_LINE_INDENT_TWIPS = 480   # 兼容值：2 × 小四12pt = 24pt = 480 twips
+HEADING_SPACE_AFTER_PT = 8
+FIRST_LINE_INDENT_CHARS = 200  # Word 的字符单位：2 个字符 = 200
+FIRST_LINE_INDENT_TWIPS = 480  # 2 × 12pt，兼容不识别 firstLineChars 的客户端
 BLACK = RGBColor(0, 0, 0)
 ANNOTATION_RED = RGBColor(0xFF, 0x00, 0x00)
 HEADING_STYLE_BY_LEVEL = {
@@ -68,20 +69,43 @@ HEADING_STYLE_BY_LEVEL = {
     2: "Heading 2",
     3: "Heading 3",
     4: "Heading 4",
+    5: "Heading 5",
 }
-HEADING_PATTERN = re.compile(r"^(#{1,4})\s+(.+)$")
+HEADING_PATTERN = re.compile(r"^(#{1,5})\s+(.+)$")
 MARKER_PATTERN = re.compile(r"^<!--\s*([a-z-]+)\s*-->$")
 # 贪婪匹配到行尾右括号，兼容含括号的文件名（如 ISO9001_00(1).jpg）
 IMAGE_PATTERN = re.compile(r"^!\[([^\]]*)\]\((.+)\)$")
-# 整行加粗（**……**）：用于比四级标题更深的小节题（如 1.4.2.1），不进目录
+# 整行加粗（**……**）：用于比五级标题更深的小节题（如 1.4.2.1.1），不进目录
 BOLD_LINE_PATTERN = re.compile(r"^\*\*(.+)\*\*$")
+# 行内加粗（段落/表格单元格中混排的 **……** 片段）：拆分为加粗 run 渲染
+INLINE_BOLD_PATTERN = re.compile(r"\*\*(.+?)\*\*")
+# 行内代码反引号、删除线等：渲染时剥掉标记，避免 Markdown 泄漏进 DOCX
+INLINE_CODE_PATTERN = re.compile(r"`([^`]+)`")
+STRIKETHROUGH_PATTERN = re.compile(r"~~(.+?)~~")
+# 水平分割线（Markdown 语法，成品中应忽略）
+HORIZONTAL_RULE_PATTERN = re.compile(r"^(-{3,}|\*{3,}|_{3,})$")
 # 说明性/待补占位文字（非标书正式内容，交付前必须替换或确认）：五号红色斜体
 ANNOTATION_BRACKET_PATTERN = re.compile(r"^（此处附[:：][^）]{0,60}）$|^【[^】]{1,80}】$")
 ANNOTATION_KEYWORDS = ("此处附", "待补充", "待回填", "待核查", "待确认", "需人工", "说明")
+# 单星号斜体 `*文字*`：渲染时剥掉星号（成对才剥，避免误伤乘号等孤立星号）
+EMPHASIS_PATTERN = re.compile(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)")
+# 行首「**引导词：**」+ 正文：碎片化清单文风，且离开本渲染器就会漏出星号
+LEAD_IN_BOLD_PATTERN = re.compile(r"^\s*(?:[-*+]\s+|\d+[.、]\s*)?\*\*[^*]{1,20}[:：]\*\*\s*\S")
+# 中间稿中应避免的 Markdown 痕迹（**加粗** 为合法语法，由渲染器消化，不列入）
+# 「不成对的**」改用计数判定（见 has_unpaired_bold）：正则版会把合法整行加粗误报。
+MARKDOWN_LEAK_PATTERNS = (
+    (re.compile(r"`"), "行内代码反引号`"),
+    (re.compile(r"~~.+?~~"), "删除线~~"),
+    (re.compile(r"^>\s+", re.MULTILINE), "引用块>"),
+    (re.compile(r"\[([^\]]+)\]\(([^)]+)\)"), "Markdown链接语法"),
+    (EMPHASIS_PATTERN, "单星号斜体*"),
+)
 # A4 减去左右 3.18cm / 上下 2.54cm 页边距后的可打印区域
 PRINTABLE_WIDTH_CM = 21.0 - 3.18 * 2
 PRINTABLE_HEIGHT_CM = 29.7 - 2.54 * 2 - 1.5  # 预留页眉页脚空间
-def set_run_font(run, size_pt: int, bold: bool = False) -> None:
+
+
+def set_run_font(run, size_pt: float, bold: bool = False) -> None:
     run.font.name = FONT_NAME
     run._element.rPr.rFonts.set(qn("w:eastAsia"), FONT_NAME)
     run.font.size = Pt(size_pt)
@@ -90,7 +114,7 @@ def set_run_font(run, size_pt: int, bold: bool = False) -> None:
 
 
 def set_annotation_font(run) -> None:
-    """说明性文字统一为五号红色斜体：与正式内容一眼区分，交付前必须处理掉。"""
+    """将待补或说明文字统一成五号红色斜体，形成可见的人工核查标记。"""
     run.font.name = FONT_NAME
     run._element.rPr.rFonts.set(qn("w:eastAsia"), FONT_NAME)
     run.font.size = Pt(ANNOTATION_SIZE_PT)
@@ -107,15 +131,14 @@ def is_annotation_line(text: str) -> bool:
 
 
 def set_first_line_indent(paragraph) -> None:
-    """正文首行缩进2字符：firstLineChars 随字号自适应（Word 优先读取），
-    firstLine twips 值兜底兼容不识别字符单位的渲染器。"""
+    """设置正文首行缩进 2 字符，并保留 twips 回退值以兼容 Word/WPS。"""
     p_pr = paragraph._p.get_or_add_pPr()
-    ind = p_pr.find(qn("w:ind"))
-    if ind is None:
-        ind = OxmlElement("w:ind")
-        p_pr.append(ind)
-    ind.set(qn("w:firstLineChars"), str(FIRST_LINE_INDENT_CHARS))
-    ind.set(qn("w:firstLine"), str(FIRST_LINE_INDENT_TWIPS))
+    indent = p_pr.find(qn("w:ind"))
+    if indent is None:
+        indent = OxmlElement("w:ind")
+        p_pr.append(indent)
+    indent.set(qn("w:firstLineChars"), str(FIRST_LINE_INDENT_CHARS))
+    indent.set(qn("w:firstLine"), str(FIRST_LINE_INDENT_TWIPS))
 
 
 def configure_paragraph_format(paragraph_format, before_pt: int = 0, after_pt: int = 0) -> None:
@@ -125,7 +148,7 @@ def configure_paragraph_format(paragraph_format, before_pt: int = 0, after_pt: i
     paragraph_format.space_after = Pt(after_pt)
 
 
-def configure_style(style, size_pt: int, bold: bool, before_pt: int = 0, after_pt: int = 0) -> None:
+def configure_style(style, size_pt: float, bold: bool, before_pt: int = 0, after_pt: int = 0) -> None:
     style.font.name = FONT_NAME
     style._element.get_or_add_rPr().get_or_add_rFonts().set(qn("w:eastAsia"), FONT_NAME)
     style.font.size = Pt(size_pt)
@@ -140,9 +163,9 @@ def configure_document_styles(document: Document) -> None:
         document.styles["Heading 1"], HEADING1_SIZE_PT, bold=True,
         before_pt=HEADING_SPACE_BEFORE_PT, after_pt=HEADING_SPACE_AFTER_PT,
     )
-    for style_name in ("Heading 2", "Heading 3", "Heading 4"):
+    for style_name in ("Heading 2", "Heading 3", "Heading 4", "Heading 5"):
         configure_style(
-            document.styles[style_name], BODY_SIZE_PT, bold=True,
+            document.styles[style_name], HEADING_OTHER_SIZE_PT, bold=True,
             before_pt=HEADING_SPACE_BEFORE_PT, after_pt=HEADING_SPACE_AFTER_PT,
         )
 
@@ -227,6 +250,22 @@ def markdown_table_rows(lines: list[str], start: int) -> tuple[list[list[str]], 
     return rows, index
 
 
+def add_inline_runs(paragraph, text: str, size_pt: int, base_bold: bool = False) -> None:
+    """按行内 **加粗** 标记拆分为多个 run；顺带清洗反引号/删除线/链接等泄漏标记。"""
+    text = clean_inline_markdown(text)
+    position = 0
+    for match in INLINE_BOLD_PATTERN.finditer(text):
+        if match.start() > position:
+            run = paragraph.add_run(text[position:match.start()])
+            set_run_font(run, size_pt, bold=base_bold)
+        run = paragraph.add_run(match.group(1))
+        set_run_font(run, size_pt, bold=True)
+        position = match.end()
+    if position < len(text):
+        run = paragraph.add_run(text[position:])
+        set_run_font(run, size_pt, bold=base_bold)
+
+
 def add_table(document: Document, rows: list[list[str]]) -> None:
     if not rows:
         return
@@ -240,8 +279,7 @@ def add_table(document: Document, rows: list[list[str]]) -> None:
             paragraph = cell.paragraphs[0]
             paragraph.style = document.styles["Normal"]
             configure_paragraph_format(paragraph.paragraph_format)
-            run = paragraph.add_run(text)
-            set_run_font(run, BODY_SIZE_PT, bold=(row_index == 0))
+            add_inline_runs(paragraph, text, BODY_SIZE_PT, base_bold=(row_index == 0))
 
 
 def add_body_paragraph(
@@ -249,18 +287,17 @@ def add_body_paragraph(
 ):
     paragraph = document.add_paragraph(style="Normal")
     configure_paragraph_format(paragraph.paragraph_format)
-    # 只有普通正文段缩进；整行加粗是小节题，与标题一样顶格
+    # 仅常规正文缩进；整行加粗的小节题、表格、标题和占位说明均顶格。
     if not bold:
         set_first_line_indent(paragraph)
     if page_break_before:
         set_page_break_before(paragraph)
-    run = paragraph.add_run(text.strip())
-    set_run_font(run, BODY_SIZE_PT, bold=bold)
+    add_inline_runs(paragraph, text.strip(), BODY_SIZE_PT, base_bold=bold)
     return paragraph
 
 
 def add_annotation_paragraph(document: Document, text: str, page_break_before: bool = False):
-    """说明性/待补占位段：五号红色斜体、不缩进，便于交付前逐条清理。"""
+    """说明性/待补占位段：五号红色斜体且顶格，便于交付前逐条核查。"""
     paragraph = document.add_paragraph(style="Normal")
     configure_paragraph_format(paragraph.paragraph_format)
     if page_break_before:
@@ -274,9 +311,9 @@ def add_heading(document: Document, text: str, level: int, page_break_before: bo
     paragraph = document.add_paragraph(style=HEADING_STYLE_BY_LEVEL[level])
     if page_break_before:
         set_page_break_before(paragraph)
-    run = paragraph.add_run(text.strip())
-    size = HEADING1_SIZE_PT if level == 1 else BODY_SIZE_PT
-    set_run_font(run, size, bold=True)
+    run = paragraph.add_run(strip_markdown_marks(text))
+    size_pt = HEADING1_SIZE_PT if level == 1 else HEADING_OTHER_SIZE_PT
+    set_run_font(run, size_pt, bold=True)
     return paragraph
 
 
@@ -291,7 +328,7 @@ def add_plain_title(document: Document, text: str, page_break_before: bool) -> N
     paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     if page_break_before:
         set_page_break_before(paragraph)
-    run = paragraph.add_run(text.strip())
+    run = paragraph.add_run(strip_markdown_marks(text))
     set_run_font(run, HEADING1_SIZE_PT, bold=True)
 
 
@@ -335,16 +372,67 @@ def add_page_break_paragraph(document: Document) -> None:
     run.add_break(WD_BREAK.PAGE)
 
 
+def strip_markdown_marks(text: str) -> str:
+    """去掉常见 Markdown 标记，避免封面/标题/直排文本原样漏出。
+
+    正文段落的 **加粗** 由 add_inline_runs 单独处理；本函数用于封面、标题
+    等整段直排文本，以及最终兜底清洗。
+    """
+    text = re.sub(r"^\s*#{1,6}\s+", "", text)
+    text = INLINE_CODE_PATTERN.sub(r"\1", text)
+    text = STRIKETHROUGH_PATTERN.sub(r"\1", text)
+    text = text.replace("**", "").replace("__", "")
+    text = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"\1", text)
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1", text)
+    return text.strip()
+
+
+def clean_inline_markdown(text: str) -> str:
+    """清洗正文/表格单元格中除 **加粗** 以外的 Markdown 痕迹。
+
+    单星号斜体 `*文字*` 此前未清洗，会把星号原样带进 DOCX（如 `*保密承诺：*`）。
+    加粗由 add_inline_runs 拆 run 处理，故此处只剥单星号，不动 `**`。
+    """
+    text = INLINE_CODE_PATTERN.sub(r"\1", text)
+    text = STRIKETHROUGH_PATTERN.sub(r"\1", text)
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1", text)
+    text = EMPHASIS_PATTERN.sub(r"\1", text)
+    return text
+
+
+def has_unpaired_bold(text: str) -> bool:
+    """行内 `**` 个数为奇数即不成对，会导致加粗渲染错位、星号外漏。
+
+    注意：整行加粗 `**小节题**` 是合法写法（两个标记，偶数），不得误报。
+    """
+    return text.count("**") % 2 == 1
+
+
+def detect_markdown_leaks(text: str) -> list[str]:
+    """检测成品正文中不应残留的 Markdown 痕迹，返回命中说明列表。"""
+    hits: list[str] = []
+    for pattern, label in MARKDOWN_LEAK_PATTERNS:
+        if pattern.search(text):
+            hits.append(label)
+    if has_unpaired_bold(text):
+        hits.append("不成对的**标记")
+    return hits
+
+
 def add_cover_page(document: Document, lines: list[str]) -> None:
-    """封面：信息行三号居中；"投标文件"小初加粗居中，上下留白，与中标样本一致。"""
+    """封面：信息行三号居中；含"投标文件"的主标题小初加粗居中。"""
     for line in lines:
-        text = line.strip()
+        text = strip_markdown_marks(line)
         if not text:
             continue
         paragraph = document.add_paragraph(style="Normal")
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         compact = text.replace("　", "").replace(" ", "")
-        if compact == "投标文件":
+        # 主标题：以"投标文件"开头且非"XX：YY"信息项（如"投标文件""投标文件（技术部分）"）
+        is_cover_title = (
+            compact.startswith("投标文件") and "：" not in compact and ":" not in compact
+        )
+        if is_cover_title:
             configure_paragraph_format(paragraph.paragraph_format, before_pt=90, after_pt=90)
             run = paragraph.add_run(text)
             set_run_font(run, COVER_TITLE_SIZE_PT, bold=True)
@@ -360,8 +448,8 @@ def add_toc_block(document: Document, page_break_before: bool) -> None:
     configure_paragraph_format(paragraph.paragraph_format)
     add_field_runs(
         paragraph,
-        'TOC \\o "1-3" \\h \\z \\u',
-        "【目录域：在 Word 中全选后按 F9（或右键→更新域）生成带页码目录】",
+        'TOC \\o "1-5" \\h \\z \\u',
+        "【目录域：在 Word/WPS 中全选后按 F9 或右键「更新域」生成带页码目录】",
         BODY_SIZE_PT,
         annotation_placeholder=True,
     )
@@ -418,6 +506,22 @@ class MarkdownRenderer:
             if not stripped:
                 index += 1
                 continue
+
+            # Markdown 水平分割线不进入成品
+            if HORIZONTAL_RULE_PATTERN.match(stripped):
+                index += 1
+                continue
+
+            # 引用块 > 前缀剥掉后按正文渲染，并记入泄漏警告
+            if stripped.startswith(">"):
+                stripped = stripped.lstrip(">").strip()
+                line = stripped
+                self.warnings.append(
+                    f"Markdown引用块已降级为正文（请改写成标书段落）: {markdown_path.name}"
+                )
+                if not stripped:
+                    index += 1
+                    continue
 
             marker_match = MARKER_PATTERN.match(stripped)
             if marker_match:
@@ -478,11 +582,28 @@ class MarkdownRenderer:
                     self.last_heading_level = level
                 self.rendered_any_block = True
             else:
-                text = line[2:] if line.startswith("- ") else line
+                # 无序列表标记剥掉后按正文渲染（写作规则要求成段论述，列表应改写为（1）（2））
+                if re.match(r"^[-*+]\s+", line):
+                    text = re.sub(r"^[-*+]\s+", "", line)
+                    warning = (
+                        f"Markdown列表标记已降级为正文（请改写成（1）（2）成段论述）: "
+                        f"{markdown_path.name}"
+                    )
+                    if warning not in self.warnings:
+                        self.warnings.append(warning)
+                else:
+                    text = line
                 bold_match = BOLD_LINE_PATTERN.match(stripped)
+                # 对即将写入的正文做泄漏检测（清洗前），便于作者回改中间稿
+                for leak in detect_markdown_leaks(text):
+                    warning = f"Markdown痕迹[{leak}]: {markdown_path.name}"
+                    if warning not in self.warnings:
+                        self.warnings.append(warning)
                 if is_annotation_line(stripped):
                     add_annotation_paragraph(
-                        self.document, stripped, page_break_before=self._consume_break()
+                        self.document,
+                        strip_markdown_marks(stripped),
+                        page_break_before=self._consume_break(),
                     )
                 elif bold_match:
                     add_body_paragraph(

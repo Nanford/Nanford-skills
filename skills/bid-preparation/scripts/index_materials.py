@@ -76,14 +76,63 @@ def write_markdown(records: list[dict], output_dir: Path) -> Path:
     return target
 
 
-def index_materials(material_root: Path, output_dir: Path) -> dict:
+def build_material_gate(records: list[dict], scope: str = "full") -> dict:
+    """P0：资料库空壳时禁止写详细正文。仅统计真实证明文件（排除说明类占位）。"""
+    evidence_count = len(records)
+    # 至少要有若干真实证据文件才允许展开「含事实陈述」的正文
+    min_for_detail = 1 if scope == "technical-only" else 3
+    writing_detail_allowed = evidence_count >= min_for_detail
+    return {
+        "scope": scope,
+        "evidence_file_count": evidence_count,
+        "min_for_detail": min_for_detail,
+        "writing_detail_allowed": writing_detail_allowed,
+        "outline_only": not writing_detail_allowed,
+        "message": (
+            "资料库有可索引证据文件，允许在用户确认大纲后撰写正文（仍须逐条对应真实材料）"
+            if writing_detail_allowed
+            else (
+                f"资料库可索引证据文件仅 {evidence_count} 个（需要≥{min_for_detail}）。"
+                "P0 硬门禁：禁止撰写含人员/业绩/证书/报价等事实的详细正文；"
+                "仅允许输出大纲 + 资料缺口清单，待用户补齐后说「继续」再写。"
+            )
+        ),
+    }
+
+
+def write_material_gate(gate: dict, output_dir: Path) -> None:
+    lines = [
+        "# 资料写作门禁（P0）",
+        "",
+        f"- 生成范围：{gate.get('scope', 'full')}",
+        f"- 可索引证据文件数：{gate['evidence_file_count']}",
+        f"- 详细正文门槛：≥ {gate['min_for_detail']} 个真实文件",
+        f"- **是否允许写详细正文**：{'是' if gate['writing_detail_allowed'] else '否（仅大纲+缺口清单）'}",
+        "",
+        gate["message"],
+        "",
+    ]
+    (output_dir / "material-gate.md").write_text("\n".join(lines), encoding="utf-8")
+    (output_dir / "material-gate.json").write_text(
+        json.dumps(gate, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
+
+def index_materials(material_root: Path, output_dir: Path, scope: str = "full") -> dict:
     material_root = material_root.expanduser().resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     files = list_material_files(material_root)
     records = [material_record(path, material_root) for path in files]
     markdown_path = write_markdown(records, output_dir)
     json_path = output_dir / "material-index.json"
-    result = {"material_root": str(material_root), "materials": records, "markdown": str(markdown_path)}
+    gate = build_material_gate(records, scope=scope)
+    write_material_gate(gate, output_dir)
+    result = {
+        "material_root": str(material_root),
+        "materials": records,
+        "markdown": str(markdown_path),
+        "gate": gate,
+    }
     json_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     return result
 
@@ -92,12 +141,18 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Index company evidence materials.")
     parser.add_argument("--materials", type=Path, required=True, help="Material file or directory.")
     parser.add_argument("--output-dir", type=Path, required=True, help="Analysis output directory.")
+    parser.add_argument(
+        "--scope",
+        choices=("full", "technical-only"),
+        default="full",
+        help="与项目生成范围一致，影响详细正文最低证据数门槛.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    result = index_materials(args.materials, args.output_dir)
+    result = index_materials(args.materials, args.output_dir, scope=args.scope)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
