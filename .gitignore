@@ -35,3 +35,9 @@ mcps/
 
 # Generated PLC mapper outputs
 skills/plc-station-db-mapper/output/
+
+# Local subsidy tracker credentials, customer data, and generated artifacts
+skills/hubei-subsidy-tracker/config.env
+skills/hubei-subsidy-tracker/data/
+skills/hubei-subsidy-tracker/scripts/run_daily.bat
+skills/hubei-subsidy-tracker/*.zip

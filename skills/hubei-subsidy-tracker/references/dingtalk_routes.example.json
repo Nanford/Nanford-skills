@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "张三@企业A": {
+      "name": "企业A政策通知群",
+      "webhook": "https://oapi.dingtalk.com/robot/send?access_token=REPLACE_ME",
+      "secret": "SEC_REPLACE_ME"
+    }
+  }
+}

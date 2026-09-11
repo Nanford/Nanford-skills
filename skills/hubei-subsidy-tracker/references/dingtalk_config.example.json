@@ -1,0 +1,9 @@
+{
+  "base_id": "REPLACE_WITH_DINGTALK_BASE_ID",
+  "tables": {
+    "policy": "REPLACE_WITH_POLICY_TABLE_ID",
+    "enterprise": "REPLACE_WITH_ENTERPRISE_TABLE_ID",
+    "match": "REPLACE_WITH_MATCH_TABLE_ID"
+  },
+  "robot_code": ""
+}

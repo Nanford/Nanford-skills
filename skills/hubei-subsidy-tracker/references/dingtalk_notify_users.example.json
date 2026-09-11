@@ -1,0 +1,4 @@
+{
+  "_说明": "键为企业档案中每家企业对应操作人的姓名，值为经确认的钉钉 userId；不设置固定或默认收件人",
+  "张三": "REPLACE_WITH_CONFIRMED_DINGTALK_USER_ID"
+}
