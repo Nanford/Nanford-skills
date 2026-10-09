@@ -1,0 +1,4 @@
+interface:
+  display_name: "镜头补充插图"
+  short_description: "为缺画面的镜头生成示意插图并登记来源"
+  default_prompt: "使用 $visual-assets 为分镜里缺画面的镜头生成插图并入库。"

@@ -1,0 +1,27 @@
+# Credentials and local machine settings must never enter version history.
+.env
+.env.*
+!.env.example
+config.local.*
+secrets/
+
+# Source media, private briefs and generated assets are retained locally.
+inbox/
+projects/
+library/
+.cache/
+logs/
+out/
+dist/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+*.log
+~$*
+
+# Personal Claude Code settings stay local; project skills under .claude/skills are versioned.
+.claude/settings.local.json
+
+# Fonts and their licence text are downloaded and SHA-256 verified by the render skill setup script (about 17 MB), not versioned.
+.claude/skills/remotion-render/public/fonts/

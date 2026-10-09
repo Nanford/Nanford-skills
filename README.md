@@ -193,6 +193,27 @@
 *   **能力边界**：匹配结果与申报草稿供人工审核，不自动提交申报，不保证覆盖全部政策或通过审核。
 *   **入口文档**：[Skill 使用说明](skills/hubei-subsidy-tracker/SKILL.md)。
 
+### 🎞️ 16. AI 实战短视频生产工作流（VideoCut）
+> **定位**：把选题、公众号文章或录屏做成抖音 / 视频号竖屏成片的 12 个 Skill，由总入口 `video-workflow` 按阶段调度
+
+| Skill | 工作阶段 | 核心产物 |
+| :--- | :--- | :--- |
+| `video-workflow` | 总入口：阶段顺序、四个人工确认点、计费与发布边界、断点续跑、初始化工作区 | 新工作区（规则文档、模板、标记文件） |
+| `video-project` | 建档、素材入库、阶段状态与费用账本 | `project.json`、`assets.json`、`costs/` |
+| `script-check` | 配音前文稿闸门、平台敏感词（含截图 OCR）、开头实测 | `script-check.json`、`terms-check.json` |
+| `doubao-review` / `jev-check` | 豆包平台风险审核 / Jev 语义提示（计费，带月度上限） | `doubao-review.json`、`jev-check.json` |
+| `minimax-tts` / `voice-captions` | MiniMax 配音与逐字时间戳 / 拼接母轨与断句字幕 | `voice.wav`、`captions.json`、SRT |
+| `video-timeline` | 毫秒与帧一次算定的统一时间轴 | `timeline.json` |
+| `visual-assets` / `remotion-render` | 示意插图 / Remotion 渲染十种场景、语义配色、文字动效、封面与动作标记 | 无声画面、审片静帧、`actions.json` |
+| `sfx-kit` / `av-export` | 本地合成界面音效 / 音效轨、混音、封装、质检与交付清单 | `sfx.wav`、`mix.wav`、成片、`delivery.json` |
+
+*   **核心价值**：需要判断的交给智能体，需要精确的交给本地命令；每一步都记录上游校验值，改了哪里只重做受影响的环节。
+*   **画面风格**：浅灰底、五种语义色（品牌 / 痛点 / 解法 / 数据 / 提醒）按文案意思选色；文字动效含落下、弹出、数字滚动、划掉换词、荧光笔、打字、飞入飞出、粒子消散。
+*   **驱动方式**：Codex、Claude Code 等能读文件、能在本机运行 Python 3.10+、Node.js 22.6+ 与 FFmpeg 的智能体。
+*   **工作区**：`videocut.workspace.json` 标记工作区（或用环境变量 `VIDEOCUT_WORKSPACE`），`.env`、项目文件和付费接口用量账本都放在工作区里，技能装在全局目录也不会写错位置。
+*   **入口文档**：[video-workflow](skills/video-workflow/SKILL.md)；完整规则在 [references/workspace/](skills/video-workflow/references/workspace/)。
+*   **素材许可**：Lucide 图标为 ISC 许可（许可全文随附）；6 张风景底图为 Unsplash License（作者与来源见清单），另 15 张安装时从图库 CDN 下载；字体安装时按固定版本下载（SIL OFL 1.1）。这些素材不适用本仓库的 MIT 许可。
+
 ---
 
 ## 🏗️ 仓库目录结构
@@ -204,7 +225,10 @@ Nanford-skills/
 ├── .agents/                      # Agent 专用 Skill
 │   └── skills/
 │       └── architecture-diagram/ # 无连线架构图视觉设计
+├── install-video-skills.ps1       # 视频工作流 12 个 Skill 的安装脚本
 └── skills/                       # 核心 Skill 目录
+    ├── video-workflow/           # 视频生产总入口（references/workspace/ 为规则文档与模板）
+    ├── video-project/ … av-export/  # 视频工作流其余 11 个 Skill，各带 scripts/、tests/、agents/
     ├── hubei-subsidy-tracker/     # 湖北惠企政策采集、企业匹配与协作通知
     │   ├── SKILL.md              # 首次引导、日常运行与故障恢复入口
     │   ├── scripts/              # 采集、匹配、通知、状态管理与分发打包
@@ -273,6 +297,18 @@ powershell -ExecutionPolicy Bypass -File ".\install-ecom-skills.ps1" -Agent both
 
 Codex 依次调用 `$ecom-listing`、`$ecom-image`、`$ecom-publish`；Claude Code 依次调用 `/ecom-listing`、`/ecom-image`、`/ecom-publish`。需要补充关键选项时使用 Agent 的原生选择控件；当前模式不提供该控件时，切换到支持结构化输入的交互模式后继续。
 
+### 视频工作流安装
+
+需要 Python 3.10+（含 `requests`、`pillow`）、Node.js 22.6+、FFmpeg。脚本先检查环境，再复制 Skill，并在每个安装位置执行 `npm ci`、下载字体、恢复底图、生成音效库：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\install-video-skills.ps1" -Agent codex
+# 之后建一个工作区（每台电脑或每个账号一次），复制 .env.example 为 .env 填密钥
+python "$env:USERPROFILE\.codex\skills\video-workflow\scripts\init_workspace.py" D:\VideoWork
+```
+
+在工作区目录打开智能体，Codex 用 `$video-workflow`、Claude Code 用 `/video-workflow` 开始。`-DryRun` 只预览，`-SkipSetup` 只复制不安装依赖，`-Force` 更新已安装的版本。这些 Skill 由 VideoCut 仓库单向导出，问题请在源仓库修改。
+
 ### 统一标准
 每个 Skill 遵循 **“单一职责”** 原则，包含明确的：
 - `SKILL.md` (核心指令)
@@ -287,6 +323,7 @@ Codex 依次调用 `$ecom-listing`、`$ecom-image`、`$ecom-publish`；Claude Co
 
 ## 📜 版本更新记录
 
+- **v0.10**：新增 AI 实战短视频生产工作流（VideoCut）12 个 Skill 与 `install-video-skills.ps1`：总入口 `video-workflow`、文稿闸门与平台审核、MiniMax 配音与字幕、统一时间轴、Remotion 渲染（语义配色与八种文字动效）、系列音效与混音质检交付。
 - **v0.9**：新增 `bid-preparation` 标书响应文件制作 Skill（脚本 + 模板 + 参考卡片）；新增 `minimal-narrative-sketch-scenes` 极简手绘叙事小场景提示词 Skill；新增 `plc-station-db-mapper` 西门子 PLC 站台点位映射 Skill；新增 `.agents/skills/architecture-diagram` 无连线架构图视觉设计 Skill；升级 `text-to-ppt-pro` 为 PPT 执行层（13 种页型、4 套主题、`layout-specs` 版式规范、参考 PPT）；`article-to-ppt` 重命名为 `article-to-ppt-outline` 明确规划层定位。
 - **v0.8**：新增 `article-to-ppt` 与 `text-to-ppt-pro`，完善 PPT 制作全链路工具；升级 `hootoolai-ppt` 至 V3，引入 PPT-Agent 认知设计逻辑。
 - **v0.7**：新增 `ai-news-scout` AI 信息差日报 Skill——3 批 Agent 并行搜索、自动去重合并、6 类分类标签、精简 5 维分析 + 3 维评分、输出结构化日报文件。

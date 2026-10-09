@@ -1,0 +1,4 @@
+interface:
+  display_name: "文稿闸门"
+  short_description: "配音前检查开头、画面文字、事实出处与平台敏感词"
+  default_prompt: "使用 $script-check 对当前版本跑 lint 和 terms，逐条列出 error。"

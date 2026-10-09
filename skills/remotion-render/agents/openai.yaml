@@ -1,0 +1,4 @@
+interface:
+  display_name: "Remotion 画面渲染"
+  short_description: "按时间轴渲染竖屏画面、审片静帧、封面与动作标记"
+  default_prompt: "使用 $remotion-render 先出审片静帧，确认后渲染正式画面。"

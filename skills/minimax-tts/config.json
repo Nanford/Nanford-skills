@@ -1,0 +1,24 @@
+{
+  "model": "speech-2.8-hd",
+  "textNormalization": true,
+  "pronunciation": [],
+  "audio": {
+    "format": "mp3",
+    "sampleRate": 32000,
+    "bitrate": 128000
+  },
+  "subtitles": "word",
+  "maxCharsPerRun": 3000,
+  "pricePer10kBillingChars": 3.5,
+  "priceSource": "platform.minimax.cn 按量计费 speech-2.8-hd ¥3.50/万字符，汉字计 2 个字符（2026-09-29 核验）",
+  "defaultRole": "narrator",
+  "roles": {
+    "narrator": {
+      "voice_id": "Chinese (Mandarin)_Gentleman",
+      "speed": 1.0,
+      "vol": 1.0,
+      "pitch": 0,
+      "label": "温润男声（2026-09-29 用户指定；代表段试听待确认）"
+    }
+  }
+}

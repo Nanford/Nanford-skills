@@ -1,0 +1,4 @@
+interface:
+  display_name: "统一时间轴"
+  short_description: "按真实配音时间生成毫秒与帧一次算定的时间轴"
+  default_prompt: "使用 $video-timeline 为当前版本生成 timeline.json。"

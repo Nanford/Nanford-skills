@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "is_example": true,
+  "project_id": "20260929-meeting-action-list",
+  "topic": "把会议记录整理成可核对的行动清单",
+  "audience": "需要整理会议结论和跟进事项的办公室职员",
+  "core_question": "如何用 AI 整理任务、负责人和截止时间，并检查遗漏？",
+  "audience_segment": "ai_office",
+  "hook": {"type": "pain", "text": "每次开完会，行动项总有人漏跟"},
+  "input_type": "topic",
+  "inputs": [],
+  "platforms": ["douyin", "channels"],
+  "target_duration_seconds": {
+    "douyin": {"min": 60, "max": 120},
+    "channels": {"min": 60, "max": 180}
+  },
+  "mode": "hybrid",
+  "voice": {
+    "mode": "tts",
+    "provider": null,
+    "model": null,
+    "voice_id": null,
+    "language": "zh-CN",
+    "cloning_authorized": false
+  },
+  "music": {
+    "mode": "licensed_library",
+    "asset_id": null
+  },
+  "aigc": {
+    "final_implicit_label": null,
+    "decision_ref": null
+  },
+  "budget": {
+    "currency": "CNY",
+    "authorized_max": 0,
+    "authorization_ref": null,
+    "allow_new_paid_calls": false
+  },
+  "publish": {
+    "authorized": false,
+    "account_ref": null,
+    "authorization_ref": null
+  },
+  "constraints": [
+    "不出镜，普通话，竖屏",
+    "真实操作与原理示意分开标识",
+    "不虚构节省时间或实测结果",
+    "正式录屏前核验素材使用权并遮挡个人信息",
+    "缺少录屏时先建立补录清单，不能用生成界面冒充真实结果"
+  ]
+}

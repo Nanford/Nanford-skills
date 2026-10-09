@@ -1,0 +1,4 @@
+interface:
+  display_name: "Jev 语义提示"
+  short_description: "配音前检查开头、受众、夸大收益与事实支持"
+  default_prompt: "使用 $jev-check 先 dry-run，再对当前版本做语义提示。"

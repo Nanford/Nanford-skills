@@ -1,0 +1,4 @@
+interface:
+  display_name: "视频生产总流程"
+  short_description: "按阶段调度十一个技能把选题做成竖屏成片"
+  default_prompt: "使用 $video-workflow 查看当前项目进度并推进到下一步；遇到四个人工确认点、计费或发布时停下来问我。"

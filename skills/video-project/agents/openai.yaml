@@ -1,0 +1,4 @@
+interface:
+  display_name: "视频项目管理"
+  short_description: "建档、导入素材、登记阶段状态与费用"
+  default_prompt: "使用 $video-project 查看项目状态，或为新选题建档。"

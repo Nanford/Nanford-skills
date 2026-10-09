@@ -1,0 +1,4 @@
+interface:
+  display_name: "豆包平台风险审核"
+  short_description: "审核配音稿、脚本与发布文案的平台违规风险"
+  default_prompt: "使用 $doubao-review 先 dry-run 估算费用，再审核当前版本。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "配音拼接与字幕"
+  short_description: "拼成 48 kHz 母轨并按语义断句生成字幕"
+  default_prompt: "使用 $voice-captions 拼接当前版本的配音并生成字幕。"

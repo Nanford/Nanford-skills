@@ -1,0 +1,4 @@
+interface:
+  display_name: "系列音效库"
+  short_description: "本地合成按画面动作取用的界面音效"
+  default_prompt: "使用 $sfx-kit 生成音效库并排出试听文件。"

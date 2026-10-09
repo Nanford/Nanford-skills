@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "description": "本项目自用的平台敏感词工作清单，不是抖音或视频号的官方名单（平台不公开完整名单）。每收到一次平台处理通知，按真实原因补充条目并写明来源；不凭想象一次铺满。",
+  "matching": "英文词按整词、不分大小写匹配：前面不能紧贴字母，后面不能接小写字母（CLAUDE.md、GPT-4o、#ClaudeCode 会命中，ChatGPT 不算 GPT）；含中文的词按子串匹配。截图文字经 OCR 后去掉汉字之间的空格再匹配。",
+  "levels": "error：发布阻断，必须改稿、换图或打码；warning：逐条判断；off：该平台不检查。",
+  "categories": [
+    {
+      "category": "overseas_ai",
+      "label": "境外 AI 产品名",
+      "levels": {"douyin": "error", "channels": "error"},
+      "suggestion": "统一改称「AI Agent」；截图里的产品名打码或裁掉",
+      "source": "2026-09-30 抖音将 ai-bid-format 判为「不适宜公开」后，主理人决定统一用「AI Agent」；平台未给出具体条款",
+      "terms": ["Claude", "Anthropic", "ChatGPT", "GPT", "OpenAI", "Gemini", "Codex", "Grok", "Midjourney", "Perplexity", "OpenClaw", "ClawdBot", "Moltbot"]
+    },
+    {
+      "category": "blocked_apps",
+      "label": "境内无法访问的境外应用",
+      "levels": {"douyin": "error", "channels": "error"},
+      "suggestion": "截图打码或换图；口播与文案删去",
+      "source": "2026-09-30 ai-bid-format 抖音版开场截图出现 WhatsApp、Telegram、Discord 后被判「不适宜公开」（执行者推断的最可能原因，平台未确认）",
+      "terms": ["WhatsApp", "Telegram", "Discord", "YouTube", "Facebook", "Instagram", "Twitter", "推特", "油管", "脸书"]
+    },
+    {
+      "category": "circumvention",
+      "label": "翻墙与访问限制",
+      "levels": {"douyin": "error", "channels": "error"},
+      "suggestion": "删去；不提示观众如何访问境外服务",
+      "source": "项目初版工作清单（2026-09-30），依据是境内平台对引导使用境外未备案服务内容的普遍审核",
+      "terms": ["VPN", "翻墙", "梯子", "科学上网", "魔法上网", "中国大陆用户"]
+    },
+    {
+      "category": "off_platform",
+      "label": "站外引流",
+      "levels": {"douyin": "error", "channels": "off"},
+      "suggestion": "抖音版删去站外去向，改成「评论区聊聊」「关注看下一期」",
+      "source": "brief 约束「抖音版不引导到站外」（2026-09-29）；视频号属于微信生态，不检查",
+      "terms": ["公众号", "微信", "加V", "vx", "私信领取", "回复关键词", "扫码"]
+    },
+    {
+      "category": "ghostwriting",
+      "label": "代写与招投标违规",
+      "levels": {"douyin": "error", "channels": "error"},
+      "suggestion": "删去；本系列只讲自己动手用 AI 做文件",
+      "source": "项目初版工作清单（2026-09-30）：标书类选题容易被归入代写服务",
+      "terms": ["代写", "代做", "包中标", "包过", "围标", "串标"]
+    },
+    {
+      "category": "absolute_claims",
+      "label": "极限词与收益承诺",
+      "levels": {"douyin": "warning", "channels": "warning"},
+      "suggestion": "换成实测数字或删去；收益承诺不写",
+      "source": "项目初版工作清单（2026-09-30），参照广告法极限用语与 AGENTS.md「避免夸张收益」",
+      "terms": ["最好", "最强", "最佳", "顶级", "史上", "全网第一", "排名第一", "100%", "绝对", "保证", "稳赚", "躺赚", "月入", "暴富"]
+    }
+  ]
+}

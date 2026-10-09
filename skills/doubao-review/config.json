@@ -1,0 +1,18 @@
+{
+  "model": "doubao-seed-2-0-lite-260428",
+  "modelNote": "火山方舟模型 ID；须先在方舟控制台「开通管理」开通该模型，否则接口报模型不存在或无权限。2026-09-30 首次真实调用确认可用（check --ping 与两版文稿审核均成功，json_schema 与关闭深度思考均被接受）",
+  "apiBase": "https://ark.cn-beijing.volces.com/api/v3",
+  "thinking": "disabled",
+  "responseFormat": "json_schema",
+  "temperature": 0,
+  "maxOutputTokens": 4000,
+  "priceTiersCnyPerMillion": [
+    {"maxInputTokens": 32000, "input": 0.6, "output": 3.6},
+    {"maxInputTokens": 128000, "input": 1.2, "output": 7.2},
+    {"maxInputTokens": 256000, "input": 1.8, "output": 10.8}
+  ],
+  "priceSource": "Doubao-Seed-2.0-lite 推理输入 0.6～1.8 元/百万 tokens、输出 3.6～10.8 元/百万 tokens，按输入长度分档（2026-09-30 搜索摘要，官方价格页 docs.volcengine.com/docs/82379/1099320 为动态页面未能抓取；分档边界待在控制台核对）",
+  "monthlyBudgetCny": 20,
+  "budgetAuthorizationRef": "用户会话授权 2026-09-30：豆包审核每月上限 ¥20；高风险拦截；审核范围含发布文案",
+  "tokenBoundOverhead": 200
+}

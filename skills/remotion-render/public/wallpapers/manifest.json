@@ -1,0 +1,542 @@
+{
+  "schema_version": "1.0",
+  "purpose": "VideoCut 背景底图库：wallpaper 背景的全部可用图片，按题材分组（group）。每期在 brief.visual.backdrop_theme 选与题材相符的组，镜头未指定底图时按组轮换（主理人 2026-10-07：背景不能每次都一样，要按题材换）。nature 组为 2026-09-29 首批风景图。",
+  "license_checked_at": "2026-09-29",
+  "license": {
+    "name": "Unsplash License",
+    "url": "https://unsplash.com/license",
+    "summary": "允许免费商用、修改和分发，不要求署名；限制：不得不经实质修改直接出售图片，不得汇编 Unsplash 图片来复制类似或竞争的服务。",
+    "page_text_verified": "每张照片页面均显示「Free to use under the Unsplash License」，均非 Unsplash+ 付费图（2026-09-29 逐页核对）；2026-10-07 新增 15 张另用照片 JSON 核对 premium=false、plus=false（搜索结果页的标记不可靠，以照片本身为准）"
+  },
+  "processing": "取原图可容纳的最大 9:16 区域（box 为原图像素坐标 [左, 上, 右, 下]），Pillow 12.1.0 LANCZOS 缩放到 1080×1920，JPEG 质量 86。2026-10-07 起由 scripts/wallpapers_build.py 处理：原图经 images.unsplash.com 取原尺寸，focus_x/focus_y 为取景中心，box 由脚本算出",
+  "wallpapers": [
+    {
+      "id": "glacier",
+      "file": "glacier.jpg",
+      "description": "冰川湖与漂浮的蓝白冰山，水面平静",
+      "photographer": "Marc Wieland",
+      "photographer_url": "https://unsplash.com/@mawiswiss",
+      "page_url": "https://unsplash.com/photos/icebergs-floating-in-a-calm-glacial-lake-AQO3hq9lltE",
+      "download_url": "https://unsplash.com/photos/AQO3hq9lltE/download?force=true",
+      "source_size": [
+        7901,
+        5267
+      ],
+      "source_sha256": "466f7a56c732b930c777bfd05a1eaaa9ea3587d9aea19ca642b057bb2d49377d",
+      "box": [
+        1837,
+        0,
+        4800,
+        5267
+      ],
+      "sha256": "80f7d58c98a0e1a5650c4ff2316b90d0c06a0d4c7b58c5d14478300fbe483302",
+      "bytes": 326032,
+      "group": "nature"
+    },
+    {
+      "id": "meltwater",
+      "file": "meltwater.jpg",
+      "description": "航拍冰川融水的碧绿水道穿过浅色沙洲",
+      "photographer": "Nathan Queloz",
+      "photographer_url": "https://unsplash.com/@nathan030997",
+      "page_url": "https://unsplash.com/photos/an-aerial-view-of-a-beautiful-turquoise-lake-CzZZBrRWMjA",
+      "download_url": "https://unsplash.com/photos/CzZZBrRWMjA/download?force=true",
+      "source_size": [
+        5272,
+        3948
+      ],
+      "source_sha256": "f27fcdfafa9154e906784225940d316b0a83512bd0dac2836676f4b73c3e81ab",
+      "box": [
+        1526,
+        0,
+        3747,
+        3948
+      ],
+      "sha256": "573d49edeb17d1ab8a276c68f6e688cf021e792af645bf9a0a7bb9465e3ca07c",
+      "bytes": 338603,
+      "group": "nature"
+    },
+    {
+      "id": "alpenglow",
+      "file": "alpenglow.jpg",
+      "description": "黄昏粉紫天空下的雪峰（阿尔卑斯 Dent Blanche）",
+      "photographer": "Oleg Demakov",
+      "photographer_url": "https://unsplash.com/@odemakov",
+      "page_url": "https://unsplash.com/photos/a-snowy-mountain-range-with-a-pink-sky-in-the-background-jVsFoS586aI",
+      "download_url": "https://unsplash.com/photos/jVsFoS586aI/download?force=true",
+      "source_size": [
+        3024,
+        2012
+      ],
+      "source_sha256": "07e1fce84f898390009b3feb6867e0998e0ede636a328a6c2828fe07323d1bc9",
+      "box": [
+        1097,
+        0,
+        2229,
+        2012
+      ],
+      "sha256": "bf3f2331887d9698ce2e867570e94645695bef51076aed066ac7ed26c1af7313",
+      "bytes": 324428,
+      "group": "nature"
+    },
+    {
+      "id": "pinkbeach",
+      "file": "pinkbeach.jpg",
+      "description": "俯拍粉色沙滩与浅绿海水",
+      "photographer": "Jonathan Bean",
+      "photographer_url": "https://unsplash.com/@jonathanbean",
+      "page_url": "https://unsplash.com/photos/a-sandy-beach-with-a-pink-sky-T14fyw_tFik",
+      "download_url": "https://unsplash.com/photos/T14fyw_tFik/download?force=true",
+      "source_size": [
+        3070,
+        5464
+      ],
+      "source_sha256": "63e19f6b708e81f792a7917ce18e23399b5fd0e8d47069485d29035bf4918365",
+      "box": [
+        0,
+        3,
+        3070,
+        5461
+      ],
+      "sha256": "b533df5efe30f29fad3083359d99fd3600bb9f57fbcc375251fc53d307df2aa8",
+      "bytes": 322447,
+      "group": "nature"
+    },
+    {
+      "id": "pinkclouds",
+      "file": "pinkclouds.jpg",
+      "description": "日落时粉橙色云层与海浪",
+      "photographer": "Hannah Reding",
+      "photographer_url": "https://unsplash.com/@hannahrdg",
+      "page_url": "https://unsplash.com/photos/pink-clouds-over-the-ocean-at-sunset--hb1Oqyyd80",
+      "download_url": "https://unsplash.com/photos/-hb1Oqyyd80/download?force=true",
+      "source_size": [
+        2944,
+        4416
+      ],
+      "source_sha256": "0521d1726c654e2ababf3338599bc418c9fbb8389778885c5a1350c58dee9f29",
+      "box": [
+        230,
+        0,
+        2714,
+        4416
+      ],
+      "sha256": "c69066f29e7dc43c3bc756b6cf9a614c87aac773017e70756483ae6dfbdc7532",
+      "bytes": 280634,
+      "group": "nature"
+    },
+    {
+      "id": "mistlake",
+      "file": "mistlake.jpg",
+      "description": "雾中湖面与远处树林剪影，蓝灰色调",
+      "photographer": "Daniil Silantev",
+      "photographer_url": "https://unsplash.com/@betagamma",
+      "page_url": "https://unsplash.com/photos/a-foggy-lake-with-trees-in-the-distance-IEogsFZ6sFo",
+      "download_url": "https://unsplash.com/photos/IEogsFZ6sFo/download?force=true",
+      "source_size": [
+        4895,
+        3268
+      ],
+      "source_sha256": "438ac3d675d2e3d1cbf470591d4dc700449ffeb3119dfc34fea334ee4d1ed599",
+      "box": [
+        1528,
+        0,
+        3366,
+        3268
+      ],
+      "sha256": "d0f4ab2d52115139fbc85678210e4cad65e0143bd02064167b26fdb74194a4eb",
+      "bytes": 73213,
+      "group": "nature"
+    },
+    {
+      "id": "deskwhite",
+      "group": "office",
+      "file": "deskwhite.jpg",
+      "description": "白色桌面上的绿植、白纸与钢笔，一角键盘，明亮干净",
+      "photographer": "Mediamodifier",
+      "photographer_url": "https://unsplash.com/@mediamodifier",
+      "page_url": "https://unsplash.com/photos/green-cactus-plant-on-white-table-nCk22aqZjlM",
+      "source_url": "https://images.unsplash.com/photo-1625225230517-7426c1be750c",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.55,
+      "source_size": [
+        6000,
+        4000
+      ],
+      "source_sha256": "002d486df112e76977c5af3c065ec97b5171366f60642213da20dfd8d2752d96",
+      "box": [
+        2175,
+        0,
+        4425,
+        4000
+      ],
+      "sha256": "b0a0d97c53ccd3ea6d50e32b7f41577fafcffad13b1bd2ecdb91a0afd6f22358",
+      "bytes": 66391,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "coffeenote",
+      "group": "office",
+      "file": "coffeenote.jpg",
+      "description": "桌上的咖啡杯、钢笔、文件与黄色笔记本",
+      "photographer": "2H Media",
+      "photographer_url": "https://unsplash.com/@2hmedia",
+      "page_url": "https://unsplash.com/photos/a-cup-of-coffee-and-a-pen-on-a-table-h7dBE4zAL54",
+      "source_url": "https://images.unsplash.com/photo-1632258947617-57a2be7c7ca9",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.55,
+      "source_size": [
+        4056,
+        2281
+      ],
+      "source_sha256": "ab9eea2a2da48570f50b8fa4b982fa3d91c6476f0830a5b5a50d26a4d84e5162",
+      "box": [
+        1589,
+        0,
+        2872,
+        2281
+      ],
+      "sha256": "fd6f02dae4b2b1a630888b6a82cb1ab86b7e1577210c8b97b209d89c940b0f2d",
+      "bytes": 154291,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "studiowhite",
+      "group": "office",
+      "file": "studiowhite.jpg",
+      "description": "白墙前的白色书桌与椅子，极简明亮",
+      "photographer": "Bench Accounting",
+      "photographer_url": "https://unsplash.com/@benchaccounting",
+      "page_url": "https://unsplash.com/photos/white-wooden-table-near-brown-chair-nvzvOPQW0gc",
+      "source_url": "https://images.unsplash.com/photo-1449247709967-d4461a6a6103",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.5,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）",
+      "source_size": [
+        3500,
+        2333
+      ],
+      "source_sha256": "eb7978be08ffceb8ada24ad2978efd7b4b5093fd7b29e5f1f8a1ab314d829a1b",
+      "box": [
+        1094,
+        0,
+        2406,
+        2333
+      ],
+      "sha256": "3e3426a67d570709dd2c6019a407e6092218e4f3e98665099d6af3aa9b4fbb64",
+      "bytes": 136955
+    },
+    {
+      "id": "scissorsnote",
+      "group": "office",
+      "file": "scissorsnote.jpg",
+      "description": "白色桌面上的便签本与黑色剪刀，留白多",
+      "photographer": "Lauren Sauder",
+      "photographer_url": "https://unsplash.com/@laurensauderstudio",
+      "page_url": "https://unsplash.com/photos/black-scissor-CAsI8mONDHw",
+      "source_url": "https://images.unsplash.com/photo-1523634450041-0d0fbceb4036",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.42,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）",
+      "source_size": [
+        5909,
+        3929
+      ],
+      "source_sha256": "1f1eef9d3503bafbe11a2583008e0a1b9faf250f0ccefbad3d7efbf7fe633538",
+      "box": [
+        1377,
+        0,
+        3587,
+        3929
+      ],
+      "sha256": "1422d77aeccc8b64beae8d69bcf2ad6299223263c9cd8560bafd0bc7ebfadbbb",
+      "bytes": 132998
+    },
+    {
+      "id": "blueprints",
+      "group": "blueprint",
+      "file": "blueprints.jpg",
+      "description": "摊开叠放的建筑图纸，浅灰白色调",
+      "photographer": "Marina Zvada",
+      "photographer_url": "https://unsplash.com/@zvada_photo",
+      "page_url": "https://unsplash.com/photos/architectural-blueprints-spread-out-on-a-surface-fNxmdlYHRm8",
+      "source_url": "https://images.unsplash.com/photo-1762146828422-50a8bd416d3c",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.5,
+      "source_size": [
+        2796,
+        3728
+      ],
+      "source_sha256": "dfdf9feb5c367f3a53d710a99d62a8afb99fead04543489760505d5a2bda1a6d",
+      "box": [
+        350,
+        0,
+        2447,
+        3728
+      ],
+      "sha256": "880a2532ea2d0fabc0d65831160a2b941af8dc300b7cad0f512adf2dffebc50b",
+      "bytes": 361351,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "draftpencil",
+      "group": "blueprint",
+      "file": "draftpencil.jpg",
+      "description": "铅笔与比例尺压在标注尺寸的工程图上",
+      "photographer": "Sven Mieke",
+      "photographer_url": "https://unsplash.com/@sxoxm",
+      "page_url": "https://unsplash.com/photos/brown-pencil-on-white-printing-paper-fteR0e2BzKo",
+      "source_url": "https://images.unsplash.com/photo-1542621334-a254cf47733d",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.45,
+      "source_size": [
+        6000,
+        4000
+      ],
+      "source_sha256": "9bdb86c39d404a27c1d363eaf8e9c084e47bb26a91a90ccdc0125210c9f448cd",
+      "box": [
+        1575,
+        0,
+        3825,
+        4000
+      ],
+      "sha256": "5cce5101ab222ffb0f705fde93db7df5d504116984a5999517304368875e0a7a",
+      "bytes": 226354,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "sectionblue",
+      "group": "blueprint",
+      "file": "sectionblue.jpg",
+      "description": "蓝底白线的多层建筑剖面图（阿姆斯特丹城市档案馆）",
+      "photographer": "Amsterdam City Archives",
+      "photographer_url": "https://unsplash.com/@amsterdamcityarchives",
+      "page_url": "https://unsplash.com/photos/architectural-blueprint-of-a-multi-story-building-9tmKEDz03uw",
+      "source_url": "https://images.unsplash.com/photo-1721244654394-36a7bc2da288",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.5,
+      "source_size": [
+        6273,
+        5077
+      ],
+      "source_sha256": "d80d64059bba702b1b9b201c8dd477f159d2d296006dc5dc26afba663cb8c09b",
+      "box": [
+        1708,
+        0,
+        4564,
+        5077
+      ],
+      "sha256": "6b53d610a6c30a5971b8dcc43fe02e0444976b6014b429b3e4fc42250e39812a",
+      "bytes": 381850,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "linesblue",
+      "group": "blueprint",
+      "file": "linesblue.jpg",
+      "description": "深蓝底上的白色建筑弧线，简洁抽象",
+      "photographer": "Cai Fang",
+      "photographer_url": "https://unsplash.com/@caipod",
+      "page_url": "https://unsplash.com/photos/a-blue-abstract-background-with-lines-and-shapes-zkcFnFOKUFk",
+      "source_url": "https://images.unsplash.com/photo-1692798346701-96ffea619f9a",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.4,
+      "source_size": [
+        4096,
+        3072
+      ],
+      "source_sha256": "14157afc166ca085c6162270c27b2abd1cdb16f4934fa49591e1c6c49c884820",
+      "box": [
+        774,
+        0,
+        2502,
+        3072
+      ],
+      "sha256": "d660a97a31dc324dce1b47bab3181806e4c968d8f5a473d2247a6cfdb7c6b10d",
+      "bytes": 267779,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "labwhite",
+      "group": "tech",
+      "file": "labwhite.jpg",
+      "description": "白色明亮的实验室走廊与蓝色设备柜",
+      "photographer": "Lightsaber Collection",
+      "photographer_url": "https://unsplash.com/@lightsabercollection",
+      "page_url": "https://unsplash.com/photos/a-row-of-blue-and-white-lockers-in-a-room-EJo_5pPUr9c",
+      "source_url": "https://images.unsplash.com/photo-1682562031269-58a59c81432c",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.42,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）",
+      "source_size": [
+        7008,
+        4672
+      ],
+      "source_sha256": "ec9733311248f882cb49111627c6434cc6af2e5dd939b41efed3374bf213c733",
+      "box": [
+        1629,
+        0,
+        4257,
+        4672
+      ],
+      "sha256": "bd3d9b4d8954a4a45067ade2e919173b9346d3b6d08df729c23d4fb5f0627226",
+      "bytes": 224179
+    },
+    {
+      "id": "wavewhite",
+      "group": "tech",
+      "file": "wavewhite.jpg",
+      "description": "白色曲面上的流动线条，浅色抽象",
+      "photographer": "Jean-Philippe Delberghe",
+      "photographer_url": "https://unsplash.com/@jipy32",
+      "page_url": "https://unsplash.com/photos/a-close-up-of-a-white-wall-with-wavy-lines-75xPHEQBmvA",
+      "source_url": "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.5,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）",
+      "source_size": [
+        4447,
+        6670
+      ],
+      "source_sha256": "b34e2acb3321f25d9eee26ff3bc191de5dbc26e5cf6b0da8175654e9dd1ad1de",
+      "box": [
+        348,
+        0,
+        4100,
+        6670
+      ],
+      "sha256": "ebaffe4737fa888dacf6e664e8ecf156707ce7cb343ab885eb3532b936dc11dd",
+      "bytes": 100333
+    },
+    {
+      "id": "serveraisle",
+      "group": "tech",
+      "file": "serveraisle.jpg",
+      "description": "天窗下明亮的机房过道与两侧金属机柜",
+      "photographer": "İsmail Enes Ayhan",
+      "photographer_url": "https://unsplash.com/@ismailenesayhan",
+      "page_url": "https://unsplash.com/photos/server-room-aisle-with-metal-equipment-racks-lVZjvw-u9V8",
+      "source_url": "https://images.unsplash.com/photo-1584169417032-d34e8d805e8b",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.5,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）",
+      "source_size": [
+        5619,
+        3231
+      ],
+      "source_sha256": "13defa0cbcd7b627829bbd2b1a6b9da18081433941b02aaa38075fe50d489755",
+      "box": [
+        1901,
+        0,
+        3718,
+        3231
+      ],
+      "sha256": "119143a9a36fc0db12e819268e9798cda6e6641e23a49da4f6a23cb5a61c8761",
+      "bytes": 411339
+    },
+    {
+      "id": "lujiazui",
+      "group": "city",
+      "file": "lujiazui.jpg",
+      "description": "蓝天白云下的陆家嘴超高层建筑，仰拍",
+      "photographer": "Felix yu",
+      "photographer_url": "https://unsplash.com/@qixna",
+      "page_url": "https://unsplash.com/photos/high-rise-building-under-blue-sky-during-daytime-J0G7WBwvrpY",
+      "source_url": "https://images.unsplash.com/photo-1602952045538-a5051815d475",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.5,
+      "source_size": [
+        3456,
+        5184
+      ],
+      "source_sha256": "787b20169d77e48404e234533e91f3fc0a09f06b59936dbe68e6bf45e3961eaf",
+      "box": [
+        270,
+        0,
+        3186,
+        5184
+      ],
+      "sha256": "0208c49f9f1b51cad341e7891a9ec2f409cf03617556e8554405a0181ec16171",
+      "bytes": 309933,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "shanghaiclouds",
+      "group": "city",
+      "file": "shanghaiclouds.jpg",
+      "description": "云层下的上海天际线与黄浦江，竖构图",
+      "photographer": "Siyuan Hu",
+      "photographer_url": "https://unsplash.com/@siyuan_hu",
+      "page_url": "https://unsplash.com/photos/city-skyline-under-cloudy-sky-during-daytime-Jea4t6pte-k",
+      "source_url": "https://images.unsplash.com/photo-1616680687799-ea36d6fb2173",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.5,
+      "source_size": [
+        2700,
+        4800
+      ],
+      "source_sha256": "a1902a15ac648fb97a608479f125f3c947066f765f47badd9d5faf1f02dbb94b",
+      "box": [
+        0,
+        0,
+        2700,
+        4800
+      ],
+      "sha256": "55f15f6489e27b245fe19f08ebe9a520ca87bf0eaaa40c769b6ac615898a04e9",
+      "bytes": 358439,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "bunddusk",
+      "group": "city",
+      "file": "bunddusk.jpg",
+      "description": "黄昏时陆家嘴天际线倒映在黄浦江上",
+      "photographer": "Freeman Zhou",
+      "photographer_url": "https://unsplash.com/@freeman_zhou",
+      "page_url": "https://unsplash.com/photos/lujiazui-skyline-at-the-bund-shanghai-oV9hp8wXkPE",
+      "source_url": "https://images.unsplash.com/photo-1545893835-abaa50cbe628",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.6,
+      "source_size": [
+        8429,
+        4832
+      ],
+      "source_sha256": "7c8cfa282e53ee440b773f9a71d8678cdc1bc5e73e4396b3b4f6601cfca0a144",
+      "box": [
+        3698,
+        0,
+        6416,
+        4832
+      ],
+      "sha256": "1fe43f7507fe6a1ec799e9c1c9898a4ce0908be10eadc77e09b551d351152797",
+      "bytes": 152480,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    },
+    {
+      "id": "shanghaiaerial",
+      "group": "city",
+      "file": "shanghaiaerial.jpg",
+      "description": "粉色天空下俯瞰上海楼群",
+      "photographer": "Road Trip with Raj",
+      "photographer_url": "https://unsplash.com/@roadtripwithraj",
+      "page_url": "https://unsplash.com/photos/aerial-photography-of-city-buildings-py8eyAh9J3A",
+      "source_url": "https://images.unsplash.com/photo-1578495959700-a617c3600026",
+      "license_checked_at": "2026-10-07",
+      "focus_x": 0.6,
+      "source_size": [
+        5282,
+        3519
+      ],
+      "source_sha256": "8a9189257c71585890dcc6b671a8bcf8b6eee45bdf77565ea1869f9bb7adb762",
+      "box": [
+        2180,
+        0,
+        4159,
+        3519
+      ],
+      "sha256": "147835c4b1b0534923f5ee32b82ac3cf401c851d22a0784a9700944fa3975f6e",
+      "bytes": 666115,
+      "license_check": "照片页显示 Free to use under the Unsplash License；照片 JSON premium=false、plus=false（2026-10-07）"
+    }
+  ]
+}

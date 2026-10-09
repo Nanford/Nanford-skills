@@ -1,0 +1,13 @@
+{
+  "model": "jev-latest",
+  "calibratedModel": "jev-1.13.0",
+  "apiBase": "https://api.typesafe.ai",
+  "pricePerMillionInputTokensUsd": 0.042,
+  "priceSource": "docs.typesafe.ai/models.md：jev-1.13.0 每百万输入 token 0.042 美元，输出免费（2026-09-29 核验）",
+  "monthlyBudgetUsd": 1.0,
+  "budgetAuthorizationRef": "用户会话授权 2026-09-29：Jev 每月费用上限 1 美元，同意发送视频文稿文字",
+  "tokenBound": {
+    "perQuestionOverhead": 100,
+    "baseOverhead": 200
+  }
+}

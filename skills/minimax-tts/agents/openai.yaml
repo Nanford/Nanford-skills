@@ -1,0 +1,4 @@
+interface:
+  display_name: "MiniMax 配音"
+  short_description: "用固定音色合成配音并返回字幕时间戳"
+  default_prompt: "使用 $minimax-tts 检查密钥后，按语段合成当前版本的配音。"

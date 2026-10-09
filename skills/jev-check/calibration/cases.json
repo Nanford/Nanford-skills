@@ -1,0 +1,392 @@
+{
+ "question_set": "2026-09-29",
+ "note": "2026-09-29 试点样例（单句 44 条，用来选定问题语言、措辞和阈值，属于拟合而非独立验证）+ 语段级样例（20260929-fde-intro 定稿语段及其改错版本）。模型版本变化后用 calibrate 重测。",
+ "cases": [
+  {
+   "check": "hook_concrete",
+   "state": "每次投标都要熬夜排版？",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "一份标书初稿，半天就能出来。",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "OpenAI 正在招 23 个 FDE 相关岗位。",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "会议开完两小时，行动清单还没人整理。",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "这份 40 页的方案 PPT，我用 AI 二十分钟排完了。",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "老板让你周五前交季度汇报，数据还散在五个表格里。",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "三步把会议录音变成能直接发群里的纪要。",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "第一次装 Claude Code，十个人里有八个卡在环境变量。",
+   "expected": "passed"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "做 AI 项目最怕的一种情况，演示的时候效果惊艳，一进客户现场就卡住。",
+   "expected": "flagged",
+   "known_miss": "用户 2026-09-29 否掉的 v001 开头；它确有具体痛点，Jev 判为具体（两次实测 0.84、0.85）。本检查只量「具体不具体」，不量「抓不抓人」；该句由 script-check 的铺垫话规则拦下"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "大家好，今天跟大家聊聊 AI 办公。",
+   "expected": "flagged"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "最近 AI 真的很火，相信很多朋友都在关注。",
+   "expected": "flagged"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "我是 Nanford，一个做了十年项目管理的老兵。",
+   "expected": "flagged"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "你有没有想过，AI 到底能给我们带来什么？",
+   "expected": "flagged"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "这期视频内容非常干，建议先收藏再看。",
+   "expected": "flagged"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "随着人工智能技术的快速发展，各行各业都在发生深刻变革。",
+   "expected": "flagged"
+  },
+  {
+   "check": "hook_concrete",
+   "state": "这可能是你今年看到的最重要的一个视频。",
+   "expected": "flagged"
+  },
+  {
+   "check": "audience",
+   "state": "每次投标都要熬夜排版？用这个 Skill，把招标文件丢进去，商务和技术响应文件自动出初稿。",
+   "expected_choice": "ai_office"
+  },
+  {
+   "check": "audience",
+   "state": "学 AI 别从啃论文开始。先花一个周末跑通一个小项目，比刷一百个教程管用。",
+   "expected_choice": "ai_learning"
+  },
+  {
+   "check": "audience",
+   "state": "团队买了一堆 AI 工具，流程一点没变？问题出在没人重新设计工作流，谁审核、谁兜底都没定。",
+   "expected_choice": "ai_transformation"
+  },
+  {
+   "check": "audience",
+   "state": "OpenAI 正在招 23 个 FDE 相关岗位。FDE 就是带着模型进驻客户现场，把演示变成上线系统的人。",
+   "expected_choice": "fde"
+  },
+  {
+   "check": "audience",
+   "state": "第一次用 Claude Code，装完就报错？从安装到出第一个成品，跟着做三步就能跑通。",
+   "expected_choice": "beginner"
+  },
+  {
+   "check": "audience",
+   "state": "十个人的小公司，不加人也能把客服回复从半天缩到十分钟。投入多少钱、多久回本，一次算清。",
+   "expected_choice": "smb_owner"
+  },
+  {
+   "check": "audience",
+   "state": "AI 太厉害了，不管你是学生、老板还是程序员，都应该马上学起来。",
+   "expected_choice": "general"
+  },
+  {
+   "check": "audience",
+   "state": "周报写到半夜？把一周的聊天记录丢给 AI，十分钟出一份能直接交的周报。",
+   "expected_choice": "ai_office"
+  },
+  {
+   "check": "exaggeration",
+   "state": "用了这个方法，月入三万不是梦。",
+   "expected": "flagged"
+  },
+  {
+   "check": "exaggeration",
+   "state": "AI 帮你 100% 搞定所有标书，从此再也不用加班。",
+   "expected": "flagged"
+  },
+  {
+   "check": "exaggeration",
+   "state": "学会这一招，保证你三天升职加薪。",
+   "expected": "flagged"
+  },
+  {
+   "check": "exaggeration",
+   "state": "这个工具一出，设计师全部要失业了。",
+   "expected": "flagged"
+  },
+  {
+   "check": "exaggeration",
+   "state": "实测这份标书初稿用了 4 小时，排版还要人工检查。",
+   "expected": "passed"
+  },
+  {
+   "check": "exaggeration",
+   "state": "它能帮你出初稿，但报价和资质还得自己核对。",
+   "expected": "passed"
+  },
+  {
+   "check": "exaggeration",
+   "state": "OpenAI 正在招 23 个 FDE 相关岗位。",
+   "expected": "passed"
+  },
+  {
+   "check": "exaggeration",
+   "state": "门槛也不低，OpenAI 希望有 5 年以上工程经验。",
+   "expected": "passed"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 正在招 23 个 FDE 相关岗位。",
+    "evidence": "2026-09-29 查询 OpenAI 官方招聘板，职位名称含 Forward Deployed 的岗位共 23 个，地点包括旧金山、纽约、西雅图、东京、新加坡、首尔、悉尼、伦敦、马德里、阿布扎比、华盛顿"
+   },
+   "expected_choice": "supports"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 正在招 50 个 FDE 相关岗位。",
+    "evidence": "2026-09-29 查询 OpenAI 官方招聘板，职位名称含 Forward Deployed 的岗位共 23 个，地点包括旧金山、纽约、西雅图、东京、新加坡、首尔、悉尼、伦敦、马德里、阿布扎比、华盛顿"
+   },
+   "expected_choice": "contradicts"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "旧金山的年薪，最高 30 万美元。",
+    "evidence": "OpenAI 旧金山 FDE 岗位公开年薪范围 18.5 万～30 万美元，另有股权"
+   },
+   "expected_choice": "supports"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "旧金山的年薪，最高 50 万美元。",
+    "evidence": "OpenAI 旧金山 FDE 岗位公开年薪范围 18.5 万～30 万美元，另有股权"
+   },
+   "expected_choice": "contradicts"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 希望有 5 年以上工程或交付经验，做过面向客户的工作，也做过大模型应用。",
+    "evidence": "OpenAI 旧金山 FDE 期望 5 年以上含面向客户工作的工程或技术交付经验，能写前后端生产代码，做过大模型驱动的系统"
+   },
+   "expected_choice": "supports"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 的 FDE 不需要写代码。",
+    "evidence": "OpenAI 旧金山 FDE 期望 5 年以上含面向客户工作的工程或技术交付经验，能写前后端生产代码，做过大模型驱动的系统"
+   },
+   "expected_choice": "contradicts"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "Palantir 更是在招聘页里说，这个岗位就是它开创的。",
+    "evidence": "Palantir 在招聘页中称这个岗位由它开创"
+   },
+   "expected_choice": "supports"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "Palantir 的 FDE 平均年薪 40 万美元。",
+    "evidence": "Palantir 在招聘页中称这个岗位由它开创"
+   },
+   "expected_choice": "says_nothing"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 的岗位还写明，出差最多占一半时间。",
+    "evidence": "OpenAI FDE 负责需求发现、技术范围、系统设计、开发和上线，以生产采用和工作流效果衡量成果，并把一线反馈给研究与产品团队；出差最多 50%"
+   },
+   "expected_choice": "supports"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "FDE 要常驻海外，出差占八成时间。",
+    "evidence": "OpenAI FDE 负责需求发现、技术范围、系统设计、开发和上线，以生产采用和工作流效果衡量成果，并把一线反馈给研究与产品团队；出差最多 50%"
+   },
+   "expected_choice": "contradicts"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "a16z 说 FDE 是创业公司里最热门的岗位。",
+    "evidence": "a16z 在 2025 年 6 月发文称 FDE 是创业公司最热门的岗位"
+   },
+   "expected_choice": "supports"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "Anthropic 也在招 FDE。",
+    "evidence": "2026-09-29 查询 OpenAI 官方招聘板，职位名称含 Forward Deployed 的岗位共 23 个，地点包括旧金山、纽约、西雅图、东京、新加坡、首尔、悉尼、伦敦、马德里、阿布扎比、华盛顿"
+   },
+   "expected_choice": "says_nothing"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 正在招 23 个 FDE 相关岗位。旧金山的年薪，最高 30 万美元。",
+    "evidence": "2026-09-29 查询 OpenAI 官方招聘板，职位名称含 Forward Deployed 的岗位共 23 个，地点包括旧金山、纽约、西雅图、东京、新加坡、首尔、悉尼、伦敦、马德里、阿布扎比、华盛顿；OpenAI 旧金山 FDE 岗位公开年薪范围 18.5 万～30 万美元，另有股权"
+   },
+   "expected_choice": "supports",
+   "note": "20260929-fde-intro channels s01 定稿"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "一句话，带着模型进驻客户现场，把演示变成真正上线的系统。",
+    "evidence": "FDE（Forward Deployed Engineer）是进驻客户现场、在客户系统里把模型做成生产系统的工程师"
+   },
+   "expected_choice": "supports",
+   "note": "20260929-fde-intro channels s04 定稿"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "第一步，摸清客户的业务、数据和限制条件。第二步，在客户的系统里写代码、做评估，一路推到上线。第三步，把踩过的坑整理成工具和打法，反馈给产品和模型团队。",
+    "evidence": "OpenAI FDE 负责需求发现、技术范围、系统设计、开发和上线，以生产采用和工作流效果衡量成果，并把一线反馈给研究与产品团队；出差最多 50%"
+   },
+   "expected_choice": "supports",
+   "note": "20260929-fde-intro channels s05 定稿"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "它和售前、外包的区别在这里。售前讲方案，外包按需求交付，FDE 要对上线后的使用效果负责。OpenAI 的岗位还写明，出差最多占一半时间。",
+    "evidence": "OpenAI FDE 负责需求发现、技术范围、系统设计、开发和上线，以生产采用和工作流效果衡量成果，并把一线反馈给研究与产品团队；出差最多 50%"
+   },
+   "expected_choice": "supports",
+   "note": "20260929-fde-intro channels s06 定稿"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "不只是 OpenAI。Anthropic 也在招，Palantir 更是在招聘页里说，这个岗位就是它开创的。",
+    "evidence": "Anthropic 也在招 FDE，职责包括在客户系统中用 Claude 构建生产应用，交付 MCP 服务器、agent skills 等工件；Palantir 在招聘页中称这个岗位由它开创"
+   },
+   "expected_choice": "supports",
+   "note": "20260929-fde-intro channels s07 定稿"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "2025 年 6 月，美国风投机构安德森霍洛维茨还专门写文章，说它是创业公司里最热门的岗位。",
+    "evidence": "a16z 在 2025 年 6 月发文称 FDE 是创业公司最热门的岗位"
+   },
+   "expected_choice": "supports",
+   "note": "20260929-fde-intro channels s08 定稿"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "门槛也不低。OpenAI 希望有 5 年以上工程或交付经验，做过面向客户的工作，也做过大模型应用。",
+    "evidence": "OpenAI 旧金山 FDE 期望 5 年以上含面向客户工作的工程或技术交付经验，能写前后端生产代码，做过大模型驱动的系统"
+   },
+   "expected_choice": "supports",
+   "note": "20260929-fde-intro channels s09 定稿"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 正在招 50 个 FDE 相关岗位。旧金山的年薪，最高 30 万美元。",
+    "evidence": "2026-09-29 查询 OpenAI 官方招聘板，职位名称含 Forward Deployed 的岗位共 23 个，地点包括旧金山、纽约、西雅图、东京、新加坡、首尔、悉尼、伦敦、马德里、阿布扎比、华盛顿；OpenAI 旧金山 FDE 岗位公开年薪范围 18.5 万～30 万美元，另有股权"
+   },
+   "expected": "flagged",
+   "note": "s01 岗位数改错"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "OpenAI 正在招 23 个 FDE 相关岗位。旧金山的年薪，最高 50 万美元。",
+    "evidence": "2026-09-29 查询 OpenAI 官方招聘板，职位名称含 Forward Deployed 的岗位共 23 个，地点包括旧金山、纽约、西雅图、东京、新加坡、首尔、悉尼、伦敦、马德里、阿布扎比、华盛顿；OpenAI 旧金山 FDE 岗位公开年薪范围 18.5 万～30 万美元，另有股权"
+   },
+   "expected": "flagged",
+   "note": "s01 年薪改错"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "它和售前、外包的区别在这里。售前讲方案，外包按需求交付，FDE 要对上线后的使用效果负责。OpenAI 的岗位还写明，出差最多占八成时间。",
+    "evidence": "OpenAI FDE 负责需求发现、技术范围、系统设计、开发和上线，以生产采用和工作流效果衡量成果，并把一线反馈给研究与产品团队；出差最多 50%"
+   },
+   "expected": "flagged",
+   "note": "s06 夹观点句 + 出差比例改错"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "不只是 OpenAI。Anthropic 也在招，Google 更是在招聘页里说，这个岗位就是它开创的。",
+    "evidence": "Anthropic 也在招 FDE，职责包括在客户系统中用 Claude 构建生产应用，交付 MCP 服务器、agent skills 等工件；Palantir 在招聘页中称这个岗位由它开创"
+   },
+   "expected": "flagged",
+   "note": "s07 公司名改错"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "2023 年 6 月，美国风投机构安德森霍洛维茨还专门写文章，说它是创业公司里最热门的岗位。",
+    "evidence": "a16z 在 2025 年 6 月发文称 FDE 是创业公司最热门的岗位"
+   },
+   "expected": "flagged",
+   "note": "s08 年份改错"
+  },
+  {
+   "check": "support",
+   "state": {
+    "sentence": "门槛也不低。OpenAI 希望有 1 年以上工程或交付经验，做过面向客户的工作，也做过大模型应用。",
+    "evidence": "OpenAI 旧金山 FDE 期望 5 年以上含面向客户工作的工程或技术交付经验，能写前后端生产代码，做过大模型驱动的系统"
+   },
+   "expected": "flagged",
+   "note": "s09 年限改错"
+  },
+  {
+   "check": "exaggeration",
+   "state": "第一步，摸清客户的业务、数据和限制条件。第二步，在客户的系统里写代码、做评估，一路推到上线。第三步，把踩过的坑整理成工具和打法，反馈给产品和模型团队。学会这套打法，保证你年薪翻倍。",
+   "expected": "flagged",
+   "note": "s05 末尾加打包票承诺"
+  },
+  {
+   "check": "exaggeration",
+   "state": "它和售前、外包的区别在这里。售前讲方案，外包按需求交付，FDE 要对上线后的使用效果负责。OpenAI 的岗位还写明，出差最多占一半时间。",
+   "expected": "passed",
+   "note": "s06 定稿"
+  }
+ ]
+}
