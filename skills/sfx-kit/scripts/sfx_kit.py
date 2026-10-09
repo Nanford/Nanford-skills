@@ -58,6 +58,10 @@ def command_list(_: argparse.Namespace) -> int:
 
 
 def main() -> int:
+    # Windows 控制台默认 GBK，被智能体管道读取时中文会乱码；与其他技能一样统一输出 UTF-8
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="VideoCut 系列音效库（本地合成）")
     sub = parser.add_subparsers(dest="command", required=True)
     for name in ("build", "verify"):

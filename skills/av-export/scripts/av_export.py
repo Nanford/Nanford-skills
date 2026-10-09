@@ -258,6 +258,10 @@ COMMANDS = {"mix": command_mix, "sfx": command_sfx, "mux": command_mux, "check":
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows 控制台默认 GBK，被智能体管道读取时中文会乱码；与其他技能一样统一输出 UTF-8
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     args = build_parser().parse_args(argv)
     try:
         return COMMANDS[args.command](args)

@@ -120,6 +120,10 @@ def restore_all(manifest: dict) -> int:
 
 
 def main() -> int:
+    # Windows 控制台默认 GBK，被智能体管道读取时中文会乱码；与其他技能一样统一输出 UTF-8
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="下载并裁切风景底图，写回 manifest.json；--restore 只按清单恢复缺失的底图")
     parser.add_argument("--force", nargs="*", default=[], help="重做这些 id（默认只处理还没有 sha256 的条目）")
     parser.add_argument("--restore", action="store_true", help="安装时用：按清单下载并恢复全部底图，核对校验值，不改清单")
