@@ -193,6 +193,10 @@
 *   **能力边界**：匹配结果与申报草稿供人工审核，不自动提交申报，不保证覆盖全部政策或通过审核。
 *   **入口文档**：[Skill 使用说明](skills/hubei-subsidy-tracker/SKILL.md)。
 
+### qingtian-bid
+
+面向青天大模型评审的施工组织设计 Skill。按项目评审项编制框式图文施组，生成必要的工艺示意图，并导出经过属性清理和验收的完整 PDF。当前为 `2.0-dev` 开发预览版。[Skill 入口](skills/qingtian-bid/SKILL.md) · [单独安装与更新](skills/qingtian-bid/references/installation.md)
+
 ---
 
 ## 🏗️ 仓库目录结构
@@ -205,6 +209,7 @@ Nanford-skills/
 │   └── skills/
 │       └── architecture-diagram/ # 无连线架构图视觉设计
 └── skills/                       # 核心 Skill 目录
+    ├── qingtian-bid/             # 青天评审施组、工艺配图、PDF 交付
     ├── hubei-subsidy-tracker/     # 湖北惠企政策采集、企业匹配与协作通知
     │   ├── SKILL.md              # 首次引导、日常运行与故障恢复入口
     │   ├── scripts/              # 采集、匹配、通知、状态管理与分发打包
@@ -262,6 +267,21 @@ Nanford-skills/
 ---
 
 ## 🚀 使用与演进
+
+### 单独安装 qingtian-bid
+
+使用支持 `gh skill` 的 GitHub CLI。Codex 和 Claude Code 任选对应命令：
+
+```powershell
+gh skill install Nanford/Nanford-skills skills/qingtian-bid --agent codex --scope user
+gh skill install Nanford/Nanford-skills skills/qingtian-bid --agent claude-code --scope user
+```
+
+也可把这句话发给 Agent：“请从 Nanford/Nanford-skills 的 skills/qingtian-bid 单独安装 Skill，为当前 Agent 做用户级安装并保留 GitHub 更新跟踪。”
+
+安装后开启新会话。首次使用时，Skill 会在 GitHub CLI 可用且有安装来源记录时检查是否有更新。看到提醒可回复“更新 qingtian-bid”。[更新命令和旧版迁移方法](skills/qingtian-bid/references/installation.md)
+
+维护时，更新 `skills/qingtian-bid/` 并推送到 GitHub `main`。从独立仓库同步时保留 Skill 入口的安装更新段落及 `references/installation.md`。更新检查比较该目录的 Git 版本，其他 Skill 的改动不会触发这项提醒。当前按默认分支分发。如果仓库以后使用 GitHub Releases，GitHub CLI 会优先选择最新发行版，发布更新时也要将发行版指向包含最新版 Skill 的提交。
 
 ### 电商工作流安装
 
