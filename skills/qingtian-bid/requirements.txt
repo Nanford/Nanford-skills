@@ -1,0 +1,8 @@
+# qingtian-bid Skill 脚本依赖（pip install -r requirements.txt）
+# PDF 文本提取与页码对照（阶段 1）；xlsx 工程量清单只用标准库解析
+pypdf>=4.0
+# DOCX 生成与格式校验
+python-docx>=1.1
+# 可选：格式样张导出 PDF 需要本机装有 Microsoft Word 或 WPS 文字（Windows COM 自动化，无 Python 依赖）
+# 可选：读 DWG、DXF 图纸上的文字要 ezdxf（pip install "ezdxf>=1.1"）；DWG 还要本机装 ODA File Converter
+# （免费，从 ODA 官网下载，许可不允许随 Skill 分发）。招标文件不带这两种图纸就用不到，所以不写进必需项

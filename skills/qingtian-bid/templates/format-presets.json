@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "default_preset": "F1",
+  "fonts": {
+    "system": ["宋体", "仿宋", "楷体", "黑体", "微软雅黑"],
+    "needs_install": ["仿宋_GB2312", "楷体_GB2312", "方正仿宋_GBK", "方正小标宋简体", "方正小标宋_GBK"],
+    "latin": ["Times New Roman", "Arial"]
+  },
+  "dimensions": {
+    "body_size_pt": [10.5, 11, 12, 14, 16],
+    "heading_size_pt": [22, 18, 16, 15, 14, 12],
+    "line_spacing": {
+      "multiple": [1.0, 1.25, 1.5, 2.0],
+      "exact": [18, 20, 22, 25, 28, 28.9],
+      "at_least": "任意磅值"
+    },
+    "heading_space_pt": [0, 6, 8, 12]
+  },
+  "presets": {
+    "F1": {
+      "name": "宋体 11/12 磅 · 1.5 倍",
+      "source": "全局 DOCX 设定；开工不选时用它",
+      "fields": {
+        "body_font": "宋体",
+        "heading1_font": "宋体",
+        "heading2_font": "宋体",
+        "heading3_font": "宋体",
+        "latin_font": null,
+        "body_size_pt": 11,
+        "heading1_size_pt": 12,
+        "heading2_size_pt": 12,
+        "heading3_size_pt": 12,
+        "cover_title_size_pt": 12,
+        "cover_info_size_pt": 11,
+        "header_footer_size_pt": 11,
+        "line_spacing_rule": "multiple",
+        "line_spacing": 1.5,
+        "heading_space_before_pt": 8,
+        "heading_space_after_pt": 8,
+        "first_line_indent_chars": 2,
+        "page_width_cm": 21,
+        "page_height_cm": 29.7,
+        "margin_top_cm": 2.54,
+        "margin_bottom_cm": 2.54,
+        "margin_left_cm": 3.18,
+        "margin_right_cm": 3.18,
+        "heading_bold": true,
+        "heading_page_breaks": true,
+        "require_toc": true,
+        "require_page_numbers": true,
+        "blind_mode": false
+      }
+    },
+    "F2": {
+      "name": "合肥示范文本",
+      "source": "示范文本《施工组织设计编制建议》（评分表注 1，p61）【一手】",
+      "fields": {
+        "body_size_pt": 14,
+        "heading1_size_pt": 16,
+        "heading2_size_pt": 16,
+        "heading3_size_pt": 16,
+        "cover_title_size_pt": 16,
+        "cover_info_size_pt": 14,
+        "header_footer_size_pt": 14,
+        "line_spacing_rule": "exact",
+        "line_spacing": 22,
+        "margin_top_cm": 2.5,
+        "margin_bottom_cm": 2.0,
+        "margin_left_cm": 2.0,
+        "margin_right_cm": 2.0,
+        "heading_page_breaks": false,
+        "require_toc": false
+      },
+      "field_sources": {
+        "cover_title_size_pt": "示范文本“标题：三号”，推断同样适用于封面标题【推断】",
+        "cover_info_size_pt": "示范文本“其他为四号”，推断同样适用于封面信息【推断】",
+        "header_footer_size_pt": "示范文本“其他为四号”，推断同样适用于页眉页脚【推断】",
+        "heading_page_breaks": "2026-10-28 用户确认 2A：50 页上限下标题不强制分页，招标文件要求时再打开",
+        "require_toc": "2026-10-28 用户确认 2A：目录占篇幅，默认不出，招标文件要求时再打开"
+      }
+    },
+    "F3": {
+      "name": "常规标书",
+      "source": "常见做法【推断】",
+      "fields": {
+        "heading1_font": "黑体",
+        "heading2_font": "黑体",
+        "heading3_font": "黑体",
+        "body_size_pt": 12,
+        "heading1_size_pt": 16,
+        "heading2_size_pt": 14,
+        "heading3_size_pt": 12
+      }
+    },
+    "F4": {
+      "name": "公文风",
+      "source": "GB/T 9704-2012《党政机关公文格式》（待核验现行版本）",
+      "fields": {
+        "body_font": "仿宋",
+        "heading1_font": "黑体",
+        "heading2_font": "楷体",
+        "heading3_font": "仿宋",
+        "body_size_pt": 16,
+        "heading1_size_pt": 16,
+        "heading2_size_pt": 16,
+        "heading3_size_pt": 16,
+        "line_spacing_rule": "exact",
+        "line_spacing": 28.9,
+        "margin_top_cm": 3.7,
+        "margin_bottom_cm": 3.5,
+        "margin_left_cm": 2.8,
+        "margin_right_cm": 2.6,
+        "heading_bold": false
+      },
+      "field_sources": {
+        "line_spacing": "版心高 225 mm ≈ 637.8 磅，排得下 22 行（GB/T 9704-2012，待核验现行版本）",
+        "heading_bold": "公文层次标题以黑体、楷体、仿宋区分，不加粗（2026-10-28 计划默认）"
+      }
+    },
+    "F5": {
+      "name": "紧凑版",
+      "source": "招标文件只限页数、不限字号时用【推断】；字号偏小，专家阅读较吃力",
+      "fields": {
+        "heading1_font": "黑体",
+        "heading2_font": "黑体",
+        "heading3_font": "黑体",
+        "body_size_pt": 10.5,
+        "heading1_size_pt": 12,
+        "heading2_size_pt": 12,
+        "heading3_size_pt": 10.5,
+        "line_spacing_rule": "exact",
+        "line_spacing": 18
+      }
+    }
+  }
+}

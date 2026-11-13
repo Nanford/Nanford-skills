@@ -1,0 +1,11 @@
+{
+  "schema": "qingtian-response-matrix/2",
+  "front_pages": 2,
+  "reserve_pages": 3,
+  "items": [],
+  "coverage": {
+    "实施": {"items": [], "note": ""},
+    "进度": {"items": [], "note": ""},
+    "组织": {"items": [], "note": ""}
+  }
+}
