@@ -11,7 +11,7 @@
     会变成数字，按 ID 找 Normal、Heading1 会误报缺样式。
 
 INPUT: DOCX file; project-state.json found above it (locked document_format), else --preset/--set,
-       else preset F1; optional final-delivery mode.
+       else the default preset; optional final-delivery mode.
 OUTPUT: effective-format issues, DOCX SHA-256, format snapshot, and optional JSON/MD report
         (<docx>.format-report.json / .md).
 POS: DOCX format gate for qingtian-bid (stage 6 self-check, stage 7 gate B3). Checks OOXML

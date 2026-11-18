@@ -35,15 +35,15 @@ python -X utf8 "<skill目录>/scripts/check_env.py"
 
 ## 二、成品格式的四种定法
 
-先用 `render_format_sample.py --list-presets` 把 F1～F5 的对照表给用户看。字段名可写英文键或中文名（如 `正文字号`、`body_size_pt`），字号可写磅值或中文字号名（`三号`、`小四`）。
+先用 `render_format_sample.py --list-presets` 把 F1～F6 的对照表给用户看。字段名可写英文键或中文名（如 `正文字号`、`body_size_pt`、`框线颜色`、`标题条底纹`、`页码样式`），字号可写磅值或中文字号名（`三号`、`五号`）。
 
 | 用户的说法 | 怎么落到命令上 |
 |---|---|
 | 直接选一套预设 | `--format-preset F2` |
-| 先选预设，再改个别字段 | `--format-preset F2 --format-set 正文字号=小四 --format-set 西文和数字字体="Times New Roman"` |
+| 先选预设，再改个别字段 | `--format-preset F6 --format-set 框线颜色=5B9BD5 --format-set 标题条底纹=无` |
 | 按维度逐项组合 | 先 `render_format_sample.py --list-presets --filter 正文字体=仿宋 --filter 行距方式=固定值` 找最接近的预设，再用 `--format-set` 改其余字段 |
-| 完全自定义 | 以 F1 为底，用 `--format-set` 逐项给出用户说的每个字段；用户没说的字段沿用 F1，在确认卡上照实列出 |
-| 不回答 | 框式新项目以 F1 字号和行距为底，采用主样张上边距 2.5 厘米、其余 2 厘米、连续排版且不单列目录，经样张确认 |
+| 完全自定义 | 以 F6 为底，用 `--format-set` 逐项给出用户说的每个字段；用户没说的字段沿用默认预设，在确认卡上照实列出 |
+| 不回答 | 默认用 F6（参考框式：宋体五号单倍、章标题三号居中、绿框米色标题条、上边距 2.5 厘米其余 2 厘米、页脚“— N —”、封面加一级目录、各章连续排版），经样张确认 |
 
 两条已定的默认（决策 2A）：
 

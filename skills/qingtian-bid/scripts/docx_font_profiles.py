@@ -35,9 +35,12 @@ SPACING_FIELDS = ("heading_space_before_pt", "heading_space_after_pt")
 PAGE_FIELDS = ("page_width_cm", "page_height_cm")
 MARGIN_FIELDS = ("margin_top_cm", "margin_bottom_cm", "margin_left_cm", "margin_right_cm")
 BOOL_FIELDS = ("heading_bold", "heading_page_breaks", "require_toc", "require_page_numbers", "blind_mode")
+# 框式版面的线框颜色和章内标题条底纹（六位十六进制 RGB；底纹为 None 表示无填充）。
+COLOR_FIELDS = ("frame_color", "title_bar_fill")
 FORMAT_FIELDS = (
     *FONT_FIELDS, "latin_font", *SIZE_FIELDS, "line_spacing_rule", "line_spacing",
     *SPACING_FIELDS, "first_line_indent_chars", *PAGE_FIELDS, *MARGIN_FIELDS, *BOOL_FIELDS,
+    *COLOR_FIELDS, "page_number_style",
 )
 META_FIELDS = ("preset", "sources")
 
@@ -84,8 +87,19 @@ FIELD_LABELS = {
     "require_toc": "生成目录",
     "require_page_numbers": "页脚页码",
     "blind_mode": "暗标模式（不设页眉页脚页码）",
+    "frame_color": "框线颜色",
+    "title_bar_fill": "标题条底纹",
+    "page_number_style": "页码样式",
 }
 LABEL_TO_FIELD = {label.split("（")[0]: key for key, label in FIELD_LABELS.items()}
+PAGE_NUMBER_STYLES = {"plain": "1", "dash": "— 1 —", "page_of_total": "第 1 页 共 N 页"}
+PAGE_NUMBER_STYLE_ALIASES = {
+    "plain": "plain", "普通": "plain", "数字": "plain", "1": "plain",
+    "dash": "dash", "横线": "dash", "短横": "dash", "—1—": "dash", "-1-": "dash",
+    "page_of_total": "page_of_total", "第x页共y页": "page_of_total", "第1页共n页": "page_of_total",
+}
+NO_FILL_WORDS = {"none", "null", "无", "无填充", "不填充", ""}
+HEX_COLOR = re.compile(r"[0-9A-F]{6}")
 
 
 @lru_cache(maxsize=4)
@@ -120,26 +134,36 @@ def allowed_fonts(catalog: dict) -> set[str]:
 
 
 def _preset_fields_and_sources(code: str, catalog: dict) -> tuple[dict, dict]:
-    """Raw preset values: listed fields carry the preset source, the rest inherit the default preset."""
+    """Raw preset values: listed fields carry the preset source, the rest inherit the base preset.
+
+    预设可用 inherits 指定沿用哪一套（F2～F5 沿用 F1），不写时沿用 default_preset。
+    这样新项目的默认预设可以换，已有预设的取值不跟着变。
+    """
     presets = catalog["presets"]
     if code not in presets:
         raise ValueError(f"未知格式预设: {code}（可选: {', '.join(presets)}）")
     default_code = catalog["default_preset"]
-    default = presets[default_code]
     preset = presets[code]
+    base_code = preset.get("inherits", default_code)
+    if base_code not in presets or (base_code != default_code and "inherits" in presets[base_code]):
+        raise ValueError(f"预设 {code} 的 inherits 须指向一套不再继承的完整预设（当前: {base_code}）")
+    base = presets[base_code]
+    missing = [key for key in FORMAT_FIELDS if key not in base.get("fields", {})]
+    if missing:
+        raise ValueError(f"预设 {base_code} 缺少字段: {', '.join(missing)}")
     unknown = set(preset.get("fields", {})) - set(FORMAT_FIELDS)
     if unknown:
         raise ValueError(f"预设 {code} 含未知字段: {', '.join(sorted(unknown))}")
-    fields = {**default["fields"], **preset.get("fields", {})}
+    fields = {**base["fields"], **preset.get("fields", {})}
     field_sources = preset.get("field_sources", {})
     sources = {}
     for key in FORMAT_FIELDS:
         if key in field_sources:
             sources[key] = field_sources[key]
-        elif code == default_code or key in preset.get("fields", {}):
+        elif code == base_code or key in preset.get("fields", {}):
             sources[key] = f"{code} {preset['name']}：{preset['source']}"
         else:
-            sources[key] = f"沿用 {default_code}：{default['source']}"
+            sources[key] = f"沿用 {base_code}：{base['source']}"
     return fields, sources
 
 
@@ -196,6 +220,20 @@ def _check_line_spacing(result: dict) -> None:
                 )
 
 
+def _check_style_fields(result: dict) -> None:
+    frame = result["frame_color"]
+    if not isinstance(frame, str) or not HEX_COLOR.fullmatch(frame):
+        raise ValueError(f"框线颜色须为六位十六进制 RGB（如 70AD47），当前为 {frame!r}")
+    fill = result["title_bar_fill"]
+    if fill is not None and (not isinstance(fill, str) or not HEX_COLOR.fullmatch(fill)):
+        raise ValueError(f"标题条底纹须为六位十六进制 RGB 或“无”，当前为 {fill!r}")
+    if fill is not None and all(int(fill[i:i + 2], 16) < 0xB0 for i in (0, 2, 4)):
+        # 标题文字固定黑色，底纹太深会看不清，也会被门禁 B6 当成同色隐藏文字。
+        raise ValueError(f"标题条底纹 #{fill} 太深，黑色标题字看不清；请用浅色底纹")
+    if result["page_number_style"] not in PAGE_NUMBER_STYLES:
+        raise ValueError(f"页码样式不支持“{result['page_number_style']}”（可选: plain、dash、page_of_total）")
+
+
 def _check_sources(sources) -> dict:
     if not isinstance(sources, dict):
         raise ValueError("sources 必须是对象")
@@ -224,6 +262,7 @@ def normalize_document_format(value: dict | None = None, catalog: dict | None = 
     _check_font_fields(result, catalog)
     _check_numeric_fields(result)
     _check_line_spacing(result)
+    _check_style_fields(result)
     for key in BOOL_FIELDS:
         if not isinstance(result[key], bool):
             raise ValueError(f"{FIELD_LABELS[key]}（{key}）必须是布尔值")
@@ -301,6 +340,18 @@ def parse_field_value(key: str, raw: str) -> str | float | bool | None:
         return _parse_number(text, ("磅", "pt"))
     if key == "first_line_indent_chars":
         return _parse_number(text, ("字符", "字"))
+    if key in COLOR_FIELDS:
+        if key == "title_bar_fill" and text.lower() in NO_FILL_WORDS:
+            return None
+        color = text.lstrip("#").upper()
+        if not HEX_COLOR.fullmatch(color):
+            raise ValueError(f"{FIELD_LABELS[key]}写六位十六进制 RGB（如 70AD47），当前: {raw}")
+        return color
+    if key == "page_number_style":
+        style = PAGE_NUMBER_STYLE_ALIASES.get(text.lower().replace(" ", ""))
+        if style is None:
+            raise ValueError(f"页码样式只接受 plain（1）、dash（— 1 —）、page_of_total（第 1 页 共 N 页），当前: {raw}")
+        return style
     return _parse_number(text, ("厘米", "cm"))
 
 
@@ -346,6 +397,12 @@ def describe_value(key: str, record: dict) -> str:
         return f"{value:g} 字符"
     if key in (*PAGE_FIELDS, *MARGIN_FIELDS):
         return f"{value:g} 厘米"
+    if key == "frame_color":
+        return f"#{value}"
+    if key == "title_bar_fill":
+        return f"#{value}" if value else "无填充"
+    if key == "page_number_style":
+        return PAGE_NUMBER_STYLES[value]
     return str(value)
 
 

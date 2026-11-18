@@ -33,7 +33,7 @@ IDENTITY_SCHEMA = "qingtian-identity-terms/1"
 IDENTITY_KINDS = ("公司全称", "简称", "商标", "网址")
 
 # 与 build_response_docx 的 MARKER_PATTERN、HEADING_PATTERN、IMAGE_PATTERN 一致：渲染器怎么认，这里就怎么认
-LAYOUT_MARKER = re.compile(r"^<!--\s*(?:[a-z-]+|table-widths:\s*[\d.,\s]+|table-caption:\s*.+?)\s*-->$")
+LAYOUT_MARKER = re.compile(r"^<!--\s*(?:[a-z-]+|toc-[1-5]|table-widths:\s*[\d.,\s]+|table-caption:\s*.+?)\s*-->$")
 TABLE_CAPTION = re.compile(r"^<!--\s*table-caption:\s*(.+?)\s*-->$")
 HEADING = re.compile(r"^#{1,6}\s+")
 IMAGE = re.compile(r"^!\[([^\]]*)\]\((.+)\)$")

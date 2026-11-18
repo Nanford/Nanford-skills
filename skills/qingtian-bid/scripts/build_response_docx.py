@@ -20,7 +20,7 @@
     （第 4b-2 步）。
 
 INPUT: ordered Markdown files under bid-projects/<project>/output, optional page-header text,
-       optional explicit document format (otherwise project-state.json, else preset F1).
+       optional explicit document format (otherwise project-state.json or the default preset).
 OUTPUT: one formatted DOCX (document properties blank, personal-info removal on save) plus
         <output>.build-report.json (format record, source list with each file's sha256 at build time, and
         warnings such as missing images, image hashes and optional visual-manifest hash); native framed modules.
@@ -28,7 +28,8 @@ POS: Final delivery builder for the qingtian-bid skill (stage 6) and the format-
 
 Markdown layout markers (HTML comments, invisible in Markdown preview):
   <!-- cover -->              file top: render this file as the centered cover page
-  <!-- toc -->                insert 目录 title + Word TOC field (update in Word to fill)
+  <!-- toc -->                independent 目录 page, listing native level-one headings
+  <!-- toc-2 --> to toc-5     same layout, with the chosen outline depth
   <!-- notoc -->              next heading renders as a centered bold title outside TOC
                               (used for the three navigation tables)
   <!-- break-all-headings --> file top: every heading in this file starts a new page
@@ -105,7 +106,8 @@ HEADING_STYLE_BY_LEVEL = {
     5: "Heading 5",
 }
 HEADING_PATTERN = re.compile(r"^(#{1,5})\s+(.+)$")
-MARKER_PATTERN = re.compile(r"^<!--\s*([a-z-]+)\s*-->$")
+MARKER_PATTERN = re.compile(r"^<!--\s*([a-z-]+|toc-[1-5])\s*-->$")
+TOC_MARKER = re.compile(r"toc(?:-([1-5]))?")
 # 贪婪匹配到行尾右括号，兼容含括号的文件名（如 ISO9001_00(1).jpg）
 IMAGE_PATTERN = re.compile(r"^!\[([^\]]*)\]\((.+)\)$")
 TABLE_WIDTHS_PATTERN = re.compile(r"^<!--\s*table-widths:\s*([\d.,\s]+)\s*-->$")
@@ -319,7 +321,20 @@ def configure_header_footer(document: Document, header_text: str) -> None:
     footer_paragraph.paragraph_format.space_after = Pt(0)
     configure_paragraph_format(footer_paragraph.paragraph_format)
     if format_value("require_page_numbers"):
-        add_field_runs(footer_paragraph, "PAGE", "1", format_value("header_footer_size_pt"))
+        size = format_value("header_footer_size_pt")
+        style = format_value("page_number_style")
+        if style == "dash":
+            set_run_font(footer_paragraph.add_run("— "), size)
+            add_field_runs(footer_paragraph, "PAGE", "1", size)
+            set_run_font(footer_paragraph.add_run(" —"), size)
+        elif style == "page_of_total":
+            set_run_font(footer_paragraph.add_run("第 "), size)
+            add_field_runs(footer_paragraph, "PAGE", "1", size)
+            set_run_font(footer_paragraph.add_run(" 页 共 "), size)
+            add_field_runs(footer_paragraph, "NUMPAGES", "1", size)
+            set_run_font(footer_paragraph.add_run(" 页"), size)
+        else:
+            add_field_runs(footer_paragraph, "PAGE", "1", size)
 
 
 def markdown_table_rows(lines: list[str], start: int) -> tuple[list[list[str]], int] | None:
@@ -373,9 +388,10 @@ def set_table_geometry(table, widths: list[float], *, repeat_header: bool = True
     if repeat_header:
         table.rows[0]._tr.get_or_add_trPr().append(OxmlElement("w:tblHeader"))
     borders = OxmlElement("w:tblBorders")
+    border_color = format_value("frame_color") or "000000" if not repeat_header else "000000"
     for side in ("top", "left", "bottom", "right", "insideH", "insideV"):
         edge = OxmlElement(f"w:{side}")
-        for key, value in (("val", "single"), ("sz", "4"), ("color", "000000")):
+        for key, value in (("val", "single"), ("sz", "4"), ("color", border_color)):
             edge.set(qn(f"w:{key}"), value)
         borders.append(edge)
     table._tbl.tblPr.append(borders)
@@ -410,8 +426,17 @@ def add_caption(container, text: str, *, keep_next: bool = False):
     return paragraph
 
 
+def _is_panel_title(element) -> bool:
+    p_pr = element.find(qn("w:pPr"))
+    p_style = None if p_pr is None else p_pr.find(qn("w:pStyle"))
+    style_id = "" if p_style is None else p_style.get(qn("w:val"), "")
+    return style_id.startswith("Heading") or style_id == "BidSubheading"
+
+
 def decorate_panel(elements, *, grid: bool = False) -> None:
     """Borders leave Heading paragraphs in the document body, preserving TOC/gate discovery."""
+    frame_color = format_value("frame_color") or "000000"
+    title_fill = format_value("title_bar_fill")
     for element in elements:
         if element.tag != qn("w:p"):
             continue
@@ -422,10 +447,17 @@ def decorate_panel(elements, *, grid: bool = False) -> None:
         for side in ("top", "left", "bottom", "right", "between"):
             edge = OxmlElement(f"w:{side}")
             for key, value in (("val", "nil" if side == "between" and not grid else "single"),
-                               ("sz", "4"), ("space", "0"), ("color", "000000")):
+                               ("sz", "4"), ("space", "0"), ("color", frame_color)):
                 edge.set(qn(f"w:{key}"), value)
             borders.append(edge)
         p_pr.append(borders)
+        if title_fill and _is_panel_title(element):
+            for shade in list(p_pr.findall(qn("w:shd"))):
+                p_pr.remove(shade)
+            shd = OxmlElement("w:shd")
+            for key, value in (("val", "clear"), ("color", "auto"), ("fill", title_fill)):
+                shd.set(qn(f"w:{key}"), value)
+            p_pr.append(shd)
 
 
 def add_body_paragraph(
@@ -624,9 +656,10 @@ def add_cover_page(document: Document, lines: list[str]) -> None:
         paragraph = document.add_paragraph(style="Normal")
         paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         compact = text.replace("　", "").replace(" ", "")
-        # 主标题：以"投标文件"开头且非"XX：YY"信息项（如"投标文件""投标文件（技术部分）"）
+        # 主标题：以"投标文件"或"施工组织设计"开头且非"XX：YY"信息项（如"施工组织设计""施 工 组 织 设 计"）
         is_cover_title = (
-            compact.startswith("投标文件") and "：" not in compact and ":" not in compact
+            compact.startswith(("投标文件", "施工组织设计"))
+            and "：" not in compact and ":" not in compact
         )
         if is_cover_title:
             paragraph.style = document.styles["Bid Cover Title"]
@@ -639,13 +672,13 @@ def add_cover_page(document: Document, lines: list[str]) -> None:
             set_run_font(run, format_value("cover_info_size_pt"), bold=False)
 
 
-def add_toc_block(document: Document, page_break_before: bool) -> None:
+def add_toc_block(document: Document, page_break_before: bool, depth: int) -> None:
     add_plain_title(document, "目　录", page_break_before)
     paragraph = document.add_paragraph(style="Normal")
     configure_paragraph_format(paragraph.paragraph_format)
     add_field_runs(
         paragraph,
-        'TOC \\o "1-5" \\h \\z \\u',
+        f'TOC \\o "1-{depth}" \\h \\z \\u',
         "【目录域：在 Word/WPS 中全选后按 F9 或右键「更新域」生成带页码目录】",
         format_value("body_size_pt"),
         annotation_placeholder=True,
@@ -828,11 +861,13 @@ class MarkdownRenderer:
                     self.pending_break = True
                 elif marker == "notoc":
                     notoc_next_heading = True
-                elif marker == "toc":
-                    if format_value("require_toc"):
-                        add_toc_block(self.document, self._consume_break())
-                        self.rendered_any_block = True
-                        self.last_heading_level = None
+                elif (toc := TOC_MARKER.fullmatch(marker)) and format_value("require_toc"):
+                    starts_new_page = self._consume_break() or self.rendered_any_block
+                    add_toc_block(self.document, starts_new_page, int(toc[1] or 1))
+                    # Keep the body on a separate page in continuous chapter mode as well.
+                    self.pending_break = True
+                    self.rendered_any_block = True
+                    self.last_heading_level = None
                 # cover/break-all-headings 已在文件级处理
                 index += 1
                 continue
@@ -1053,7 +1088,7 @@ def load_manifest(manifest_path: Path) -> tuple[list[Path], str]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Build the formatted 施工组织设计 DOCX (format from project-state.json, else preset F1)."
+        description="Build the formatted 施工组织设计 DOCX (project format or default preset)."
     )
     parser.add_argument("--output", type=Path, required=True, help="Final DOCX path.")
     parser.add_argument("--visual-manifest", type=Path, help="已检查的 visual-assets.json；组图必需。")

@@ -5,7 +5,7 @@
 | 文件 | 内容 | 使用者 |
 |---|---|---|
 | `visual-assets.json` | 图文清单骨架：schema_version 1、required_jobs 配图作业和 assets 成果，具体字段见 image-generation.md | `scripts/visual_assets.py`、`build_response_docx.py`；相对路径以清单目录为准 |
-| `format-presets.json` | 格式预设库：F1～F5 五套预设（字段值、预设出处、个别字段的单独出处）；可选字体（系统自带、需另装、西文）；各维度的常用值 | `scripts/docx_font_profiles.py` |
+| `format-presets.json` | F1～F6 格式预设（字段值与出处）；F6 为新项目默认，支持框线、标题条底纹和页码样式；可选字体及各维度的常用值 | `scripts/docx_font_profiles.py` |
 | `rule-card.json` | 规则卡骨架（schema `qingtian-rule-card/3`）：27 个字段。其中 9 个（`qualification`、`checkboxes`、`key_dates`、`off_table`、`award`、`price_limit`、`bid_forms`、`bid_forms_diff`、`profile`）只含 `value`、`basis`、`checked`，出处逐行写 `ref`；其余每个含 `value`、`basis`、`source`、`checked`，轨道另有 `signals`、`handoff`，篇幅另有 `kind`，青天启用情况 `qingtian` 另有 `rule_scope`、`signals`、`user_decision`；工程类别 `project_category` 的 `value` 是 `{main, modules, scenarios}`，决定阶段 4、5 用哪几张类别知识卡 | `scripts/scaffold_rule_card.py` 复制为项目的 `analysis/rule-card.json`；`scripts/project_cards.py` 用它补齐渲染 |
 | `fact-card.json` | 事实卡骨架（schema `qingtian-fact-card/2`，第 2L 步加 `cites`）：空的 `facts` 列表，每条事实的键见 `references/stage-3-facts-resources.md` 第三节 | `scripts/scaffold_facts.py` 复制为项目的 `analysis/fact-card.json` |
 | `resource-card.json` | 资源卡骨架（schema `qingtian-resource-card/2`，第 2L 步加 `cites`）：`managers`、`machinery`、`labor`、`materials` 四节和 `gaps` 缺口，都是空列表 | `scripts/index_materials.py` 在项目里还没有资源卡时复制，并按缺类别预填缺口 |
@@ -16,7 +16,7 @@
 
 ## 维护
 
-- 改预设数值直接改 `format-presets.json`。F1 必须写全所有字段；其余预设只写与 F1 不同的字段，没写的字段沿用 F1，格式确认卡上标"沿用 F1"。
+- 改预设数值直接改 `format-presets.json`。F1 和 F6 写全字段；F2～F5 用 `inherits: "F1"` 沿用未列字段，不受默认预设切换影响。
 - 某个字段的依据与整套预设不同（例如推断值、用户决策），写进该预设的 `field_sources`。
 - 新字体须先加入 `fonts` 列表才能使用；系统不自带的放 `needs_install`，用到时确认卡给出 W8 提醒。
 - 预设代号一经发布不重排；不再使用的预设在名称里注明，不删除代号。

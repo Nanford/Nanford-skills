@@ -1,25 +1,70 @@
 {
   "schema_version": 1,
-  "default_preset": "F1",
+  "default_preset": "F6",
   "fonts": {
-    "system": ["宋体", "仿宋", "楷体", "黑体", "微软雅黑"],
-    "needs_install": ["仿宋_GB2312", "楷体_GB2312", "方正仿宋_GBK", "方正小标宋简体", "方正小标宋_GBK"],
-    "latin": ["Times New Roman", "Arial"]
+    "system": [
+      "宋体",
+      "仿宋",
+      "楷体",
+      "黑体",
+      "微软雅黑"
+    ],
+    "needs_install": [
+      "仿宋_GB2312",
+      "楷体_GB2312",
+      "方正仿宋_GBK",
+      "方正小标宋简体",
+      "方正小标宋_GBK"
+    ],
+    "latin": [
+      "Times New Roman",
+      "Arial"
+    ]
   },
   "dimensions": {
-    "body_size_pt": [10.5, 11, 12, 14, 16],
-    "heading_size_pt": [22, 18, 16, 15, 14, 12],
+    "body_size_pt": [
+      10.5,
+      11,
+      12,
+      14,
+      16
+    ],
+    "heading_size_pt": [
+      22,
+      18,
+      16,
+      15,
+      14,
+      12
+    ],
     "line_spacing": {
-      "multiple": [1.0, 1.25, 1.5, 2.0],
-      "exact": [18, 20, 22, 25, 28, 28.9],
+      "multiple": [
+        1.0,
+        1.25,
+        1.5,
+        2.0
+      ],
+      "exact": [
+        18,
+        20,
+        22,
+        25,
+        28,
+        28.9
+      ],
       "at_least": "任意磅值"
     },
-    "heading_space_pt": [0, 6, 8, 12]
+    "heading_space_pt": [
+      0,
+      6,
+      8,
+      12
+    ]
   },
   "presets": {
     "F1": {
       "name": "宋体 11/12 磅 · 1.5 倍",
-      "source": "全局 DOCX 设定；开工不选时用它",
+      "source": "全局 DOCX 设定；v2.1 及以前开工不选时用它，F2～F5 未列字段沿用它",
       "fields": {
         "body_font": "宋体",
         "heading1_font": "宋体",
@@ -48,12 +93,16 @@
         "heading_page_breaks": true,
         "require_toc": true,
         "require_page_numbers": true,
-        "blind_mode": false
+        "blind_mode": false,
+        "frame_color": "000000",
+        "title_bar_fill": null,
+        "page_number_style": "plain"
       }
     },
     "F2": {
       "name": "合肥示范文本",
       "source": "示范文本《施工组织设计编制建议》（评分表注 1，p61）【一手】",
+      "inherits": "F1",
       "fields": {
         "body_size_pt": 14,
         "heading1_size_pt": 16,
@@ -82,6 +131,7 @@
     "F3": {
       "name": "常规标书",
       "source": "常见做法【推断】",
+      "inherits": "F1",
       "fields": {
         "heading1_font": "黑体",
         "heading2_font": "黑体",
@@ -95,6 +145,7 @@
     "F4": {
       "name": "公文风",
       "source": "GB/T 9704-2012《党政机关公文格式》（待核验现行版本）",
+      "inherits": "F1",
       "fields": {
         "body_font": "仿宋",
         "heading1_font": "黑体",
@@ -120,6 +171,7 @@
     "F5": {
       "name": "紧凑版",
       "source": "招标文件只限页数、不限字号时用【推断】；字号偏小，专家阅读较吃力",
+      "inherits": "F1",
       "fields": {
         "heading1_font": "黑体",
         "heading2_font": "黑体",
@@ -130,6 +182,47 @@
         "heading3_size_pt": 10.5,
         "line_spacing_rule": "exact",
         "line_spacing": 18
+      }
+    },
+    "F6": {
+      "name": "参考框式 · 宋体五号单倍 · 绿框米色标题条",
+      "source": "框式参考预设：正文宋体五号单倍行距，章标题三号居中，三级标题米色底标题条，绿色线框，页眉写项目名称，页脚“— N —”；新项目默认",
+      "fields": {
+        "body_font": "宋体",
+        "heading1_font": "宋体",
+        "heading2_font": "宋体",
+        "heading3_font": "宋体",
+        "latin_font": null,
+        "body_size_pt": 10.5,
+        "heading1_size_pt": 16,
+        "heading2_size_pt": 10.5,
+        "heading3_size_pt": 10.5,
+        "cover_title_size_pt": 16,
+        "cover_info_size_pt": 16,
+        "header_footer_size_pt": 9,
+        "line_spacing_rule": "multiple",
+        "line_spacing": 1.0,
+        "heading_space_before_pt": 6,
+        "heading_space_after_pt": 6,
+        "first_line_indent_chars": 2,
+        "page_width_cm": 21,
+        "page_height_cm": 29.7,
+        "margin_top_cm": 2.5,
+        "margin_bottom_cm": 2.0,
+        "margin_left_cm": 2.0,
+        "margin_right_cm": 2.0,
+        "heading_bold": true,
+        "heading_page_breaks": false,
+        "require_toc": true,
+        "require_page_numbers": true,
+        "blind_mode": false,
+        "frame_color": "70AD47",
+        "title_bar_fill": "F5ECE5",
+        "page_number_style": "dash"
+      },
+      "field_sources": {
+        "require_toc": "样本封面后单列一级目录页；招标文件不要目录时关闭",
+        "heading_page_breaks": "样本各章接排不另起页，节省篇幅"
       }
     }
   }

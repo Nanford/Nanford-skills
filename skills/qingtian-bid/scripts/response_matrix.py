@@ -3,7 +3,7 @@ gate, plus the item naming shared with stage 5 and the step-4 gate scripts.
 
 INPUT: <project>/analysis/response-matrix.json (scaffold_matrix.py 出骨架后按规则卡、事实卡、资源卡填写);
        analysis/rule-card.json, fact-card.json, resource-card.json; project-state.json (the locked
-       document_format feeds the page estimate); templates/response-matrix.json.
+       document_format feeds optional page estimates); templates/response-matrix.json.
 OUTPUT: validation issues; the analysis/response-matrix.md view, which is the outline the user confirms;
         the confirmation record cards.response_matrix (each row locks the rule, fact and resource rows it depends on);
         item_heading() / item_file() naming; page_capacity(); stage4_issues(); writing_inputs() and
@@ -148,8 +148,6 @@ def check_item(item: dict, label: str, context: dict) -> list[str]:
     facts = item.get("facts") if isinstance(item.get("facts"), list) else []
     if len(set(facts)) < MIN_FACTS and not str(item.get("facts_note") or "").strip():
         issues.append(f"{label}：引用的事实少于 {MIN_FACTS} 条，补事实或在 facts_note 写明原因（W1）")
-    if not is_half_pages(item.get("pages"), 0.5):
-        issues.append(f"{label}：pages 应为正数页数，以 0.5 页为单位")
     return issues
 
 
@@ -183,14 +181,28 @@ def page_total(matrix: dict, items: list[dict]) -> float:
     return sum(pages) + sum(fixed)
 
 
+def page_limit_value(rule_card: dict) -> int | None:
+    entry = rule_card.get("page_limit") or {}
+    value = entry.get("value")
+    if entry.get("basis") == UNSPECIFIED or type(value) is not int or value <= 0:
+        return None
+    return value
+
+
 def check_pages(matrix: dict, items: list[dict], rule_card: dict) -> list[str]:
     """封面目录 + 各项 + 余量不超过篇幅上限；"建议"也照做（D7），偏离须用户同意后改规则卡。"""
     issues = [f"{key} 应为不小于 0 的页数，以 0.5 页为单位" for key in ("front_pages", "reserve_pages")
               if not is_half_pages(matrix.get(key), 0)]
     limit = rule_card.get("page_limit") or {}
-    value = limit.get("value")
+    value = page_limit_value(rule_card)
+    for item in items:
+        pages = item.get("pages")
+        if pages is None and value is None:
+            continue
+        if not is_half_pages(pages, 0.5):
+            issues.append(f"第 {item.get('no')} 项：pages 应为正数页数，以 0.5 页为单位")
     total = page_total(matrix, items)
-    if isinstance(value, int) and not isinstance(value, bool) and total > value:
+    if value is not None and total > value:
         issues.append(f"篇幅预算 {total:g} 页超过上限 {value} 页（{limit.get('kind')}）：压缩各项页数或余量；"
                       "压缩会删掉评审内容要求的要点时硬停，请用户取舍")
     return issues
@@ -267,7 +279,7 @@ def item_row(item: dict, context: dict, capacity: int | None) -> str:
     words = str(int(pages * capacity)) if capacity and is_half_pages(pages, 0.5) else "—"
     return (f"| {cell(no)} | {cell(title)} | {cell(file)} | {cell(joined(item.get('points')))} | {cell(facts)} | "
             f"{cell(joined(resources, '、'))} | {cell(joined(item.get('mandatory'), '、'))} | {cell(controls)} | "
-            f"{cell(pages)} | {words} |")
+            f"{cell(pages) if pages is not None else '未预估'} | {words} |")
 
 
 def landing_rows(items: list[dict], context: dict) -> list[str]:
@@ -293,11 +305,13 @@ def coverage_rows(matrix: dict) -> list[str]:
 
 
 def budget_lines(matrix: dict, items: list[dict], rule_card: dict, capacity: int | None) -> list[str]:
-    item_pages = sum(item["pages"] for item in items if is_half_pages(item.get("pages"), 0.5))
+    estimated = [item["pages"] for item in items if is_half_pages(item.get("pages"), 0.5)]
     limit = rule_card.get("page_limit") or {}
-    ceiling = f"上限 {limit['value']} 页（{limit.get('kind')}）" if isinstance(limit.get("value"), int) \
-        else "招标文件未规定篇幅上限"
-    return [f"- 封面与目录 {cell(matrix.get('front_pages'))} 页 + 各项合计 {item_pages:g} 页 + 余量 "
+    value = page_limit_value(rule_card)
+    ceiling = f"上限 {value} 页（{limit.get('kind')}）" if value is not None else "招标文件未规定篇幅上限"
+    if not items or len(estimated) < len(items):
+        return [f"- {ceiling}。已预估 {len(estimated)}/{len(items)} 项，不汇总未估项。"]
+    return [f"- 封面与目录计入 {cell(matrix.get('front_pages'))} 页 + 各项合计 {sum(estimated):g} 页 + 余量 "
             f"{cell(matrix.get('reserve_pages'))} 页 = {page_total(matrix, items):g} 页；{ceiling}",
             f"- 一页约 {capacity} 字（按锁定格式估算【推断】）" if capacity else "- 格式未锁定，不估字数"]
 
