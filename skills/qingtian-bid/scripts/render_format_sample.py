@@ -134,7 +134,7 @@ def format_card_markdown(record: dict, docx_path: Path, pdf_path: Path | None, p
         f"- 与预设不同的字段：{'、'.join(FIELD_LABELS[key] for key in changed) if changed else '无'}",
         f"- 样张 DOCX：{docx_path}",
         f"- 样张 PDF：{pdf_path if pdf_path else '无'}（{pdf_note}）",
-        f"- 样张正文：{'无分块线框' if plain_sample else '黑色细线分块，表格、图题可编辑'}。",
+        f"- 样张正文：{'无分块线框' if plain_sample else '框式分块（标题条底纹与线框按预设配色），表格、图题可编辑'}。",
         f"- 生成时间：{datetime.now().isoformat(timespec='seconds')}",
         "",
         "| 字段 | 取值 | 出处 |",

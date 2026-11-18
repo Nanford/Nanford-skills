@@ -1,12 +1,12 @@
 # qingtian-bid 目录说明
 
+GitHub 安装与更新见 `references/installation.md`。安装跟踪信息由 GitHub CLI 写入使用者的副本。
+
 本目录是 `qingtian-bid` Skill 的源目录，遵循 SKILL.md + references/ + templates/ + scripts/ 的通用 Agent Skill 结构。它面向招标文件启用青天大模型 AI 类人评审的项目，不看地区和行业（见 SKILL.md《适用范围》），目前只做施工组织设计和提交前清单：第一层是投标基础红线，第二层叠加青天 AI 类人评审与暗标规则。商务文件由用户另行编制，本版本暂不生成。
 
 ## 建设状态
 
-GitHub 安装与更新见 `references/installation.md`。安装跟踪信息由 GitHub CLI 写入使用者的副本。
-
-图文响应文件：按主样张采用框式版面，必要配图按作业生成并核对小节落点。`references/visual-layout.md` 与 `references/image-generation.md` 说明版式及 Agent 配图，`references/pdf-delivery.md` 说明完整 PDF 导出、身份属性清理和验收。
+图文响应文件：遵循招标及确认版式，可用连续正文与就近单图，也可按需用表格、线框和组图。必要图件先写提示词或绘制说明，再按类型制作并核对落点。招标文件无篇幅上限时不预分章页。`references/visual-layout.md` 与 `references/image-generation.md` 说明版式和制图，`references/pdf-delivery.md` 说明 PDF 交付和验收。
 
 v1.0 按设计稿 v1 分 6 步建成，下面是当时的记录；v2.0 的改动见 `CHANGELOG.md`：
 

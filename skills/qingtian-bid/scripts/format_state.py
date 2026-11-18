@@ -9,7 +9,7 @@ OUTPUT: composed candidate format plus three-column diff rows ("所选 / 招标�
         for the rule-card cross-check;
         pending review records; confirmation that locks document_format in project-state.json.
 POS: state layer behind render_format_sample --project and prepare_project. Pure logic, no
-     rendering. Priority follows design D7: 招标文件 > 开工所选 > F1. Tender requirements are
+     rendering. Priority follows design D7: 招标文件 > 开工所选 > 新项目默认预设 F6. Tender requirements are
      always laid over the user's own selection (format_selection), never over a previous tender
      result, so a later 补遗 that drops a field returns it to the user's choice.
 
@@ -255,7 +255,7 @@ def compose_format(selection: dict, tender: dict | None) -> tuple[dict, list[dic
 
 
 def _describe(field: str, value: object, record: dict) -> str:
-    if value is None and field != "latin_font":
+    if value is None and field not in {"latin_font", "title_bar_fill"}:
         return "—"
     return describe_value(field, {**record, field: value})
 

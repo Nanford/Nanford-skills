@@ -195,7 +195,9 @@
 
 ### qingtian-bid
 
-面向青天大模型评审的施工组织设计 Skill。按项目评审项编制框式图文施组，生成必要的工艺示意图，并导出经过属性清理和验收的完整 PDF。当前为 `2.0-dev` 开发预览版。[Skill 入口](skills/qingtian-bid/SKILL.md) · [单独安装与更新](skills/qingtian-bid/references/installation.md)
+面向青天大模型评审的施工组织设计 Skill，当前版本为 **2.2**。招标文件未限页时按工程内容展开，不套固定页数；正文可就近插图，施工动作配写实示意，过程管控配可编辑流程图，不固定每节图数。新项目可使用 F6 参考框式版式，招标要求和已确认格式优先。
+
+[Skill 入口](skills/qingtian-bid/SKILL.md) · [单独安装与更新](skills/qingtian-bid/references/installation.md) · [版本记录](skills/qingtian-bid/CHANGELOG.md)
 
 ---
 
@@ -281,7 +283,7 @@ gh skill install Nanford/Nanford-skills skills/qingtian-bid --agent claude-code 
 
 安装后开启新会话。首次使用时，Skill 会在 GitHub CLI 可用且有安装来源记录时检查是否有更新。看到提醒可回复“更新 qingtian-bid”。[更新命令和旧版迁移方法](skills/qingtian-bid/references/installation.md)
 
-维护时，更新 `skills/qingtian-bid/` 并推送到 GitHub `main`。从独立仓库同步时保留 Skill 入口的安装更新段落及 `references/installation.md`。更新检查比较该目录的 Git 版本，其他 Skill 的改动不会触发这项提醒。当前按默认分支分发。如果仓库以后使用 GitHub Releases，GitHub CLI 会优先选择最新发行版，发布更新时也要将发行版指向包含最新版 Skill 的提交。
+维护时，同步 `skills/qingtian-bid/`、本页的当前版本和 Skill 的版本记录，再推送到 GitHub `main`。从独立仓库同步时保留 Skill 入口的安装更新段落及 `references/installation.md`。更新检查比较该目录的 Git 版本，其他 Skill 的改动不会触发这项提醒。当前按默认分支分发。如果仓库以后使用 GitHub Releases，发布更新时也须检查最新发行版是否包含新版 Skill。
 
 ### 电商工作流安装
 

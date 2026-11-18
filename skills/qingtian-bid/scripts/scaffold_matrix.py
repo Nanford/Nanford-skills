@@ -5,7 +5,7 @@ INPUT: <project>/analysis/rule-card.json (review items, mandatory clauses whose 
        site_limits); project-state.json (stage 3 must be done); templates/response-matrix.json; the category
        knowledge cards the rule card selects (category_cards).
 OUTPUT: analysis/response-matrix.json with one row per review item (title in the original wording, empty
-        points and facts, prefilled resources, ★ landings, control points and page budget) and the
+        points and facts, prefilled resources, ★ landings, control points and page budget only when limited) and the
         analysis/response-matrix.md view. An existing matrix is never overwritten: the draft goes to
         analysis/response-matrix-候选-<时间>.json. JSON summary on stdout.
 POS: stage-4 helper of qingtian-bid (design v1 §9, 第 3c 步). It only proposes: points, facts and the R13
@@ -15,7 +15,7 @@ POS: stage-4 helper of qingtian-bid (design v1 §9, 第 3c 步). It only propose
      办公区……) is rewritten to "现场不设……，写明场外解决方式" with the card text kept after it (第 6b 步, 决策
      S6-A). Prefills are keyword guesses (物资/机械/劳动力 → that resource section; 工期/质量/安全 → the
      item named after it; 招标指定 clauses → the item whose title has 重点/难点) and must be checked. Page budgets follow the
-     示范文本 defaults; a title outside them weighs DEFAULT_PAGES. When the tender lists no review items
+     示范文本 weights only when the rule card sets a limit; otherwise estimates are left open. When the tender lists no review items
      (T-合格), it stops: the chapters come from the user, not from a guess. Each row starts citing its own
      review item and the clauses landed on it (决策 D9); other rule rows it uses are added by hand.
 """
@@ -33,18 +33,18 @@ from category_cards import control_point_prefill, project_cards
 from fact_resource_cards import card_template
 from project_cards import (FACT_CARD_FILE, MATRIX_FILE, RESOURCE_CARD_FILE, RULE_CARD_FILE, TECH_SCOPE,
                            TENDER_SPECIFIED, load_json, load_project, scoped_clauses)
-from response_matrix import check_matrix, expected_items
+from response_matrix import check_matrix, expected_items, page_limit_value
 from rule_card_rows import REVIEW_PREFIX
 from site_limits import forbidden_objects, rewrite_point
 
 
-# 设计稿 §5.1 的默认页数【推断】：示范文本 10 项评审内容合计 47 页，加余量 3 页正好 50 页
+# 只作限页项目的相对权重【推断】，不是各章默认页数。
 DEMO_PAGES = {
     "工程概况": 3, "主要施工方法": 14, "拟投入的主要物资计划": 3, "拟投入的主要施工机械、设备计划": 3,
     "劳动力安排计划": 3, "确保工程质量的技术组织措施": 5, "确保安全生产的技术组织措施": 5,
     "确保工期的技术组织措施": 4, "确保文明施工的技术组织措施": 4, "施工总平面布置图": 3,
 }
-DEFAULT_PAGES = 3  # 没有篇幅上限、标题又不是示范文本那 10 项时，每项先给 3 页
+DEFAULT_PAGES = 3  # 限页项目中，非示范文本标题的相对权重
 # 标题关键词 → 预填的资源卡节
 RESOURCE_KEYWORDS = (("物资", "materials"), ("机械", "machinery"), ("设备", "machinery"), ("劳动力", "labor"))
 # 条款原文里的关键词 → 落在标题含同一关键词的那一项
@@ -106,11 +106,11 @@ def split_half_pages(weights: list[int], units: int) -> list[int]:
     return split
 
 
-def page_budget(titles: list[str], rule_card: dict, fixed: float) -> list[float | int]:
-    """按示范文本默认页数的比例在上限内分配（不是那 10 项的标题按 DEFAULT_PAGES 计），以 0.5 页为单位。"""
-    limit = (rule_card.get("page_limit") or {}).get("value")
-    if not isinstance(limit, int) or isinstance(limit, bool):
-        return [DEMO_PAGES.get(title, DEFAULT_PAGES) for title in titles]
+def page_budget(titles: list[str], rule_card: dict, fixed: float) -> list[float | int | None]:
+    """有上限才按相对权重分配半页；无上限不预填各章估算。"""
+    limit = page_limit_value(rule_card)
+    if limit is None:
+        return [None] * len(titles)
     budget = limit - fixed
     if budget < 0.5 * len(titles):
         raise ValueError(f"篇幅上限 {limit} 页扣除封面目录和余量后不够每项 0.5 页：先和用户商定篇幅分配")
@@ -164,13 +164,13 @@ def scaffold_matrix(project_dir: Path) -> dict:
     return {"response_matrix": str(target), "views": views, "items": len(matrix["items"]),
             "category_cards": [card["name"] for card in cards], "undelivered_cards": missing,
             "site_limits": forbidden_objects(list(fact_card.get("facts") or [])),
-            "note": "骨架：逐项写要点、引用事实（每项至少 2 条或写明原因），核对预填的资源、★落点和页数，写实施/进度/组织"
+            "note": "骨架：逐项写要点、引用事实（每项至少 2 条或写明原因），核对资源和★落点；有上限才分配页数，写实施/进度/组织"
                     "的分布依据；控制点是类别知识卡的通用要点【推断】，不适用本项目的删掉，与现场限制（site_limits）矛盾的"
                     "已改写为现场不设、写明场外解决方式；校验通过后请用户确认大纲"}
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="按确认过的规则卡出响应矩阵骨架（一项评审内容一行，预填资源、★落点和页数）。")
+    parser = argparse.ArgumentParser(description="按确认过的规则卡出响应矩阵骨架（预填资源、★落点；有上限才分配页数）。")
     parser.add_argument("project", type=Path, help="项目目录。")
     return parser.parse_args()
 

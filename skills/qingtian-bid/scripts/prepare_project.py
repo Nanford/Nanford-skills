@@ -113,12 +113,8 @@ def install_company_dir(project_dir: Path) -> Path:
 
 def kickoff_format(preset: str | None, settings: dict, *, plain_sample: bool = False) -> dict:
     """先在建目录之前校验格式，非法值不留下半个项目。"""
+    del plain_sample
     record = preset_format(preset)
-    if preset is None and not plain_sample:
-        record = apply_format_settings(record, {
-            "margin_top_cm": 2.5, "margin_bottom_cm": 2, "margin_left_cm": 2, "margin_right_cm": 2,
-            "heading_page_breaks": False, "require_toc": False,
-        }, "框式主样张默认")
     if settings:
         record = apply_format_settings(record, with_blind_mode_defaults(settings),
                                        f"开工所选，用户自定义（{date.today().isoformat()}）")
@@ -278,7 +274,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resources", type=Path, action="append", default=[],
                         help="放在项目公司资料目录以外的公司资源资料，原地登记；可重复。")
     parser.add_argument("--no-copy-sources", action="store_true", help="只登记招标文件和样本路径，不复制。")
-    parser.add_argument("--format-preset", help="成品格式预设代号（F1～F5），不填用默认预设 F1。")
+    parser.add_argument("--format-preset", help="成品格式预设代号（F1～F6），不填用默认预设 F6。")
     parser.add_argument("--format-set", action="append", default=[], metavar="字段=值",
                         help="在预设上改个别字段，如 正文字号=小四；可重复。")
     parser.add_argument("--no-pdf", action="store_true", help="不调用 Word/WPS 导出样张 PDF。")
