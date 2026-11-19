@@ -67,18 +67,17 @@
 *   **核心价值**：需求归一化与可视化。直接将口语化需求转化为可交互的 HTML 原型。
 *   **适用场景**：快速原型验证、产品规格评审、方案视觉化演示。
 
-### 📐 4. svg-architecture-diagram
-> **定位**：SVG 信息架构图生成器
+### 📐 4. processon-diagrams
+> **定位**：ProcessOn 风格多图种 SVG 图表生成器（由 `svg-architecture-diagram` 升级重构）
 
-*   **核心价值**：将任意架构文字描述转化为结构清晰、视觉专业的 SVG 架构图，无需外部工具，直接输出可渲染的矢量图。
-*   **适用场景**：系统架构、业务流程、组织结构、数据流、技术选型方案等场景的可视化。
-*   **8 种主题**：通用多彩 / 科技蓝 / 深色海洋 / 医疗健康 / 金融 / 森林绿 / 政企 / 暖色创意，根据行业自动匹配。
-*   **双画布模式**：标准（1400×1000）和宽屏（1920×1080），适配不同展示需求。
-*   **技术亮点**：使用几何拼接箭头替代 SVG marker，确保跨平台渲染一致性。
+*   **核心价值**：将文字描述转化为 ProcessOn 模板风格的矢量 SVG 图表，内置零外部依赖 Python 渲染脚本，自动计算坐标、换行与对齐，杜绝节点重叠与溢出，并支持无头浏览器导出 PNG 预览自检。
+*   **多图种架构**：按“路由入口 + 共用核心（主题/排版/图元/箭头/导出）+ 图种渲染器”拆分，当前支持**分层架构图（`architecture`）**，便于后续扩展甘特图、泳道图、流程图等常用辅助阅读图形。
+*   **5 套 ProcessOn 主题**：青绿经典（默认）/ 科技蓝 / 清新绿 / 活力橙 / 商务灰，低饱和浅色块 + 1px 细描边，按语义角色统一取色。
+*   **技术亮点**：几何拼接箭头替代 SVG `<marker>`，确保导入 PPT、Word、公众号编辑器不丢箭头；左侧竖排层标签、右侧支撑体系栏、多列卡片网格自动底对齐。
 
 **效果预览**：
 
-![架构图示例](skills/svg-architecture-diagram/references/architecture-diagram.svg)
+![ProcessOn 风格架构图示例](skills/processon-diagrams/examples/ecommerce.svg)
 
 ### 📡 5. ai-news-scout
 > **定位**：AI 信息差日报生成工具
@@ -279,9 +278,11 @@ Nanford-skills/
     ├── ai-news-scout/
     │   ├── SKILL.md              # 3 批并行搜索 + 去重 + 分类
     │   └── references/           # 输出模板
-    ├── svg-architecture-diagram/
-    │   ├── SKILL.md              # JSON 模型 → SVG 架构图
-    │   └── references/           # 配色主题定义 & 效果示例
+    ├── processon-diagrams/
+    │   ├── SKILL.md              # 多图种路由入口（JSON 模型 → ProcessOn 风格 SVG）
+    │   ├── references/           # 共用视觉规范、5 套配色主题 & 分图种规范
+    │   ├── scripts/              # 统一渲染入口 render.py、core 核心库 & diagrams 渲染器
+    │   └── examples/             # 图种示例 JSON 与成品 SVG
     ├── viral-article-analyzer/
     └── wechat-article-operator/
         ├── SKILL.md              # V3 核心指令
@@ -345,6 +346,7 @@ python "$env:USERPROFILE\.codex\skills\video-workflow\scripts\init_workspace.py"
 
 ## 📜 版本更新记录
 
+- **v0.11**：将 `svg-architecture-diagram` 重构并更名为 `processon-diagrams`——全面切换为 ProcessOn 模板风格（5 套角色色主题、1px 细描边、几何拼接箭头、自动换行与卡片对齐），按“路由入口 + `scripts/core` + `scripts/diagrams`”拆分为多图种可扩展框架，新增零依赖 Python 渲染脚本与 PNG 预览自检。
 - **v0.10**：新增 AI 实战短视频生产工作流（VideoCut）12 个 Skill 与 `install-video-skills.ps1`：总入口 `video-workflow`、文稿闸门与平台审核、MiniMax 配音与字幕、统一时间轴、Remotion 渲染（语义配色与八种文字动效）、系列音效与混音质检交付。
 - **v0.9**：新增 `bid-preparation` 标书响应文件制作 Skill（脚本 + 模板 + 参考卡片）；新增 `minimal-narrative-sketch-scenes` 极简手绘叙事小场景提示词 Skill；新增 `plc-station-db-mapper` 西门子 PLC 站台点位映射 Skill；新增 `.agents/skills/architecture-diagram` 无连线架构图视觉设计 Skill；升级 `text-to-ppt-pro` 为 PPT 执行层（13 种页型、4 套主题、`layout-specs` 版式规范、参考 PPT）；`article-to-ppt` 重命名为 `article-to-ppt-outline` 明确规划层定位。
 - **v0.8**：新增 `article-to-ppt` 与 `text-to-ppt-pro`，完善 PPT 制作全链路工具；升级 `hootoolai-ppt` 至 V3，引入 PPT-Agent 认知设计逻辑。

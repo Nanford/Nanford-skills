@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1018" viewBox="0 0 1200 1018">
+<style>text{font-family:'PingFang SC','Microsoft YaHei','Hiragino Sans GB','Noto Sans CJK SC','Source Han Sans SC',-apple-system,'Segoe UI',Arial,sans-serif;fill:#262626;}</style>
+<rect width="1200" height="1018" fill="#FFFFFF"/>
+<rect x="40.0" y="16.0" width="1120.0" height="44.0" rx="0" fill="#90DDDB" stroke="#4D4D4D" stroke-width="1"/>
+<text x="600.0" y="44.3" font-size="18" text-anchor="middle" font-weight="500">电商系统设计架构图</text>
+<!-- 层级1：展现层 -->
+<rect x="153.6" y="86.0" width="180.0" height="40.0" rx="0" fill="#D3EDC4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="243.6" y="110.9" font-size="14" text-anchor="middle">H5、小程序</text>
+<rect x="391.2" y="86.0" width="180.0" height="40.0" rx="0" fill="#D3EDC4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="481.2" y="110.9" font-size="14" text-anchor="middle">PC、WAP</text>
+<rect x="628.8" y="86.0" width="180.0" height="40.0" rx="0" fill="#D3EDC4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="718.8" y="110.9" font-size="14" text-anchor="middle">APP</text>
+<rect x="866.4" y="86.0" width="180.0" height="40.0" rx="0" fill="#D3EDC4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="956.4" y="110.9" font-size="14" text-anchor="middle">管理端</text>
+<rect x="40.0" y="76.0" width="40.0" height="60.0" rx="4" fill="#FBE5D6" stroke="#4D4D4D" stroke-width="1"/>
+<text font-size="15" text-anchor="middle"><tspan x="60.0" y="95.2">展</tspan><tspan x="60.0" y="111.2">现</tspan><tspan x="60.0" y="127.2">层</tspan></text>
+<!-- 层级2：微服务应用层 -->
+<rect x="96.0" y="152.0" width="1008.0" height="52.0" rx="0" fill="#FDF8EE" stroke="#4D4D4D" stroke-width="1"/>
+<text x="600.0" y="182.9" font-size="14" text-anchor="middle">网关、Gateway路由、鉴权管理、熔断降级、黑名单管理、A/B测配置</text>
+<rect x="96.0" y="218.0" width="278.7" height="208.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="96.0" y="218.0" width="278.7" height="40.0" rx="0" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="235.3" y="243.2" font-size="15" text-anchor="middle" font-weight="bold">用户服务</text>
+<rect x="108.0" y="270.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="168.7" y="294.9" font-size="14" text-anchor="middle">用户注册</text>
+<rect x="241.3" y="270.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="302.0" y="294.9" font-size="14" text-anchor="middle">个人中心</text>
+<rect x="108.0" y="322.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="168.7" y="346.9" font-size="14" text-anchor="middle">用户登录</text>
+<rect x="241.3" y="322.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="302.0" y="346.9" font-size="14" text-anchor="middle">会员管理</text>
+<rect x="108.0" y="374.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="168.7" y="398.9" font-size="14" text-anchor="middle">用户评价</text>
+<rect x="241.3" y="374.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="302.0" y="398.9" font-size="14" text-anchor="middle">账号管理</text>
+<rect x="96.0" y="440.0" width="278.7" height="170.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="96.0" y="440.0" width="278.7" height="40.0" rx="0" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="235.3" y="465.2" font-size="15" text-anchor="middle" font-weight="bold">物流服务</text>
+<rect x="108.0" y="492.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="168.7" y="516.9" font-size="14" text-anchor="middle">物流合作</text>
+<rect x="241.3" y="492.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="302.0" y="516.9" font-size="14" text-anchor="middle">物流查询</text>
+<rect x="108.0" y="544.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="168.7" y="568.9" font-size="14" text-anchor="middle">物流修改</text>
+<rect x="241.3" y="544.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="302.0" y="568.9" font-size="14" text-anchor="middle">物流售后</text>
+<rect x="388.7" y="218.0" width="278.7" height="156.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="388.7" y="218.0" width="278.7" height="40.0" rx="0" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="528.0" y="243.2" font-size="15" text-anchor="middle" font-weight="bold">商品服务</text>
+<rect x="400.7" y="270.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="461.3" y="294.9" font-size="14" text-anchor="middle">商品展示</text>
+<rect x="534.0" y="270.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="594.7" y="294.9" font-size="14" text-anchor="middle">商品分类</text>
+<rect x="400.7" y="322.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="461.3" y="346.9" font-size="14" text-anchor="middle">商品推荐</text>
+<rect x="534.0" y="322.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="594.7" y="346.9" font-size="14" text-anchor="middle">价格管理</text>
+<rect x="388.7" y="388.0" width="278.7" height="104.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="388.7" y="388.0" width="278.7" height="40.0" rx="0" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="528.0" y="413.2" font-size="15" text-anchor="middle" font-weight="bold">库存服务</text>
+<rect x="400.7" y="440.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="461.3" y="464.9" font-size="14" text-anchor="middle">库存查询</text>
+<rect x="534.0" y="440.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="594.7" y="464.9" font-size="14" text-anchor="middle">库存预占</text>
+<rect x="388.7" y="506.0" width="278.7" height="104.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="388.7" y="506.0" width="278.7" height="40.0" rx="0" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="528.0" y="531.2" font-size="15" text-anchor="middle" font-weight="bold">营销管理</text>
+<rect x="400.7" y="558.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="461.3" y="582.9" font-size="14" text-anchor="middle">广告管理</text>
+<rect x="534.0" y="558.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="594.7" y="582.9" font-size="14" text-anchor="middle">图片管理</text>
+<rect x="681.3" y="218.0" width="278.7" height="156.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="681.3" y="218.0" width="278.7" height="40.0" rx="0" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="820.7" y="243.2" font-size="15" text-anchor="middle" font-weight="bold">订单服务</text>
+<rect x="693.3" y="270.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="754.0" y="294.9" font-size="14" text-anchor="middle">购物车</text>
+<rect x="826.7" y="270.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="887.3" y="294.9" font-size="14" text-anchor="middle">订单管理</text>
+<rect x="693.3" y="322.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="754.0" y="346.9" font-size="14" text-anchor="middle">订单状态跟踪</text>
+<rect x="826.7" y="322.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="887.3" y="346.9" font-size="14" text-anchor="middle">订单售后</text>
+<rect x="681.3" y="388.0" width="278.7" height="222.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="681.3" y="388.0" width="278.7" height="40.0" rx="0" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="820.7" y="413.2" font-size="15" text-anchor="middle" font-weight="bold">支付服务</text>
+<rect x="693.3" y="440.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="754.0" y="464.9" font-size="14" text-anchor="middle">支付查询</text>
+<rect x="826.7" y="440.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="887.3" y="464.9" font-size="14" text-anchor="middle">三方对接</text>
+<rect x="693.3" y="492.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="754.0" y="516.9" font-size="14" text-anchor="middle">支付取消</text>
+<rect x="826.7" y="492.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="887.3" y="516.9" font-size="14" text-anchor="middle">支付管理</text>
+<rect x="693.3" y="544.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="754.0" y="568.9" font-size="14" text-anchor="middle">补偿处理</text>
+<rect x="826.7" y="544.0" width="121.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="887.3" y="568.9" font-size="14" text-anchor="middle">回调处理</text>
+<rect x="974.0" y="218.0" width="130.0" height="392.0" rx="2" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="986.0" y="230.0" width="106.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1039.0" y="254.9" font-size="14" text-anchor="middle">服务发现</text>
+<rect x="986.0" y="284.7" width="106.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1039.0" y="309.6" font-size="14" text-anchor="middle">服务注册</text>
+<rect x="986.0" y="339.3" width="106.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1039.0" y="364.2" font-size="14" text-anchor="middle">配置中心</text>
+<rect x="986.0" y="394.0" width="106.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1039.0" y="418.9" font-size="14" text-anchor="middle">自动发布</text>
+<rect x="986.0" y="448.7" width="106.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1039.0" y="473.6" font-size="14" text-anchor="middle">监控管理</text>
+<rect x="986.0" y="503.3" width="106.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1039.0" y="528.2" font-size="14" text-anchor="middle">日志管理</text>
+<rect x="986.0" y="558.0" width="106.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1039.0" y="582.9" font-size="14" text-anchor="middle">监控告警</text>
+<rect x="40.0" y="152.0" width="40.0" height="458.0" rx="4" fill="#FBE5D6" stroke="#4D4D4D" stroke-width="1"/>
+<text font-size="15" text-anchor="middle"><tspan x="60.0" y="338.8">微</tspan><tspan x="60.0" y="357.8">服</tspan><tspan x="60.0" y="376.8">务</tspan><tspan x="60.0" y="395.8">应</tspan><tspan x="60.0" y="414.8">用</tspan><tspan x="60.0" y="433.8">层</tspan></text>
+<!-- 层级3：基础设施 -->
+<rect x="96.0" y="626.0" width="1008.0" height="64.0" rx="2" fill="#B4E7E7" stroke="#4D4D4D" stroke-width="1"/>
+<text x="112.0" y="662.9" font-size="14" text-anchor="start">底层服务</text>
+<rect x="248.0" y="638.0" width="150.0" height="40.0" rx="6" fill="#DDF4F4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="323.0" y="662.9" font-size="14" text-anchor="middle">pod</text>
+<rect x="462.0" y="638.0" width="150.0" height="40.0" rx="6" fill="#DDF4F4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="537.0" y="662.9" font-size="14" text-anchor="middle">pod</text>
+<rect x="676.0" y="638.0" width="150.0" height="40.0" rx="6" fill="#DDF4F4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="751.0" y="662.9" font-size="14" text-anchor="middle">pod</text>
+<rect x="890.0" y="638.0" width="150.0" height="40.0" rx="6" fill="#DDF4F4" stroke="#4D4D4D" stroke-width="1"/>
+<text x="965.0" y="662.9" font-size="14" text-anchor="middle">pod</text>
+<rect x="96.0" y="704.0" width="1008.0" height="230.0" rx="0" fill="#E6E9EC" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="112.0" y="720.0" width="976.0" height="112.0" rx="0" fill="#DAF4F5" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="6 4"/>
+<g transform="translate(228.8,762.0)"><rect x="-24" y="-16" width="48" height="32" rx="3" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><polyline points="-18,2 -10,2 -6,-8 0,10 5,-4 9,2 18,2" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="228.8" y="810.5" font-size="13" text-anchor="middle">数据收集</text>
+<g transform="translate(414.4,762.0)"><path d="M-16,-18 H8 L16,-10 V18 H-16 Z" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M8,-18 V-10 H16" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="-2" cy="4" r="7" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="9" x2="10" y2="16" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="414.4" y="810.5" font-size="13" text-anchor="middle">数据清洗</text>
+<g transform="translate(600.0,762.0)"><polygon points="-12,-18 12,-18 24,0 12,18 -12,18 -24,0" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="-10" y1="-6" x2="10" y2="-6" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="-14" y1="0" x2="14" y2="0" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="-10" y1="6" x2="10" y2="6" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="600.0" y="810.5" font-size="13" text-anchor="middle">实时计算</text>
+<g transform="translate(785.6,762.0)"><rect x="-26" y="-16" width="52" height="28" rx="2" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="-14" y1="6" x2="-14" y2="-4" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="-6" y1="6" x2="-6" y2="-8" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="6" x2="2" y2="0" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="6" x2="10" y2="-6" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="-10" y1="18" x2="10" y2="18" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="785.6" y="810.5" font-size="13" text-anchor="middle">智能数据分析</text>
+<g transform="translate(971.2,762.0)"><ellipse cx="0" cy="-12" rx="18" ry="6" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M-18,-12 V12 A18,6 0 0 0 18,12 V-12" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M-18,0 A18,6 0 0 0 18,0" stroke="#4A9DA3" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="971.2" y="810.5" font-size="13" text-anchor="middle">数据存储</text>
+<path d="M264.8,762.0 H370.4" stroke="#333333" stroke-width="1.2" fill="none"/>
+<g class="flow-arrow" transform="translate(378.4,762.0) rotate(0)"><polygon points="0,0 -9,-4.5 -9,4.5" fill="#333333"/></g>
+<path d="M450.4,762.0 H556.0" stroke="#333333" stroke-width="1.2" fill="none"/>
+<g class="flow-arrow" transform="translate(564.0,762.0) rotate(0)"><polygon points="0,0 -9,-4.5 -9,4.5" fill="#333333"/></g>
+<path d="M636.0,762.0 H741.6" stroke="#333333" stroke-width="1.2" fill="none"/>
+<g class="flow-arrow" transform="translate(749.6,762.0) rotate(0)"><polygon points="0,0 -9,-4.5 -9,4.5" fill="#333333"/></g>
+<path d="M821.6,762.0 H927.2" stroke="#333333" stroke-width="1.2" fill="none"/>
+<g class="flow-arrow" transform="translate(935.2,762.0) rotate(0)"><polygon points="0,0 -9,-4.5 -9,4.5" fill="#333333"/></g>
+<rect x="112.0" y="846.0" width="976.0" height="72.0" rx="0" fill="#DAF4F5" stroke="#4D4D4D" stroke-width="1"/>
+<rect x="140.0" y="862.0" width="130.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="205.0" y="886.9" font-size="14" text-anchor="middle">系统日志</text>
+<rect x="298.0" y="862.0" width="130.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="363.0" y="886.9" font-size="14" text-anchor="middle">埋点日志</text>
+<rect x="456.0" y="862.0" width="130.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="521.0" y="886.9" font-size="14" text-anchor="middle">用户行为</text>
+<rect x="614.0" y="862.0" width="130.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="679.0" y="886.9" font-size="14" text-anchor="middle">业务数据</text>
+<rect x="772.0" y="862.0" width="130.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="837.0" y="886.9" font-size="14" text-anchor="middle">三方数据</text>
+<rect x="930.0" y="862.0" width="130.0" height="40.0" rx="2" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="995.0" y="886.9" font-size="14" text-anchor="middle">预处理数据</text>
+<rect x="40.0" y="626.0" width="40.0" height="308.0" rx="4" fill="#FBE5D6" stroke="#4D4D4D" stroke-width="1"/>
+<text font-size="15" text-anchor="middle"><tspan x="60.0" y="756.8">基</tspan><tspan x="60.0" y="775.8">础</tspan><tspan x="60.0" y="794.8">设</tspan><tspan x="60.0" y="813.8">施</tspan></text>
+<!-- 右侧支撑栏 -->
+<rect x="1120.0" y="76.0" width="40.0" height="858.0" rx="4" fill="#E2F0D9" stroke="#4D4D4D" stroke-width="1"/>
+<text font-size="15" text-anchor="middle"><tspan x="1140.0" y="434.2">自</tspan><tspan x="1140.0" y="453.2">动</tspan><tspan x="1140.0" y="472.2">化</tspan><tspan x="1140.0" y="491.2">运</tspan><tspan x="1140.0" y="510.2">维</tspan><tspan x="1140.0" y="529.2">保</tspan><tspan x="1140.0" y="548.2">障</tspan><tspan x="1140.0" y="567.2">体</tspan><tspan x="1140.0" y="586.2">系</tspan></text>
+<!-- 底部基座 -->
+<rect x="40.0" y="950.0" width="1120.0" height="44.0" rx="0" fill="#BFBFBF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="600.0" y="977.2" font-size="15" text-anchor="middle">云服务</text>
+<!-- 连接线 -->
+</svg>

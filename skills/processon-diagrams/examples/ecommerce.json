@@ -1,0 +1,64 @@
+{
+  "diagram": "architecture",
+  "title": "电商系统设计架构图",
+  "themeName": "processon-teal",
+  "canvas": { "w": 1200 },
+  "sideBar": { "title": "自动化运维保障体系" },
+  "layers": [
+    {
+      "label": "展现层",
+      "rows": [
+        { "type": "entry", "nodes": ["H5、小程序", "PC、WAP", "APP", "管理端"] }
+      ]
+    },
+    {
+      "label": "微服务应用层",
+      "rows": [
+        { "type": "banner", "text": "网关、Gateway路由、鉴权管理、熔断降级、黑名单管理、A/B测配置" },
+        {
+          "type": "cards",
+          "columns": [
+            [
+              { "title": "用户服务", "nodes": ["用户注册", "个人中心", "用户登录", "会员管理", "用户评价", "账号管理"] },
+              { "title": "物流服务", "nodes": ["物流合作", "物流查询", "物流修改", "物流售后"] }
+            ],
+            [
+              { "title": "商品服务", "nodes": ["商品展示", "商品分类", "商品推荐", "价格管理"] },
+              { "title": "库存服务", "nodes": ["库存查询", "库存预占"] },
+              { "title": "营销管理", "nodes": ["广告管理", "图片管理"] }
+            ],
+            [
+              { "title": "订单服务", "nodes": ["购物车", "订单管理", "订单状态跟踪", "订单售后"] },
+              { "title": "支付服务", "nodes": ["支付查询", "三方对接", "支付取消", "支付管理", "补偿处理", "回调处理"] }
+            ]
+          ],
+          "aside": { "nodes": ["服务发现", "服务注册", "配置中心", "自动发布", "监控管理", "日志管理", "监控告警"] }
+        }
+      ]
+    },
+    {
+      "label": "基础设施",
+      "rows": [
+        { "type": "panel", "title": "底层服务", "nodes": ["pod", "pod", "pod", "pod"] },
+        {
+          "type": "container",
+          "children": [
+            {
+              "type": "flow",
+              "steps": [
+                { "label": "数据收集", "icon": "collect" },
+                { "label": "数据清洗", "icon": "clean" },
+                { "label": "实时计算", "icon": "compute" },
+                { "label": "智能数据分析", "icon": "analyze" },
+                { "label": "数据存储", "icon": "storage" }
+              ]
+            },
+            { "type": "nodes", "nodes": ["系统日志", "埋点日志", "用户行为", "业务数据", "三方数据", "预处理数据"] }
+          ]
+        }
+      ]
+    }
+  ],
+  "base": { "text": "云服务" },
+  "connections": []
+}
