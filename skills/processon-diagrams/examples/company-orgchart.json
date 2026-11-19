@@ -1,0 +1,69 @@
+{
+  "diagram": "orgchart",
+  "title": "星辰科技有限公司组织架构图",
+  "themeName": "processon-blue",
+  "root": {
+    "name": "总经理（CEO）",
+    "subtitle": "张明",
+    "assistants": [
+      { "name": "总经办 / 法务合规", "subtitle": "4人" }
+    ],
+    "children": [
+      {
+        "name": "产研中心",
+        "subtitle": "CTO · 李华",
+        "children": [
+          {
+            "name": "产品设计部",
+            "subtitle": "12人",
+            "children": [
+              { "name": "产品规划组" },
+              { "name": "交互视觉组" },
+              { "name": "数据产品组" }
+            ]
+          },
+          {
+            "name": "工程研发部",
+            "subtitle": "38人",
+            "children": [
+              { "name": "前端与移动组" },
+              { "name": "中台架构组" },
+              { "name": "AI算法组" },
+              { "name": "测试运维组" }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "商业增长中心",
+        "subtitle": "VP · 王芳",
+        "layout": "vertical",
+        "children": [
+          { "name": "大客户销售部", "subtitle": "18人" },
+          { "name": "解决方案售前部", "subtitle": "10人" },
+          { "name": "品牌市场部", "subtitle": "8人" }
+        ]
+      },
+      {
+        "name": "交付与客服中心",
+        "subtitle": "总监 · 赵磊",
+        "layout": "vertical",
+        "children": [
+          { "name": "项目实施部", "subtitle": "15人" },
+          { "name": "客户成功部", "subtitle": "9人" },
+          { "name": "7×24技术支持", "subtitle": "6人" }
+        ]
+      },
+      {
+        "name": "职能支持中心",
+        "subtitle": "总监 · 陈敏",
+        "layout": "vertical",
+        "children": [
+          { "name": "人力资源部", "subtitle": "5人" },
+          { "name": "财务核算部", "subtitle": "6人" },
+          { "name": "行政采购部", "subtitle": "4人" }
+        ]
+      }
+    ]
+  }
+}

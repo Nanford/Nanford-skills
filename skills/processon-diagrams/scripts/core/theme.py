@@ -11,15 +11,15 @@ THEME_FILE = SKILL_DIR / "references" / "color-themes.md"
 DEFAULT_THEME = "processon-teal"
 
 
-def load_themes(theme_file: Path = THEME_FILE) -> dict[str, dict[str, str]]:
+def load_themes(theme_file: Path = THEME_FILE) -> dict[str, dict]:
     text = theme_file.read_text(encoding="utf-8")
-    themes: dict[str, dict[str, str]] = {}
+    themes: dict[str, dict] = {}
     for m in re.finditer(r"^## (\S+)\s*$((?:(?!^## ).)*?)```json\s*(\{.*?\})\s*```", text, re.S | re.M):
         themes[m.group(1)] = json.loads(m.group(3))
     return themes
 
 
-def resolve_theme(model: dict, default: str = DEFAULT_THEME) -> dict[str, str]:
+def resolve_theme(model: dict, default: str = DEFAULT_THEME) -> dict:
     themes = load_themes()
     name = model.get("themeName", default)
     if name not in themes:

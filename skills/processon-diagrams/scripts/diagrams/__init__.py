@@ -2,12 +2,20 @@
 from __future__ import annotations
 
 from .architecture import ArchitectureDiagram
+from .flowchart import FlowchartDiagram
 from .gantt import GanttDiagram
+from .mindmap import MindMapDiagram
+from .orgchart import OrgChartDiagram
+from .sequence import SequenceDiagram
 from .swimlane import SwimlaneDiagram
 
 REGISTRY: dict[str, type] = {
     "architecture": ArchitectureDiagram,
+    "flowchart": FlowchartDiagram,
     "gantt": GanttDiagram,
+    "mindmap": MindMapDiagram,
+    "orgchart": OrgChartDiagram,
+    "sequence": SequenceDiagram,
     "swimlane": SwimlaneDiagram,
 }
 

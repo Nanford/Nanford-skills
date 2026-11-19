@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1212" height="523" viewBox="0 0 1212 523">
+<style>text{font-family:'PingFang SC','Microsoft YaHei','Hiragino Sans GB','Noto Sans CJK SC','Source Han Sans SC',-apple-system,'Segoe UI',Arial,sans-serif;fill:#262626;}</style>
+<rect width="1212" height="523" fill="#FFFFFF"/>
+<!-- 右侧分支 -->
+<path d="M654.0,261.9 C681.0,261.9 681.0,108.8 708.0,108.8" stroke="#00A2B8" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M823.2,108.8 C842.2,108.8 842.2,50.1 861.2,50.1" stroke="#00A2B8" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="861.2" y="34.0" width="143.1" height="32.2" rx="5" fill="#FFFFFF" stroke="#00A2B8" stroke-width="1.6"/>
+<text x="915.7" y="54.8" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">高频重复痛点</text>
+<rect x="970.2" y="41.1" width="28.1" height="18" rx="9" fill="#00A2B8"/>
+<text x="984.2" y="54.0" font-size="11.0" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">P0</text>
+<path d="M823.2,108.8 C842.2,108.8 842.2,108.8 861.2,108.8" stroke="#00A2B8" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<path d="M986.6,108.8 C1005.6,108.8 1005.6,101.8 1024.6,101.8" stroke="#00A2B8" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<line x1="1026.6" y1="101.8" x2="1120.6" y2="101.8" stroke="#00A2B8" stroke-width="1.8" stroke-linecap="round"/>
+<text x="1073.6" y="93.6" font-size="13.0" text-anchor="middle" style="fill:#262626">人效工时节省</text>
+<path d="M986.6,108.8 C1005.6,108.8 1005.6,139.3 1024.6,139.3" stroke="#00A2B8" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<line x1="1026.6" y1="139.3" x2="1159.6" y2="139.3" stroke="#00A2B8" stroke-width="1.8" stroke-linecap="round"/>
+<text x="1093.1" y="131.1" font-size="13.0" text-anchor="middle" style="fill:#262626">转化率与准确率提升</text>
+<rect x="861.2" y="92.7" width="125.5" height="32.2" rx="5" fill="#FFFFFF" stroke="#00A2B8" stroke-width="1.6"/>
+<text x="923.9" y="113.5" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">ROI 可量化评估</text>
+<path d="M823.2,108.8 C842.2,108.8 842.2,167.4 861.2,167.4" stroke="#00A2B8" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="861.2" y="151.3" width="109.0" height="32.2" rx="5" fill="#FFFFFF" stroke="#00A2B8" stroke-width="1.6"/>
+<text x="915.7" y="172.2" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">容错边界清晰</text>
+<rect x="708.0" y="89.0" width="115.2" height="39.6" rx="6" fill="#00A2B8"/>
+<text x="765.6" y="113.9" font-size="14.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">1. 场景筛选</text>
+<path d="M654.0,261.9 C681.0,261.9 681.0,278.3 708.0,278.3" stroke="#4CAF50" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M852.2,278.3 C871.2,278.3 871.2,219.7 890.2,219.7" stroke="#4CAF50" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="890.2" y="203.6" width="136.0" height="32.2" rx="5" fill="#FFFFFF" stroke="#4CAF50" stroke-width="1.6"/>
+<text x="958.2" y="224.4" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">非结构化文档清洗</text>
+<path d="M852.2,278.3 C871.2,278.3 871.2,278.3 890.2,278.3" stroke="#4CAF50" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<path d="M1002.1,278.3 C1021.1,278.3 1021.1,271.3 1040.1,271.3" stroke="#4CAF50" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<line x1="1042.1" y1="271.3" x2="1162.1" y2="271.3" stroke="#4CAF50" stroke-width="1.8" stroke-linecap="round"/>
+<text x="1102.1" y="263.1" font-size="13.0" text-anchor="middle" style="fill:#262626">分块与元数据标引</text>
+<path d="M1002.1,278.3 C1021.1,278.3 1021.1,308.9 1040.1,308.9" stroke="#4CAF50" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<line x1="1042.1" y1="308.9" x2="1149.1" y2="308.9" stroke="#4CAF50" stroke-width="1.8" stroke-linecap="round"/>
+<text x="1095.6" y="300.7" font-size="13.0" text-anchor="middle" style="fill:#262626">混合检索与重排</text>
+<rect x="890.2" y="262.2" width="112.0" height="32.2" rx="5" fill="#FFFFFF" stroke="#4CAF50" stroke-width="1.6"/>
+<text x="946.1" y="283.1" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">RAG 检索增强</text>
+<path d="M852.2,278.3 C871.2,278.3 871.2,337.0 890.2,337.0" stroke="#4CAF50" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="890.2" y="320.9" width="164.5" height="32.2" rx="5" fill="#FFFFFF" stroke="#4CAF50" stroke-width="1.6"/>
+<text x="951.4" y="341.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">权限隔离与脱敏</text>
+<rect x="1012.7" y="328.0" width="36.0" height="18" rx="9" fill="#4CAF50"/>
+<text x="1030.7" y="340.8" font-size="11.0" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">必选</text>
+<rect x="708.0" y="258.5" width="144.2" height="39.6" rx="6" fill="#4CAF50"/>
+<text x="780.1" y="283.4" font-size="14.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">2. 数据与知识库</text>
+<path d="M654.0,261.9 C681.0,261.9 681.0,431.4 708.0,431.4" stroke="#FF9800" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M837.7,431.4 C856.7,431.4 856.7,389.2 875.7,389.2" stroke="#FF9800" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="875.7" y="373.1" width="136.0" height="32.2" rx="5" fill="#FFFFFF" stroke="#FF9800" stroke-width="1.6"/>
+<text x="943.7" y="393.9" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">大小模型路由协同</text>
+<path d="M837.7,431.4 C856.7,431.4 856.7,431.4 875.7,431.4" stroke="#FF9800" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="875.7" y="415.3" width="153.8" height="32.2" rx="5" fill="#FFFFFF" stroke="#FF9800" stroke-width="1.6"/>
+<text x="952.6" y="436.2" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">工作流与 Agent 编排</text>
+<path d="M837.7,431.4 C856.7,431.4 856.7,473.7 875.7,473.7" stroke="#FF9800" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="875.7" y="457.6" width="145.9" height="32.2" rx="5" fill="#FFFFFF" stroke="#FF9800" stroke-width="1.6"/>
+<text x="948.6" y="478.4" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">工具调用 MCP 接入</text>
+<rect x="708.0" y="411.6" width="129.7" height="39.6" rx="6" fill="#FF9800"/>
+<text x="772.8" y="436.5" font-size="14.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">3. 模型与编排</text>
+<!-- 左侧分支 -->
+<path d="M434.0,261.9 C407.0,261.9 407.0,146.3 380.0,146.3" stroke="#5C6BC0" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M250.4,146.3 C231.4,146.3 231.4,104.1 212.4,104.1" stroke="#5C6BC0" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="89.9" y="88.0" width="122.5" height="32.2" rx="5" fill="#FFFFFF" stroke="#5C6BC0" stroke-width="1.6"/>
+<text x="151.1" y="108.8" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">黄金测试集回归</text>
+<path d="M250.4,146.3 C231.4,146.3 231.4,146.3 212.4,146.3" stroke="#5C6BC0" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="47.9" y="130.2" width="164.5" height="32.2" rx="5" fill="#FFFFFF" stroke="#5C6BC0" stroke-width="1.6"/>
+<text x="109.1" y="151.1" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">幻觉与合规护栏</text>
+<rect x="170.4" y="137.3" width="36.0" height="18" rx="9" fill="#5C6BC0"/>
+<text x="188.4" y="150.2" font-size="11.0" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">重点</text>
+<path d="M250.4,146.3 C231.4,146.3 231.4,188.6 212.4,188.6" stroke="#5C6BC0" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="103.4" y="172.4" width="109.0" height="32.2" rx="5" fill="#FFFFFF" stroke="#5C6BC0" stroke-width="1.6"/>
+<text x="157.9" y="193.3" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">人工抽检闭环</text>
+<rect x="250.4" y="126.5" width="129.7" height="39.6" rx="6" fill="#5C6BC0"/>
+<text x="315.2" y="151.4" font-size="14.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">4. 评测与安全</text>
+<path d="M434.0,261.9 C407.0,261.9 407.0,283.0 380.0,283.0" stroke="#EC407A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M250.4,283.0 C231.4,283.0 231.4,240.8 212.4,240.8" stroke="#EC407A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="76.4" y="224.7" width="136.0" height="32.2" rx="5" fill="#FFFFFF" stroke="#EC407A" stroke-width="1.6"/>
+<text x="144.4" y="245.5" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">业务标杆部门试点</text>
+<path d="M250.4,283.0 C231.4,283.0 231.4,283.0 212.4,283.0" stroke="#EC407A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="59.9" y="266.9" width="152.5" height="32.2" rx="5" fill="#FFFFFF" stroke="#EC407A" stroke-width="1.6"/>
+<text x="136.1" y="287.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">SOP 沉淀与全员赋能</text>
+<path d="M250.4,283.0 C231.4,283.0 231.4,325.2 212.4,325.2" stroke="#EC407A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="76.4" y="309.1" width="136.0" height="32.2" rx="5" fill="#FFFFFF" stroke="#EC407A" stroke-width="1.6"/>
+<text x="144.4" y="330.0" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">持续迭代复盘机制</text>
+<rect x="250.4" y="263.2" width="129.7" height="39.6" rx="6" fill="#EC407A"/>
+<text x="315.2" y="288.1" font-size="14.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">5. 组织与推广</text>
+<path d="M434.0,261.9 C407.0,261.9 407.0,398.6 380.0,398.6" stroke="#26A69A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M250.4,398.6 C231.4,398.6 231.4,377.5 212.4,377.5" stroke="#26A69A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="76.1" y="361.3" width="136.3" height="32.2" rx="5" fill="#FFFFFF" stroke="#26A69A" stroke-width="1.6"/>
+<text x="144.2" y="382.2" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">Token 监控与缓存</text>
+<path d="M250.4,398.6 C231.4,398.6 231.4,419.7 212.4,419.7" stroke="#26A69A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+<rect x="89.9" y="403.6" width="122.5" height="32.2" rx="5" fill="#FFFFFF" stroke="#26A69A" stroke-width="1.6"/>
+<text x="151.1" y="424.4" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="500">可观测日志追踪</text>
+<rect x="250.4" y="378.8" width="129.7" height="39.6" rx="6" fill="#26A69A"/>
+<text x="315.2" y="403.6" font-size="14.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">6. 成本与运维</text>
+<!-- 中心主题 -->
+<rect x="434.0" y="236.4" width="220.0" height="51.0" rx="10" fill="#008B84"/>
+<text x="544.0" y="267.8" font-size="17.0" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">企业 AI 落地实施指南</text>
+</svg>

@@ -1,0 +1,69 @@
+{
+  "diagram": "mindmap",
+  "themeName": "processon-teal",
+  "layout": "both",
+  "root": {
+    "label": "企业 AI 落地实施指南",
+    "children": [
+      {
+        "label": "1. 场景筛选",
+        "children": [
+          { "label": "高频重复痛点", "tag": "P0" },
+          {
+            "label": "ROI 可量化评估",
+            "children": [
+              { "label": "人效工时节省" },
+              { "label": "转化率与准确率提升" }
+            ]
+          },
+          { "label": "容错边界清晰" }
+        ]
+      },
+      {
+        "label": "2. 数据与知识库",
+        "children": [
+          { "label": "非结构化文档清洗" },
+          {
+            "label": "RAG 检索增强",
+            "children": [
+              { "label": "分块与元数据标引" },
+              { "label": "混合检索与重排" }
+            ]
+          },
+          { "label": "权限隔离与脱敏", "tag": "必选" }
+        ]
+      },
+      {
+        "label": "3. 模型与编排",
+        "children": [
+          { "label": "大小模型路由协同" },
+          { "label": "工作流与 Agent 编排" },
+          { "label": "工具调用 MCP 接入" }
+        ]
+      },
+      {
+        "label": "4. 评测与安全",
+        "children": [
+          { "label": "黄金测试集回归" },
+          { "label": "幻觉与合规护栏", "tag": "重点" },
+          { "label": "人工抽检闭环" }
+        ]
+      },
+      {
+        "label": "5. 组织与推广",
+        "children": [
+          { "label": "业务标杆部门试点" },
+          { "label": "SOP 沉淀与全员赋能" },
+          { "label": "持续迭代复盘机制" }
+        ]
+      },
+      {
+        "label": "6. 成本与运维",
+        "children": [
+          { "label": "Token 监控与缓存" },
+          { "label": "可观测日志追踪" }
+        ]
+      }
+    ]
+  }
+}

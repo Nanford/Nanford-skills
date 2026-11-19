@@ -1,0 +1,36 @@
+{
+  "diagram": "flowchart",
+  "title": "订单支付与异常处理流程图",
+  "themeName": "processon-teal",
+  "direction": "TB",
+  "nodes": [
+    { "id": "start", "type": "start", "col": 1, "row": 0, "label": "提交订单" },
+    { "id": "check_stock", "type": "decision", "col": 1, "row": 1, "label": "库存是否\n充足" },
+    { "id": "out_stock", "type": "process", "col": 0, "row": 1, "label": "提示库存不足\n关闭订单" },
+    { "id": "lock", "type": "process", "col": 1, "row": 2, "label": "锁定库存并\n生成支付单", "variant": "highlight" },
+    { "id": "pay_call", "type": "subflow", "col": 1, "row": 3, "label": "调用三方\n支付网关" },
+    { "id": "pay_ok", "type": "decision", "col": 1, "row": 4, "label": "支付是否\n成功" },
+    { "id": "retry_chk", "type": "decision", "col": 2, "row": 4, "label": "是否超时\n或超重试" },
+    { "id": "release", "type": "process", "col": 2, "row": 5, "label": "释放库存\n取消订单" },
+    { "id": "save_db", "type": "database", "col": 1, "row": 5, "label": "更新订单与\n账务流水" },
+    { "id": "ship", "type": "document", "col": 0, "row": 5, "label": "生成电子发票\n与发货单" },
+    { "id": "end", "type": "end", "col": 1, "row": 6, "label": "流程结束" }
+  ],
+  "groups": [
+    { "title": "支付异常兜底区", "nodes": ["retry_chk", "release"] }
+  ],
+  "edges": [
+    { "from": "start", "to": "check_stock" },
+    { "from": "check_stock", "to": "out_stock", "label": "否" },
+    { "from": "check_stock", "to": "lock", "label": "是" },
+    { "from": "lock", "to": "pay_call" },
+    { "from": "pay_call", "to": "pay_ok" },
+    { "from": "pay_ok", "to": "retry_chk", "label": "否" },
+    { "from": "retry_chk", "to": "pay_call", "label": "否（重试）", "fromPort": "top", "toPort": "right" },
+    { "from": "retry_chk", "to": "release", "label": "是" },
+    { "from": "pay_ok", "to": "save_db", "label": "是" },
+    { "from": "save_db", "to": "ship" },
+    { "from": "save_db", "to": "end" },
+    { "from": "release", "to": "end" }
+  ]
+}

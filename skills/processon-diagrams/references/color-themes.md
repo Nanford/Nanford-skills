@@ -63,6 +63,15 @@ ProcessOn 风格的配色原则：
 | `swimLaneHeaderFill` | 泳道角色表头 | "客户 / 商务 / 销支 / 公司内部协同 / 相关文档" |
 | `swimHighlightFill` | 高亮步骤节点填充（`variant: "highlight"`） | 重点环节强调色 |
 
+### 普通流程图 / 时序图 / 组织结构图 / 思维导图角色色
+
+| 字段 | 适用图种 | 说明 |
+|------|---------|------|
+| `flowStartFill` / `flowDecisionFill` | `flowchart` | 起止胶囊柔和填充 / 判断菱形淡暖色填充 |
+| `seqActorFill` / `seqActivationFill` / `seqFragmentFill` / `seqNoteFill` | `sequence` | 参与者框 / 激活条 / 片段标签(`alt`/`loop`) / 便签注释底色 |
+| `orgRootFill` / `orgLevel1Fill` / `orgLevel2Fill` | `orgchart` | 根节点深色强调(配白字) / 一级部门色 / 二级团队浅色 |
+| `mindRootFill` / `mindBranches` | `mindmap` | 中心主题色(配白字) / 6 色主分支循环色板 |
+
 ---
 
 ## processon-teal
@@ -103,7 +112,18 @@ ProcessOn 风格的配色原则：
   "ganttBarCritical": "#F01414",
   "swimTitleFill": "#EBF8F8",
   "swimLaneHeaderFill": "#C7ECEC",
-  "swimHighlightFill": "#DDF4F4"
+  "swimHighlightFill": "#DDF4F4",
+  "flowStartFill": "#DDF4F4",
+  "flowDecisionFill": "#FFF4E5",
+  "seqActorFill": "#C7ECEC",
+  "seqActivationFill": "#B4E7E7",
+  "seqFragmentFill": "#90DDDB",
+  "seqNoteFill": "#FFF9DB",
+  "orgRootFill": "#008B84",
+  "orgLevel1Fill": "#B4E7E7",
+  "orgLevel2Fill": "#E5F6F6",
+  "mindRootFill": "#008B84",
+  "mindBranches": ["#00A2B8", "#4CAF50", "#FF9800", "#5C6BC0", "#EC407A", "#26A69A"]
 }
 ```
 
@@ -147,7 +167,18 @@ ProcessOn 风格的配色原则：
   "ganttBarCritical": "#EF4444",
   "swimTitleFill": "#EDF4FC",
   "swimLaneHeaderFill": "#CFE2F7",
-  "swimHighlightFill": "#E3EEFA"
+  "swimHighlightFill": "#E3EEFA",
+  "flowStartFill": "#DCEBFB",
+  "flowDecisionFill": "#FFF4E5",
+  "seqActorFill": "#CFE2F7",
+  "seqActivationFill": "#BBD5F2",
+  "seqFragmentFill": "#8DB8EA",
+  "seqNoteFill": "#FFF9DB",
+  "orgRootFill": "#1E5BB8",
+  "orgLevel1Fill": "#BBD5F2",
+  "orgLevel2Fill": "#E8F1FC",
+  "mindRootFill": "#1E5BB8",
+  "mindBranches": ["#2B7DE9", "#0EA5E9", "#6366F1", "#10B981", "#F59E0B", "#8B5CF6"]
 }
 ```
 
@@ -191,7 +222,18 @@ ProcessOn 风格的配色原则：
   "ganttBarCritical": "#E53935",
   "swimTitleFill": "#EFF7EC",
   "swimLaneHeaderFill": "#D5EBC8",
-  "swimHighlightFill": "#E6F2DE"
+  "swimHighlightFill": "#E6F2DE",
+  "flowStartFill": "#DDF0D4",
+  "flowDecisionFill": "#FFF4E5",
+  "seqActorFill": "#D5EBC8",
+  "seqActivationFill": "#C5E0B4",
+  "seqFragmentFill": "#A9D18E",
+  "seqNoteFill": "#FFF9DB",
+  "orgRootFill": "#2E7D32",
+  "orgLevel1Fill": "#C5E0B4",
+  "orgLevel2Fill": "#EAF4E4",
+  "mindRootFill": "#2E7D32",
+  "mindBranches": ["#3E9B4F", "#26A69A", "#7CB342", "#00897B", "#F59E0B", "#5C6BC0"]
 }
 ```
 
@@ -235,7 +277,18 @@ ProcessOn 风格的配色原则：
   "ganttBarCritical": "#DC2626",
   "swimTitleFill": "#FFF5EC",
   "swimLaneHeaderFill": "#FBE0C8",
-  "swimHighlightFill": "#FDEBDD"
+  "swimHighlightFill": "#FDEBDD",
+  "flowStartFill": "#FDE6D2",
+  "flowDecisionFill": "#FFF4CC",
+  "seqActorFill": "#FBE0C8",
+  "seqActivationFill": "#F9D5B8",
+  "seqFragmentFill": "#F8CBAD",
+  "seqNoteFill": "#FFF9DB",
+  "orgRootFill": "#C55A11",
+  "orgLevel1Fill": "#F9D5B8",
+  "orgLevel2Fill": "#FEF1E6",
+  "mindRootFill": "#C55A11",
+  "mindBranches": ["#ED7D31", "#F59E0B", "#EC407A", "#8B5CF6", "#10B981", "#3B82F6"]
 }
 ```
 
@@ -279,6 +332,17 @@ ProcessOn 风格的配色原则：
   "ganttBarCritical": "#DC2626",
   "swimTitleFill": "#F5F5F5",
   "swimLaneHeaderFill": "#E0E0E0",
-  "swimHighlightFill": "#E8EEF5"
+  "swimHighlightFill": "#E8EEF5",
+  "flowStartFill": "#E8EEF5",
+  "flowDecisionFill": "#F7F4EC",
+  "seqActorFill": "#DCE3EB",
+  "seqActivationFill": "#D3DCE6",
+  "seqFragmentFill": "#C9D3DE",
+  "seqNoteFill": "#FFF9E6",
+  "orgRootFill": "#374759",
+  "orgLevel1Fill": "#D3DCE6",
+  "orgLevel2Fill": "#EEF1F5",
+  "mindRootFill": "#374759",
+  "mindBranches": ["#4F6275", "#3B82F6", "#0D9488", "#6366F1", "#D97706", "#64748B"]
 }
 ```

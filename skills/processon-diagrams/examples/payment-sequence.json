@@ -1,0 +1,42 @@
+{
+  "diagram": "sequence",
+  "title": "在线支付下单与异步回调时序图",
+  "themeName": "processon-blue",
+  "autonumber": true,
+  "mirrorFooter": true,
+  "participants": [
+    { "id": "user", "label": "用户端", "type": "actor" },
+    { "id": "order", "label": "订单服务", "type": "participant" },
+    { "id": "pay", "label": "支付中心", "type": "participant" },
+    { "id": "channel", "label": "微信/支付宝", "type": "participant" },
+    { "id": "db", "label": "账务库", "type": "database" }
+  ],
+  "steps": [
+    { "from": "user", "to": "order", "label": "提交订单并发起支付" },
+    { "from": "order", "to": "pay", "label": "创建预支付单" },
+    { "from": "pay", "to": "channel", "label": "统一下单接口" },
+    { "from": "channel", "to": "pay", "type": "reply", "label": "返回 prepay_id" },
+    { "from": "pay", "to": "user", "type": "reply", "label": "拉起收银台参数" },
+    { "type": "note", "over": "user", "position": "right", "label": "用户输入密码完成付款" },
+    {
+      "type": "alt",
+      "label": "支付成功回调",
+      "steps": [
+        { "from": "channel", "to": "pay", "type": "async", "label": "异步通知支付结果" },
+        { "from": "pay", "to": "pay", "label": "验签与幂等校验" },
+        { "from": "pay", "to": "db", "label": "写入支付流水" },
+        { "from": "pay", "to": "order", "type": "async", "label": "MQ通知订单已支付" }
+      ],
+      "else": [
+        {
+          "label": "回调超时兜底",
+          "steps": [
+            { "from": "pay", "to": "channel", "label": "主动查单确认状态" },
+            { "from": "channel", "to": "pay", "type": "reply", "label": "返回最终交易状态" }
+          ]
+        }
+      ]
+    },
+    { "from": "order", "to": "user", "type": "reply", "label": "推送支付成功页面" }
+  ]
+}
