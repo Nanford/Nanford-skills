@@ -55,6 +55,14 @@ ProcessOn 风格的配色原则：
 | `ganttBarAccent3` | 进度条扩展色 3（`accent3` / `navy`） | 如后端开发条 |
 | `ganttBarCritical` | 关键/上线/里程碑色（`critical` / `red`） | 如"月底上线" |
 
+### 业务泳道图角色色（`diagram: "swimlane"`）
+
+| 字段 | 角色 | 参考示例位置 |
+|------|------|-------------|
+| `swimTitleFill` | 顶部流程总标题栏 | "商务业务流程" 浅底横条 |
+| `swimLaneHeaderFill` | 泳道角色表头 | "客户 / 商务 / 销支 / 公司内部协同 / 相关文档" |
+| `swimHighlightFill` | 高亮步骤节点填充（`variant: "highlight"`） | 重点环节强调色 |
+
 ---
 
 ## processon-teal
@@ -92,7 +100,10 @@ ProcessOn 风格的配色原则：
   "ganttBarAccent1": "#FF9696",
   "ganttBarAccent2": "#6AC42E",
   "ganttBarAccent3": "#0C2E9A",
-  "ganttBarCritical": "#F01414"
+  "ganttBarCritical": "#F01414",
+  "swimTitleFill": "#EBF8F8",
+  "swimLaneHeaderFill": "#C7ECEC",
+  "swimHighlightFill": "#DDF4F4"
 }
 ```
 
@@ -133,7 +144,10 @@ ProcessOn 风格的配色原则：
   "ganttBarAccent1": "#6366F1",
   "ganttBarAccent2": "#10B981",
   "ganttBarAccent3": "#0EA5E9",
-  "ganttBarCritical": "#EF4444"
+  "ganttBarCritical": "#EF4444",
+  "swimTitleFill": "#EDF4FC",
+  "swimLaneHeaderFill": "#CFE2F7",
+  "swimHighlightFill": "#E3EEFA"
 }
 ```
 
@@ -174,7 +188,10 @@ ProcessOn 风格的配色原则：
   "ganttBarAccent1": "#26A69A",
   "ganttBarAccent2": "#8BC34A",
   "ganttBarAccent3": "#1E6F5C",
-  "ganttBarCritical": "#E53935"
+  "ganttBarCritical": "#E53935",
+  "swimTitleFill": "#EFF7EC",
+  "swimLaneHeaderFill": "#D5EBC8",
+  "swimHighlightFill": "#E6F2DE"
 }
 ```
 
@@ -215,7 +232,10 @@ ProcessOn 风格的配色原则：
   "ganttBarAccent1": "#F472B6",
   "ganttBarAccent2": "#F59E0B",
   "ganttBarAccent3": "#8B5CF6",
-  "ganttBarCritical": "#DC2626"
+  "ganttBarCritical": "#DC2626",
+  "swimTitleFill": "#FFF5EC",
+  "swimLaneHeaderFill": "#FBE0C8",
+  "swimHighlightFill": "#FDEBDD"
 }
 ```
 
@@ -256,6 +276,9 @@ ProcessOn 风格的配色原则：
   "ganttBarAccent1": "#3B82F6",
   "ganttBarAccent2": "#0D9488",
   "ganttBarAccent3": "#6366F1",
-  "ganttBarCritical": "#DC2626"
+  "ganttBarCritical": "#DC2626",
+  "swimTitleFill": "#F5F5F5",
+  "swimLaneHeaderFill": "#E0E0E0",
+  "swimHighlightFill": "#E8EEF5"
 }
 ```

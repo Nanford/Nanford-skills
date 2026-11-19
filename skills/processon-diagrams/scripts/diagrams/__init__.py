@@ -3,10 +3,12 @@ from __future__ import annotations
 
 from .architecture import ArchitectureDiagram
 from .gantt import GanttDiagram
+from .swimlane import SwimlaneDiagram
 
 REGISTRY: dict[str, type] = {
     "architecture": ArchitectureDiagram,
     "gantt": GanttDiagram,
+    "swimlane": SwimlaneDiagram,
 }
 
 DEFAULT_DIAGRAM = "architecture"

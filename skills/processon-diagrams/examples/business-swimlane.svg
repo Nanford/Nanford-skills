@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="1165" viewBox="0 0 1160 1165">
+<style>text{font-family:'PingFang SC','Microsoft YaHei','Hiragino Sans GB','Noto Sans CJK SC','Source Han Sans SC',-apple-system,'Segoe UI',Arial,sans-serif;fill:#1F2329;}</style>
+<rect width="1160" height="1165" fill="#FFFFFF"/>
+<!-- 泳道框架 -->
+<rect x="36.0" y="24.0" width="1088.0" height="1117.8" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<rect x="36.0" y="24.0" width="1088.0" height="42" fill="#F5F5F5" stroke="#4E5560" stroke-width="1.4"/>
+<text x="52.0" y="50.6" font-size="16" text-anchor="start" font-weight="bold">商务业务流程</text>
+<!-- 泳道表头与分隔线 -->
+<rect x="36.0" y="66.0" width="217.6" height="38" fill="#E0E0E0" stroke="#4E5560" stroke-width="1.4"/>
+<text x="144.8" y="89.9" font-size="14" text-anchor="middle" font-weight="bold">客户</text>
+<rect x="253.6" y="66.0" width="217.6" height="38" fill="#E0E0E0" stroke="#4E5560" stroke-width="1.4"/>
+<text x="362.4" y="89.9" font-size="14" text-anchor="middle" font-weight="bold">商务</text>
+<line x1="253.6" y1="66.0" x2="253.6" y2="1141.8" stroke="#4E5560" stroke-width="1.4"/>
+<rect x="471.2" y="66.0" width="217.6" height="38" fill="#E0E0E0" stroke="#4E5560" stroke-width="1.4"/>
+<text x="580.0" y="89.9" font-size="14" text-anchor="middle" font-weight="bold">销支</text>
+<line x1="471.2" y1="66.0" x2="471.2" y2="1141.8" stroke="#4E5560" stroke-width="1.4"/>
+<rect x="688.8" y="66.0" width="217.6" height="38" fill="#E0E0E0" stroke="#4E5560" stroke-width="1.4"/>
+<text x="797.6" y="89.9" font-size="14" text-anchor="middle" font-weight="bold">公司内部协同</text>
+<line x1="688.8" y1="66.0" x2="688.8" y2="1141.8" stroke="#4E5560" stroke-width="1.4"/>
+<rect x="906.4" y="66.0" width="217.6" height="38" fill="#E0E0E0" stroke="#4E5560" stroke-width="1.4"/>
+<text x="1015.2" y="89.9" font-size="14" text-anchor="middle" font-weight="bold">相关文档</text>
+<line x1="906.4" y1="66.0" x2="906.4" y2="1141.8" stroke="#4E5560" stroke-width="1.4"/>
+<!-- 业务流程节点 -->
+<rect x="82.8" y="134.0" width="124.0" height="48.0" rx="22.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="144.8" y="162.7" font-size="13.5" text-anchor="middle">开始</text>
+<rect x="82.8" y="234.0" width="124.0" height="48.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="144.8" y="262.7" font-size="13.5" text-anchor="middle">推广意向</text>
+<rect x="300.4" y="234.0" width="124.0" height="48.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="362.4" y="262.7" font-size="13.5" text-anchor="middle">介绍方案</text>
+<path d="M953.2,224.0 H1077.2 V282.0 Q1046.2,272.0 1015.2,282.0 Q984.2,292.0 953.2,282.0 Z" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="1015.2" y="257.7" font-size="13.5" text-anchor="middle">业务介绍PPT</text>
+<polygon points="144.8,332.0 202.8,369.0 144.8,406.0 86.8,369.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="144.8" y="364.8" font-size="13.0" text-anchor="middle">是否同意</text><text x="144.8" y="382.3" font-size="13.0" text-anchor="middle">方案</text>
+<rect x="300.4" y="451.8" width="124.0" height="56.5" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="362.4" y="475.6" font-size="13.5" text-anchor="middle">制定合同</text><text x="362.4" y="493.8" font-size="13.5" text-anchor="middle">提交场景</text>
+<rect x="518.0" y="451.8" width="124.0" height="56.5" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="580.0" y="475.6" font-size="13.5" text-anchor="middle">递交合同</text><text x="580.0" y="493.8" font-size="13.5" text-anchor="middle">及场景</text>
+<rect x="735.6" y="451.8" width="124.0" height="56.5" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="797.6" y="475.6" font-size="13.5" text-anchor="middle">审核合同</text><text x="797.6" y="493.8" font-size="13.5" text-anchor="middle">及场景</text>
+<path d="M953.2,446.0 H1077.2 V504.0 Q1046.2,494.0 1015.2,504.0 Q984.2,514.0 953.2,504.0 Z" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="1015.2" y="470.6" font-size="13.5" text-anchor="middle">业务合作协议</text><text x="1015.2" y="488.8" font-size="13.5" text-anchor="middle">场景说明书</text>
+<rect x="300.4" y="567.0" width="124.0" height="48.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="362.4" y="595.7" font-size="13.5" text-anchor="middle">修改合同</text>
+<polygon points="797.6,554.0 855.6,591.0 797.6,628.0 739.6,591.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="797.6" y="586.8" font-size="13.0" text-anchor="middle">是否符合</text><text x="797.6" y="604.3" font-size="13.0" text-anchor="middle">公司要求</text>
+<rect x="82.8" y="668.0" width="124.0" height="56.5" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="144.8" y="691.8" font-size="13.5" text-anchor="middle">客户打印合同</text><text x="144.8" y="710.1" font-size="13.5" text-anchor="middle">并盖章</text>
+<rect x="300.4" y="672.2" width="124.0" height="48.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="362.4" y="701.0" font-size="13.5" text-anchor="middle">确认合同</text>
+<rect x="735.6" y="764.5" width="124.0" height="56.5" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="797.6" y="788.3" font-size="13.5" text-anchor="middle">合同审核</text><text x="797.6" y="806.5" font-size="13.5" text-anchor="middle">签字盖章</text>
+<rect x="518.0" y="865.1" width="124.0" height="48.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="580.0" y="893.9" font-size="13.5" text-anchor="middle">收取合同</text>
+<rect x="735.6" y="860.9" width="124.0" height="56.5" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="797.6" y="884.7" font-size="13.5" text-anchor="middle">建立线上</text><text x="797.6" y="903.0" font-size="13.5" text-anchor="middle">对接群</text>
+<rect x="82.8" y="957.4" width="124.0" height="56.5" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="144.8" y="981.2" font-size="13.5" text-anchor="middle">客户确认</text><text x="144.8" y="999.4" font-size="13.5" text-anchor="middle">开户信息</text>
+<rect x="735.6" y="1055.8" width="124.0" height="48.0" fill="#FFFFFF" stroke="#4E5560" stroke-width="1.4"/>
+<text x="797.6" y="1084.5" font-size="13.5" text-anchor="middle">开户</text>
+<!-- 流程连接线 -->
+<path d="M144.8,182.0 L144.8,226.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(144.8,234.0) rotate(90.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M206.8,258.0 L292.4,258.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(300.4,258.0) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M362.4,282.0 L362.4,369.0 L210.8,369.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(202.8,369.0) rotate(180.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M144.8,332.0 L144.8,290.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(144.8,282.0) rotate(-90.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<rect x="134.6" y="298.0" width="20.5" height="18" fill="#FFFFFF"/>
+<text x="144.8" y="311.4" font-size="12.5" text-anchor="middle">否</text>
+<path d="M144.8,406.0 L144.8,480.0 L292.4,480.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(300.4,480.0) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<rect x="212.4" y="471.0" width="20.5" height="18" fill="#FFFFFF"/>
+<text x="222.6" y="484.4" font-size="12.5" text-anchor="middle">是</text>
+<path d="M424.4,480.0 L510.0,480.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(518.0,480.0) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M642.0,480.0 L727.6,480.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(735.6,480.0) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M797.6,508.2 L797.6,546.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(797.6,554.0) rotate(90.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M739.6,591.0 L432.4,591.0" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(424.4,591.0) rotate(180.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<rect x="571.8" y="582.0" width="20.5" height="18" fill="#FFFFFF"/>
+<text x="582.0" y="595.4" font-size="12.5" text-anchor="middle">否</text>
+<path d="M362.4,567.0 L362.4,534.0 L580.0,534.0 L580.0,516.2" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(580.0,508.2) rotate(-90.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M797.6,628.0 L797.6,696.2 L432.4,696.2" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(424.4,696.2) rotate(180.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<rect x="600.8" y="687.2" width="20.5" height="18" fill="#FFFFFF"/>
+<text x="611.0" y="700.6" font-size="12.5" text-anchor="middle">是</text>
+<path d="M300.4,696.2 L214.8,696.2" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(206.8,696.2) rotate(180.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M144.8,724.5 L144.8,889.1 L510.0,889.1" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(518.0,889.1) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M580.0,865.1 L580.0,792.7 L727.6,792.7" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(735.6,792.7) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M642.0,889.1 L727.6,889.1" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(735.6,889.1) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M797.6,917.4 L797.6,985.6 L214.8,985.6" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(206.8,985.6) rotate(180.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+<path d="M144.8,1013.8 L144.8,1079.8 L727.6,1079.8" stroke="#2B3036" stroke-width="1.35" fill="none"/>
+<g class="flow-arrow" transform="translate(735.6,1079.8) rotate(0.0)"><polygon points="0,0 -9,-4.2 -9,4.2" fill="#2B3036"/></g>
+</svg>

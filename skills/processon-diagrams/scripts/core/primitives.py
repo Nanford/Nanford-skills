@@ -4,7 +4,7 @@ from __future__ import annotations
 import sys
 
 from .text import FONT, lines_height, text_block, text_width, wrap
-from .theme import resolve_theme
+from .theme import DEFAULT_THEME, resolve_theme
 
 DEFAULT_NODE_H = 40
 DEFAULT_NODE_FS = 14
@@ -13,9 +13,9 @@ DEFAULT_NODE_FS = 14
 class BaseDiagram:
     """所有图种渲染器的基类。子类实现 render() -> str 即可复用配色、排版、箭头与导出能力。"""
 
-    def __init__(self, model: dict, default_width: int = 1200):
+    def __init__(self, model: dict, default_width: int = 1200, default_theme: str = DEFAULT_THEME):
         self.m = model
-        self.t = resolve_theme(model)
+        self.t = resolve_theme(model, default=default_theme)
         self.W = int(model.get("canvas", {}).get("w", default_width))
         self.parts: list[str] = []
         self.nodes: dict[str, tuple[float, float, float, float]] = {}  # id -> (x, y, w, h)

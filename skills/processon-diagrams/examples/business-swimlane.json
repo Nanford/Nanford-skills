@@ -1,0 +1,55 @@
+{
+  "diagram": "swimlane",
+  "title": "商务业务流程",
+  "themeName": "processon-gray",
+  "canvas": { "w": 1160 },
+  "lanes": ["客户", "商务", "销支", "公司内部协同", "相关文档"],
+  "nodes": [
+    { "id": "start", "lane": "客户", "row": 0, "type": "start", "label": "开始" },
+
+    { "id": "intent", "lane": "客户", "row": 1, "label": "推广意向" },
+    { "id": "intro", "lane": "商务", "row": 1, "label": "介绍方案" },
+    { "id": "doc_ppt", "lane": "相关文档", "row": 1, "type": "document", "label": "业务介绍PPT" },
+
+    { "id": "agree", "lane": "客户", "row": 2, "type": "decision", "label": "是否同意\n方案" },
+
+    { "id": "draft", "lane": "商务", "row": 3, "label": "制定合同\n提交场景" },
+    { "id": "submit", "lane": "销支", "row": 3, "label": "递交合同\n及场景" },
+    { "id": "review", "lane": "公司内部协同", "row": 3, "label": "审核合同\n及场景" },
+    { "id": "doc_proto", "lane": "相关文档", "row": 3, "type": "document", "label": "业务合作协议\n场景说明书" },
+
+    { "id": "revise", "lane": "商务", "row": 4, "label": "修改合同" },
+    { "id": "compliant", "lane": "公司内部协同", "row": 4, "type": "decision", "label": "是否符合\n公司要求" },
+
+    { "id": "print_seal", "lane": "客户", "row": 5, "label": "客户打印合同\n并盖章" },
+    { "id": "confirm_contract", "lane": "商务", "row": 5, "label": "确认合同" },
+
+    { "id": "audit_seal", "lane": "公司内部协同", "row": 6, "label": "合同审核\n签字盖章" },
+
+    { "id": "collect", "lane": "销支", "row": 7, "label": "收取合同" },
+    { "id": "group_chat", "lane": "公司内部协同", "row": 7, "label": "建立线上\n对接群" },
+
+    { "id": "confirm_acct", "lane": "客户", "row": 8, "label": "客户确认\n开户信息" },
+
+    { "id": "open_acct", "lane": "公司内部协同", "row": 9, "label": "开户" }
+  ],
+  "edges": [
+    { "from": "start", "to": "intent" },
+    { "from": "intent", "to": "intro" },
+    { "from": "intro", "to": "agree" },
+    { "from": "agree", "to": "intent", "label": "否" },
+    { "from": "agree", "to": "draft", "label": "是" },
+    { "from": "draft", "to": "submit" },
+    { "from": "submit", "to": "review" },
+    { "from": "review", "to": "compliant" },
+    { "from": "compliant", "to": "revise", "label": "否" },
+    { "from": "revise", "to": "submit" },
+    { "from": "compliant", "to": "confirm_contract", "label": "是" },
+    { "from": "confirm_contract", "to": "print_seal" },
+    { "from": "print_seal", "to": "collect" },
+    { "from": "collect", "to": "audit_seal" },
+    { "from": "collect", "to": "group_chat" },
+    { "from": "group_chat", "to": "confirm_acct" },
+    { "from": "confirm_acct", "to": "open_acct" }
+  ]
+}

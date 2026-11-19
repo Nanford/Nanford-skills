@@ -1,6 +1,6 @@
 ---
 name: processon-diagrams
-description: 将文字描述转化为 ProcessOn 风格的 SVG 专业图表（当前支持分层架构图、甘特图，架构已按多图种拆分，便于后续扩展泳道图、流程图等）。当用户提到"画架构图"、"系统架构图"、"技术架构图"、"总体架构"、"分层架构"、"应用架构"、"数据架构"、"画甘特图"、"甘特图"、"项目排期图"、"开发计划图"、"进度计划图"、"工期横道图"、"ProcessOn风格"、"可视化架构"，或提供一段系统组成描述/项目排期希望图形化展示时，必须触发此 Skill，输出 SVG 而不是文字或 Mermaid。
+description: 将文字描述转化为 ProcessOn 风格的 SVG 专业图表（当前支持分层架构图、甘特图、业务流程泳道图，架构已按多图种拆分，便于后续继续扩展）。当用户提到"画架构图"、"系统架构图"、"技术架构图"、"总体架构"、"分层架构"、"应用架构"、"数据架构"、"画甘特图"、"甘特图"、"项目排期图"、"开发计划图"、"进度计划图"、"工期横道图"、"泳道图"、"业务流程图"、"跨部门流程图"、"审批流程图"、"跨职能流程图"、"ProcessOn风格"、"可视化架构"，或提供一段系统组成描述/项目排期/业务流转步骤希望图形化展示时，必须触发此 Skill，输出 SVG 而不是文字或 Mermaid。
 ---
 <!-- author: Nanford -->
 
@@ -18,19 +18,20 @@ description: 将文字描述转化为 ProcessOn 风格的 SVG 专业图表（当
 |------------------|---------|---------|------|
 | `architecture`（默认） | 系统架构、技术架构、应用架构、数据平台架构、总体架构 | `references/architecture.md` | `examples/ecommerce.json` / `examples/ecommerce.svg` |
 | `gantt` | 项目排期、开发计划、季度路线图、招投标工期横道图、里程碑计划 | `references/gantt.md` | `examples/dev-plan-gantt.json` / `examples/dev-plan-gantt.svg` |
+| `swimlane` | 业务流程图、跨部门/跨角色泳道图、审批流转图、端到端 SOP 流程 | `references/swimlane.md` | `examples/business-swimlane.json` / `examples/business-swimlane.svg` |
 
 共用规范与配色：
 - 视觉规范、自检清单、禁止项：`references/style-guide.md`
 - 配色主题定义（脚本唯一数据源）：`references/color-themes.md`
 
-> 如果用户明确要求目前尚未实现的图种（如泳道流程图、普通流程图），直接说明当前内置脚本支持上述图种，询问是否先按 `references/style-guide.md` 的 ProcessOn 视觉规范手写 SVG，或先扩展该图种渲染器。
+> 如果用户明确要求目前尚未实现的图种（如时序图、ER 图、思维导图），直接说明当前内置脚本支持上述图种，询问是否先按 `references/style-guide.md` 的 ProcessOn 视觉规范手写 SVG，或先扩展该图种渲染器。
 
 ---
 
 ## 标准工作流程
 
 1. **判断图种并读取规范**：根据上表选择图种，阅读对应的 `references/<diagram>.md` 和 `references/style-guide.md`。
-2. **分析需求与匹配主题**：提取用户描述中的所有结构要素（架构的层级/模块/节点，或甘特图的时间跨度/阶段/任务/里程碑）；存在关键歧义时先向用户澄清，能合理假设的直接假设并在交付时说明。按行业匹配主题（见下文）。
+2. **分析需求与匹配主题**：提取用户描述中的所有结构要素（架构的层级/模块/节点、甘特图的时间跨度/阶段/任务/里程碑、或泳道图的角色/步骤/判断分支/交付文档）；存在关键歧义时先向用户澄清，能合理假设的直接假设并在交付时说明。按行业或图种默认匹配主题（见下文）。
 3. **编写 JSON 模型**：按图种规范写出结构化 JSON（包含 `"diagram"` 字段），保存为 `<名称>.json` 到用户工作目录。
 4. **运行统一脚本渲染**：
    ```bash
@@ -45,15 +46,15 @@ description: 将文字描述转化为 ProcessOn 风格的 SVG 专业图表（当
 
 ## 配色主题速查
 
-完整色值定义见 `references/color-themes.md`。用户指定色系时优先遵循用户，否则按行业自动匹配：
+完整色值定义见 `references/color-themes.md`。用户指定色系时优先遵循用户，否则按行业与图种自动匹配（`swimlane` 未指定主题时默认使用 `processon-gray` 经典商务黑白灰风格，`architecture` 和 `gantt` 默认使用 `processon-teal`）：
 
 | `themeName` | 风格 | 适用场景 |
 |-------------|------|---------|
-| `processon-teal` | ProcessOn 经典青绿系 | 默认 / 互联网 / 电商 / 研发排期 |
+| `processon-teal` | ProcessOn 经典青绿系 | 架构图与甘特图默认 / 互联网 / 电商 / 研发排期 |
+| `processon-gray` | 商务黑白灰 | 泳道业务流程图默认 / 政企 / 金融 / 合规 / 审计 |
 | `processon-blue` | 科技蓝 | 软件 / SaaS / 云平台 / 数据中台 |
 | `processon-green` | 清新绿 | 医疗 / 能源 / 环保 / 农业 |
 | `processon-orange` | 活力橙 | 营销 / 零售 / 创意 / 品牌 |
-| `processon-gray` | 商务灰 | 政企 / 金融 / 合规 / 审计 |
 
 ---
 
