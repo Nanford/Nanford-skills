@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 from .architecture import ArchitectureDiagram
+from .gantt import GanttDiagram
 
 REGISTRY: dict[str, type] = {
     "architecture": ArchitectureDiagram,
+    "gantt": GanttDiagram,
 }
 
 DEFAULT_DIAGRAM = "architecture"

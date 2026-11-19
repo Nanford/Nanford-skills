@@ -1,0 +1,27 @@
+{
+  "diagram": "gantt",
+  "title": "开发计划甘特图",
+  "themeName": "processon-teal",
+  "canvas": { "w": 1200 },
+  "timeline": {
+    "start": "2024-02-01",
+    "end": "2024-04-30",
+    "unit": "month-week"
+  },
+  "tasks": [
+    { "name": "需求调研", "start": "2024-02-01", "end": "2024-02-14", "color": "primary" },
+    { "name": "需求分析", "start": "2024-02-08", "end": "2024-02-21", "color": "primary" },
+    { "name": "原型设计", "start": "2024-02-22", "end": "2024-03-12", "color": "primary" },
+    { "name": "UI设计", "start": "2024-03-01", "end": "2024-03-21", "color": "pink" },
+    { "name": "前端开发", "start": "2024-03-08", "end": "2024-03-31", "color": "green" },
+    { "name": "后端开发", "start": "2024-03-07", "end": "2024-04-18", "color": "navy" },
+    { "name": "前后端联调", "start": "2024-03-22", "end": "2024-04-23", "color": "primary" },
+    {
+      "name": "测试上线",
+      "bars": [
+        { "start": "2024-04-18", "end": "2024-04-23", "color": "primary" },
+        { "start": "2024-04-24", "end": "2024-04-30", "label": "月底上线", "color": "red" }
+      ]
+    }
+  ]
+}

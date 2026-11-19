@@ -71,13 +71,15 @@
 > **定位**：ProcessOn 风格多图种 SVG 图表生成器（由 `svg-architecture-diagram` 升级重构）
 
 *   **核心价值**：将文字描述转化为 ProcessOn 模板风格的矢量 SVG 图表，内置零外部依赖 Python 渲染脚本，自动计算坐标、换行与对齐，杜绝节点重叠与溢出，并支持无头浏览器导出 PNG 预览自检。
-*   **多图种架构**：按“路由入口 + 共用核心（主题/排版/图元/箭头/导出）+ 图种渲染器”拆分，当前支持**分层架构图（`architecture`）**，便于后续扩展甘特图、泳道图、流程图等常用辅助阅读图形。
+*   **多图种架构**：按“路由入口 + 共用核心（主题/排版/图元/箭头/导出）+ 图种渲染器”拆分，当前支持**分层架构图（`architecture`）**与**甘特图（`gantt`）**，便于后续继续扩展泳道图、流程图等常用辅助阅读图形。
 *   **5 套 ProcessOn 主题**：青绿经典（默认）/ 科技蓝 / 清新绿 / 活力橙 / 商务灰，低饱和浅色块 + 1px 细描边，按语义角色统一取色。
-*   **技术亮点**：几何拼接箭头替代 SVG `<marker>`，确保导入 PPT、Word、公众号编辑器不丢箭头；左侧竖排层标签、右侧支撑体系栏、多列卡片网格自动底对齐。
+*   **技术亮点**：几何拼接箭头替代 SVG `<marker>`，确保导入 PPT、Word、公众号编辑器不丢箭头；架构图支持左侧竖排层标签、右侧支撑栏与卡片底对齐；甘特图支持日期自动排布（月-周/季-月/周-日/日）、多阶段分组、胶囊进度条、里程碑、今日线与文字防溢出。
 
 **效果预览**：
 
 ![ProcessOn 风格架构图示例](skills/processon-diagrams/examples/ecommerce.svg)
+
+![ProcessOn 风格甘特图示例](skills/processon-diagrams/examples/dev-plan-gantt.svg)
 
 ### 📡 5. ai-news-scout
 > **定位**：AI 信息差日报生成工具
@@ -346,6 +348,7 @@ python "$env:USERPROFILE\.codex\skills\video-workflow\scripts\init_workspace.py"
 
 ## 📜 版本更新记录
 
+- **v0.12**：`processon-diagrams` 新增**甘特图（`gantt`）**渲染器——复刻 ProcessOn 经典甘特图模板（双层虚线表头、左侧竖排阶段栏、彩色胶囊进度条），支持 `month-week` / `quarter-month` / `week-day` / `day` 自动日期排布与自定义刻度、同行多条进度条、菱形里程碑、今日标记线、进度占比与文字防溢出。
 - **v0.11**：将 `svg-architecture-diagram` 重构并更名为 `processon-diagrams`——全面切换为 ProcessOn 模板风格（5 套角色色主题、1px 细描边、几何拼接箭头、自动换行与卡片对齐），按“路由入口 + `scripts/core` + `scripts/diagrams`”拆分为多图种可扩展框架，新增零依赖 Python 渲染脚本与 PNG 预览自检。
 - **v0.10**：新增 AI 实战短视频生产工作流（VideoCut）12 个 Skill 与 `install-video-skills.ps1`：总入口 `video-workflow`、文稿闸门与平台审核、MiniMax 配音与字幕、统一时间轴、Remotion 渲染（语义配色与八种文字动效）、系列音效与混音质检交付。
 - **v0.9**：新增 `bid-preparation` 标书响应文件制作 Skill（脚本 + 模板 + 参考卡片）；新增 `minimal-narrative-sketch-scenes` 极简手绘叙事小场景提示词 Skill；新增 `plc-station-db-mapper` 西门子 PLC 站台点位映射 Skill；新增 `.agents/skills/architecture-diagram` 无连线架构图视觉设计 Skill；升级 `text-to-ppt-pro` 为 PPT 执行层（13 种页型、4 套主题、`layout-specs` 版式规范、参考 PPT）；`article-to-ppt` 重命名为 `article-to-ppt-outline` 明确规划层定位。

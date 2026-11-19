@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="476" viewBox="0 0 1200 476">
+<style>text{font-family:'PingFang SC','Microsoft YaHei','Hiragino Sans GB','Noto Sans CJK SC','Source Han Sans SC',-apple-system,'Segoe UI',Arial,sans-serif;fill:#262626;}</style>
+<rect width="1200" height="476" fill="#FFFFFF"/>
+<!-- 左上角标题格 -->
+<rect x="36.0" y="24.0" width="156.0" height="72.0" rx="0" fill="#5CB3FF" stroke="#4D4D4D" stroke-width="1"/>
+<!-- 时间表头 -->
+<rect x="196.0" y="60.0" width="968.0" height="36" fill="#EAE6FA"/>
+<rect x="196.0" y="24.0" width="322.7" height="36.0" rx="0" fill="#00A2FF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="357.3" y="47.2" font-size="15" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">2024年2月</text>
+<rect x="198.5" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="236.3" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第一周</text>
+<rect x="279.2" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="317.0" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第二周</text>
+<rect x="359.8" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="397.7" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第三周</text>
+<rect x="440.5" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="478.3" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第四周</text>
+<rect x="518.7" y="24.0" width="322.7" height="36.0" rx="0" fill="#00A2FF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="680.0" y="47.2" font-size="15" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">2024年3月</text>
+<rect x="521.2" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="559.0" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第一周</text>
+<rect x="601.8" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="639.7" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第二周</text>
+<rect x="682.5" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="720.3" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第三周</text>
+<rect x="763.2" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="801.0" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第四周</text>
+<rect x="841.3" y="24.0" width="322.7" height="36.0" rx="0" fill="#00A2FF" stroke="#4D4D4D" stroke-width="1"/>
+<text x="1002.7" y="47.2" font-size="15" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">2024年4月</text>
+<rect x="843.8" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="881.7" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第一周</text>
+<rect x="924.5" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="962.3" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第二周</text>
+<rect x="1005.2" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="1043.0" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第三周</text>
+<rect x="1085.8" y="62.5" width="75.7" height="31.0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1" stroke-dasharray="2.5 2.5"/>
+<text x="1123.7" y="82.7" font-size="13.5" text-anchor="middle" style="fill:#262626" font-weight="bold">第四周</text>
+<!-- 甘特时间网格 -->
+<rect x="196.0" y="100.0" width="968.0" height="352.0" rx="0" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="1"/>
+<line x1="276.7" y1="100.0" x2="276.7" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="357.3" y1="100.0" x2="357.3" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="438.0" y1="100.0" x2="438.0" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="518.7" y1="100.0" x2="518.7" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="599.3" y1="100.0" x2="599.3" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="680.0" y1="100.0" x2="680.0" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="760.7" y1="100.0" x2="760.7" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="841.3" y1="100.0" x2="841.3" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="922.0" y1="100.0" x2="922.0" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="1002.7" y1="100.0" x2="1002.7" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<line x1="1083.3" y1="100.0" x2="1083.3" y2="452.0" stroke="#8C8C8C" stroke-width="1"/>
+<!-- 阶段1：开发计划甘特图 -->
+<rect x="36.0" y="100.0" width="48" height="352.0" fill="#009990"/>
+<text font-size="16" font-weight="bold" text-anchor="middle" style="fill:#FFFFFF"><tspan x="60.0" y="212.6">开</tspan><tspan x="60.0" y="235.6">发</tspan><tspan x="60.0" y="258.6">计</tspan><tspan x="60.0" y="281.6">划</tspan><tspan x="60.0" y="304.6">甘</tspan><tspan x="60.0" y="327.6">特</tspan><tspan x="60.0" y="350.6">图</tspan></text>
+<rect x="84.0" y="100.0" width="108" height="352.0" fill="#EAE6FA"/>
+<rect x="87.0" y="102.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="126.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">需求调研</text>
+<rect x="198.5" y="107.0" width="150.8" height="30" rx="15.0" fill="#009990"/>
+<text x="273.9" y="126.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">2月1日~2月14日</text>
+<rect x="87.0" y="146.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="170.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">需求分析</text>
+<rect x="276.4" y="151.0" width="150.8" height="30" rx="15.0" fill="#009990"/>
+<text x="351.8" y="170.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">2月8日~2月21日</text>
+<rect x="87.0" y="190.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="214.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">原型设计</text>
+<rect x="432.2" y="195.0" width="208.9" height="30" rx="15.0" fill="#009990"/>
+<text x="536.6" y="214.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">2月22日~3月12日</text>
+<rect x="87.0" y="234.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="258.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">UI设计</text>
+<rect x="521.2" y="239.0" width="213.6" height="30" rx="15.0" fill="#FF9696"/>
+<text x="628.0" y="258.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">3月1日~3月21日</text>
+<rect x="87.0" y="278.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="302.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">前端开发</text>
+<rect x="594.0" y="283.0" width="244.8" height="30" rx="15.0" fill="#6AC42E"/>
+<text x="716.4" y="302.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">3月8日~3月31日</text>
+<rect x="87.0" y="322.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="346.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">后端开发</text>
+<rect x="583.6" y="327.0" width="448.8" height="30" rx="15.0" fill="#0C2E9A"/>
+<text x="808.0" y="346.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">3月7日~4月18日</text>
+<rect x="87.0" y="366.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="390.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">前后端联调</text>
+<rect x="739.7" y="371.0" width="346.5" height="30" rx="15.0" fill="#009990"/>
+<text x="913.0" y="390.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">3月22日~4月23日</text>
+<rect x="87.0" y="410.5" width="102.0" height="39.0" fill="#00C6BE"/>
+<text x="138.0" y="434.9" font-size="14" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">测试上线</text>
+<rect x="1026.7" y="415.0" width="59.5" height="30" rx="15.0" fill="#009990"/>
+<text x="1020.7" y="434.6" font-size="13" text-anchor="end" style="fill:#262626" font-weight="bold">4月18日~4月23日</text>
+<rect x="1091.2" y="415.0" width="70.3" height="30" rx="15.0" fill="#F01414"/>
+<text x="1126.4" y="434.7" font-size="13.5" text-anchor="middle" style="fill:#FFFFFF" font-weight="bold">月底上线</text>
+<rect x="196.0" y="100.0" width="968.0" height="352.0" fill="none" stroke="#4D4D4D" stroke-width="1"/>
+</svg>
